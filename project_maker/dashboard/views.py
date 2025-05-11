@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated ,IsAdminUser
 from rest_framework import status
 from django.contrib.auth.models import User
-from .models import UserTag
+from .models import UserTag, FearLevel
 
 class UserDetails(APIView):
     permission_classes = [IsAuthenticated]
@@ -15,7 +15,8 @@ class UserDetails(APIView):
             "email": user.email,
         }
         return Response(data, status=status.HTTP_200_OK)
-
+    
+# Inserting of UserTag
 class UserTagUploadView(APIView):
     permission_classes = [IsAdminUser]  # or use custom permission
 
@@ -28,4 +29,19 @@ class UserTagUploadView(APIView):
                 category=tag.get('category')
             )
             created.append({'name': obj.name, 'category': obj.category})
+        return Response({"created_tags": created}, status=status.HTTP_201_CREATED)
+
+# Inserting of fear-level
+class FearLevelUploadView(APIView):
+    permission_classes = [IsAdminUser]  # or use custom permission
+
+    def post(self, request):
+        fear_level = request.data.get("fear",[])
+        created = []
+        for fear in fear_level:
+            obj, _ = FearLevel.objects.get_or_create(
+                name=fear.get('name'),
+                description=fear.get('description')
+            )
+            created.append({'name': obj.name, 'description': obj.description})
         return Response({"created_tags": created}, status=status.HTTP_201_CREATED)
