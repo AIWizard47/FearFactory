@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated ,IsAdminUser
 from rest_framework import status
 from django.contrib.auth.models import User
-from .models import UserTag, FearLevel
+from .models import UserTag, FearLevel, MemberShip
 
 class UserDetails(APIView):
     permission_classes = [IsAuthenticated]
@@ -15,7 +15,11 @@ class UserDetails(APIView):
             "email": user.email,
         }
         return Response(data, status=status.HTTP_200_OK)
-    
+
+
+
+
+#---------------------TESTING-INSERTING--------------------#
 # Inserting of UserTag
 class UserTagUploadView(APIView):
     permission_classes = [IsAdminUser]  # or use custom permission
@@ -44,4 +48,20 @@ class FearLevelUploadView(APIView):
                 description=fear.get('description')
             )
             created.append({'name': obj.name, 'description': obj.description})
+        return Response({"created_tags": created}, status=status.HTTP_201_CREATED)
+    
+# Inserting of MemberShip
+class MemberShipUploadView(APIView):
+    permission_classes = [IsAdminUser]  # or use custom permission
+
+    def post(self, request):
+        member = request.data.get("member",[])
+        created = []
+        for fear in member:
+            obj, _ = MemberShip.objects.get_or_create(
+                name=fear.get('name'),
+                description=fear.get('description'),
+                perk=fear.get('perks')
+            )
+            created.append({'name': obj.name, 'description': obj.description, 'perk':obj.perk})
         return Response({"created_tags": created}, status=status.HTTP_201_CREATED)
