@@ -1,0 +1,699 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FearFactory - Contact Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 0.99;
+                text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.4;
+                text-shadow: none;
+            }
+        }
+
+        @keyframes drip {
+            0% { height: 0; opacity: 0; }
+            10% { opacity: 1; }
+            70% { height: 100px; }
+            100% { height: 100px; opacity: 0; }
+        }
+
+        @keyframes spiderSwing {
+            0% { transform: rotate(5deg); }
+            50% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+
+        @keyframes fogAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes formSuccess {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #f8f8f8;
+            font-family: 'Roboto', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .creepy-font {
+            font-family: 'Creepster', cursive;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+        }
+
+        .flicker {
+            animation: flicker 5s infinite alternate;
+        }
+
+        .blood-drip {
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 0;
+            background: linear-gradient(to bottom, #8b0000, #ff0000);
+            border-radius: 0 0 5px 5px;
+            animation: drip 10s infinite;
+            z-index: 1;
+        }
+
+        .cobweb {
+            position: absolute;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .spider {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            animation: spiderSwing 3s infinite ease-in-out;
+            transform-origin: top center;
+            z-index: 2;
+        }
+
+        .scratch {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(45deg, transparent 45%, rgba(255, 0, 0, 0.1) 45%, transparent 55%),
+                linear-gradient(-45deg, transparent 45%, rgba(255, 0, 0, 0.1) 45%, transparent 55%);
+            background-size: 10px 10px;
+            z-index: 1;
+        }
+
+        .fog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, 
+                rgba(0,0,0,0) 0%, 
+                rgba(50,50,50,0.1) 25%, 
+                rgba(50,50,50,0.1) 75%, 
+                rgba(0,0,0,0) 100%);
+            background-size: 200% 100%;
+            animation: fogAnimation 60s ease infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .menu-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .menu-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ff0000;
+            transition: width 0.3s ease;
+        }
+
+        .menu-item:hover::after {
+            width: 100%;
+        }
+
+        .form-input {
+            background-color: rgba(30, 30, 30, 0.8);
+            border: 1px solid #3a0404;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: #ff0000;
+            box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.2);
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: #666;
+        }
+
+        .form-label {
+            color: #ccc;
+            transition: all 0.3s ease;
+        }
+
+        .form-group:focus-within .form-label {
+            color: #ff0000;
+        }
+
+        .contact-success {
+            display: none;
+            animation: formSuccess 0.5s ease forwards;
+        }
+
+        .contact-form.submitted .contact-success {
+            display: flex;
+        }
+
+        .contact-form.submitted form {
+            display: none;
+        }
+
+        .contact-card {
+            background-color: rgba(20, 20, 20, 0.8);
+            border: 1px solid #3a0404;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .contact-icon {
+            animation: pulse 2s infinite;
+        }
+
+        .error-shake {
+            animation: shake 0.5s;
+        }
+
+        .decorative {
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Fog effect -->
+    <div class="fog decorative"></div>
+    <div class="fog decorative" style="animation-delay: -30s;"></div>
+    
+    <!-- Cobwebs -->
+    <div class="cobweb top-0 left-0 decorative">
+        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0L200 200M0 200L200 0M100 0V200M0 100H200" stroke="white" stroke-width="1"/>
+        </svg>
+    </div>
+    <div class="cobweb top-0 right-0 decorative">
+        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0L200 200M0 200L200 0M100 0V200M0 100H200" stroke="white" stroke-width="1"/>
+        </svg>
+    </div>
+    
+    <!-- Blood drips -->
+    <div class="blood-drip decorative" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="blood-drip decorative" style="left: 25%; animation-delay: 2s;"></div>
+    <div class="blood-drip decorative" style="left: 40%; animation-delay: 1s;"></div>
+    <div class="blood-drip decorative" style="left: 60%; animation-delay: 3s;"></div>
+    <div class="blood-drip decorative" style="left: 75%; animation-delay: 0.5s;"></div>
+    <div class="blood-drip decorative" style="left: 90%; animation-delay: 2.5s;"></div>
+    
+    <!-- Spider -->
+    <div class="spider decorative" style="top: 100px; right: 50px;">
+        <svg viewBox="0 0 100 100" fill="black" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="20" />
+            <path d="M50 70 L50 90" stroke="black" stroke-width="2" />
+            <path d="M50 30 L50 10" stroke="black" stroke-width="2" />
+            <path d="M30 50 L10 40" stroke="black" stroke-width="2" />
+            <path d="M30 50 L10 60" stroke="black" stroke-width="2" />
+            <path d="M70 50 L90 40" stroke="black" stroke-width="2" />
+            <path d="M70 50 L90 60" stroke="black" stroke-width="2" />
+            <path d="M35 35 L20 20" stroke="black" stroke-width="2" />
+            <path d="M65 35 L80 20" stroke="black" stroke-width="2" />
+            <path d="M35 65 L20 80" stroke="black" stroke-width="2" />
+            <path d="M65 65 L80 80" stroke="black" stroke-width="2" />
+        </svg>
+    </div>
+    
+    <!-- Scratches -->
+    <div class="scratch w-full h-screen decorative"></div>
+    
+    <!-- Navigation -->
+    <nav class="relative px-6 py-4 flex justify-between items-center border-b border-red-900 z-20">
+        <div class="flex items-center">
+            <div class="text-red-600 mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9c.83 0 1.5-.67 1.5-1.5S7.83 8 7 8s-1.5.67-1.5 1.5S6.17 11 7 11zm5-2c.83 0 1.5-.67 1.5-1.5S12.83 6 12 6s-1.5.67-1.5 1.5S11.17 9 12 9zm5 2c.83 0 1.5-.67 1.5-1.5S17.83 8 17 8s-1.5.67-1.5 1.5.67 1.5 1.5 1.5z"/>
+                </svg>
+            </div>
+            <a href="index.html" class="text-2xl font-bold creepy-font glow-text flicker">FearFactory</a>
+        </div>
+        <div class="hidden md:flex space-x-8">
+            <a href="index.html" class="menu-item text-white hover:text-red-500 transition-colors">Home</a>
+            <a href="Home.html" class="menu-item text-white hover:text-red-500 transition-colors">Experiences</a>
+            <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Achievements</a>
+            <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Community</a>
+            <a href="ContactUs.html" class="menu-item text-white hover:text-red-500 transition-colors font-bold text-red-500">Contact Us</a>
+        </div>
+        <div class="md:hidden">
+            <button class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold creepy-font glow-text flicker mb-4">Contact Us</h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">Have questions about our terrifying experiences? Want to share your fears? Reach out to us and we'll respond... if you dare.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Contact Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-gradient-to-r from-gray-900 via-red-900 to-gray-900 rounded-lg p-6 shadow-lg">
+                    <div class="contact-form" id="contactForm">
+                        <!-- Success Message -->
+                        <div class="contact-success bg-black bg-opacity-70 p-8 rounded-lg flex flex-col items-center justify-center" style="display: none;">
+                            <div class="w-20 h-20 bg-red-900 rounded-full flex items-center justify-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">Message Sent!</h3>
+                            <p class="text-gray-300 text-center mb-6">We've received your message and will respond to your fears soon.</p>
+                            <button id="sendAnotherBtn" class="bg-red-700 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full transition-all duration-300">
+                                Send Another Message
+                            </button>
+                        </div>
+                        
+                        <!-- Form -->
+                        <form id="contactFormElement" class="space-y-6" style="display: block;">
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label for="name" class="form-label block mb-2">Full Name <span class="text-red-500">*</span></label>
+                                    <input type="text" id="name" name="name" placeholder="Enter your name" required
+                                        class="form-input w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-red-500">
+                                    <p class="error-message text-red-500 text-sm mt-1 hidden">Please enter your name</p>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email" class="form-label block mb-2">Email Address <span class="text-red-500">*</span></label>
+                                    <input type="email" id="email" name="email" placeholder="Enter your email" required
+                                        class="form-input w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-red-500">
+                                    <p class="error-message text-red-500 text-sm mt-1 hidden">Please enter a valid email</p>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="form-group">
+                                    <label for="phone" class="form-label block mb-2">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone" placeholder="Enter your phone number"
+                                        class="form-input w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-red-500">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="subject" class="form-label block mb-2">Subject <span class="text-red-500">*</span></label>
+                                    <select id="subject" name="subject" required
+                                        class="form-input w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-red-500">
+                                        <option value="">Select a subject</option>
+                                        <option value="general">General Inquiry</option>
+                                        <option value="booking">Booking Question</option>
+                                        <option value="experience">Experience Feedback</option>
+                                        <option value="support">Technical Support</option>
+                                        <option value="partnership">Business Partnership</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <p class="error-message text-red-500 text-sm mt-1 hidden">Please select a subject</p>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message" class="form-label block mb-2">Your Message <span class="text-red-500">*</span></label>
+                                <textarea id="message" name="message" rows="6" placeholder="Tell us about your fears or questions..." required
+                                    class="form-input w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-red-500"></textarea>
+                                <p class="error-message text-red-500 text-sm mt-1 hidden">Please enter your message</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="flex items-center space-x-2 cursor-pointer">
+                                    <input type="checkbox" id="newsletter" name="newsletter" class="form-checkbox h-5 w-5 text-red-600 rounded focus:ring-red-500">
+                                    <span class="text-gray-300">Subscribe to our newsletter for the latest horror experiences and exclusive offers</span>
+                                </label>
+                            </div>
+                            
+                            <div class="flex justify-end">
+                                <button type="submit" id="submitBtn" 
+                                    class="bg-red-700 hover:bg-red-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center">
+                                    <span>Send Message</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="space-y-6">
+                <div class="contact-card rounded-lg p-6 shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="contact-icon bg-red-900 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </span>
+                        Visit Us
+                    </h2>
+                    <p class="text-gray-300 mb-2">FearFactory Headquarters</p>
+                    <p class="text-gray-300 mb-2">1313 Nightmare Lane</p>
+                    <p class="text-gray-300">Haunted Hills, HH 66666</p>
+                </div>
+
+                <div class="contact-card rounded-lg p-6 shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="contact-icon bg-red-900 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                        </span>
+                        Call Us
+                    </h2>
+                    <p class="text-gray-300 mb-2">Main Office: (666) 123-4567</p>
+                    <p class="text-gray-300">Booking Hotline: (666) 666-6666</p>
+                </div>
+
+                <div class="contact-card rounded-lg p-6 shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="contact-icon bg-red-900 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                        </span>
+                        Email Us
+                    </h2>
+                    <p class="text-gray-300 mb-2">General Inquiries: info@fearfactory.com</p>
+                    <p class="text-gray-300 mb-2">Bookings: bookings@fearfactory.com</p>
+                    <p class="text-gray-300">Support: support@fearfactory.com</p>
+                </div>
+
+                <div class="contact-card rounded-lg p-6 shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="contact-icon bg-red-900 rounded-full p-2 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </span>
+                        Hours of Operation
+                    </h2>
+                    <p class="text-gray-300 mb-2">Monday - Thursday: 6:00 PM - 12:00 AM</p>
+                    <p class="text-gray-300 mb-2">Friday: 6:00 PM - 2:00 AM</p>
+                    <p class="text-gray-300 mb-2">Saturday: 4:00 PM - 2:00 AM</p>
+                    <p class="text-gray-300">Sunday: 4:00 PM - 12:00 AM</p>
+                </div>
+
+                <div class="contact-card rounded-lg p-6 shadow-lg">
+                    <h2 class="text-xl font-bold mb-4">Follow Us</h2>
+                    <div class="flex space-x-4">
+                        <a href="#" class="bg-red-900 hover:bg-red-700 text-white p-3 rounded-full transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="bg-red-900 hover:bg-red-700 text-white p-3 rounded-full transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="bg-red-900 hover:bg-red-700 text-white p-3 rounded-full transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="bg-red-900 hover:bg-red-700 text-white p-3 rounded-full transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="bg-red-900 hover:bg-red-700 text-white p-3 rounded-full transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold creepy-font glow-text mb-8 text-center">Frequently Asked Questions</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-r from-gray-900 to-black rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-bold mb-3">How scary are your experiences?</h3>
+                    <p class="text-gray-300">Our experiences range from mildly spooky to extremely terrifying. Each experience has a fear rating to help you choose the right level of horror for your tolerance.</p>
+                </div>
+                
+                <div class="bg-gradient-to-r from-gray-900 to-black rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-bold mb-3">Is there an age requirement?</h3>
+                    <p class="text-gray-300">Most of our experiences require participants to be at least 16 years old. Some of our more intense experiences have an 18+ requirement. Please check the specific experience details.</p>
+                </div>
+                
+                <div class="bg-gradient-to-r from-gray-900 to-black rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-bold mb-3">Can I get a refund if I'm too scared?</h3>
+                    <p class="text-gray-300">We do not offer refunds for being scared - that's what you came for! However, if you need to leave early, our staff will safely escort you out of the experience.</p>
+                </div>
+                
+                <div class="bg-gradient-to-r from-gray-900 to-black rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-bold mb-3">Do you offer group discounts?</h3>
+                    <p class="text-gray-300">Yes! We offer special rates for groups of 6 or more. Contact our booking department for more information on group packages and corporate events.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="bg-gradient-to-r from-gray-900 via-red-900 to-gray-900 rounded-lg p-6 shadow-lg mb-12">
+            <h2 class="text-2xl font-bold mb-6">Find Us If You Dare</h2>
+            <!-- <div class="bg-black bg-opacity-50 p-4 rounded-lg text-center mb-6">
+                <span class="text-red-500 font-bold">DEMO MAP</span> - This is a sample map for demonstration purposes only
+            </div> -->
+            <div class="h-80 bg-gray-800 rounded-lg flex items-center justify-center">
+                <div class="text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-red-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                    <p class="text-gray-300 text-lg">Interactive Map Would Display Here</p>
+                    <p class="text-gray-400">Located at 1313 Nightmare Lane, Haunted Hills</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 bg-black bg-opacity-70 border-t border-red-900 mt-8 py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-xl font-bold creepy-font text-red-600">FearFactory</h2>
+                    <p class="text-sm text-gray-400">Face your fears, embrace the darkness</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-red-500 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-red-500 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-red-500 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-6 pt-6 text-center">
+                <div class="flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-8 mb-4">
+                    <a href="#" class="text-sm text-gray-400 hover:text-red-500 transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-sm text-gray-400 hover:text-red-500 transition-colors">Terms of Service</a>
+                    <a href="#" class="text-sm text-gray-400 hover:text-red-500 transition-colors">Refund Policy</a>
+                    <a href="#" class="text-sm text-gray-400 hover:text-red-500 transition-colors">Careers</a>
+                </div>
+                <p class="text-sm text-gray-500">&copy; 2023 FearFactory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contact form functionality
+            const contactForm = document.getElementById('contactForm');
+            const contactFormElement = document.getElementById('contactFormElement');
+            const submitBtn = document.getElementById('submitBtn');
+            const sendAnotherBtn = document.getElementById('sendAnotherBtn');
+            const errorMessages = document.querySelectorAll('.error-message');
+            const requiredFields = contactFormElement.querySelectorAll('[required]');
+            const formWrapper = document.getElementById('contactForm');
+            const successMessage = formWrapper.querySelector('.contact-success');
+            const formSection = contactFormElement;
+            
+            // Form validation
+            function validateForm() {
+                let isValid = true;
+                
+                // Reset all error messages
+                errorMessages.forEach(msg => msg.classList.add('hidden'));
+                
+                // Check each required field
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        isValid = false;
+                        // Find the error message for this field
+                        const errorMsg = field.parentElement.querySelector('.error-message');
+                        if (errorMsg) {
+                            errorMsg.classList.remove('hidden');
+                            field.classList.add('error-shake');
+                            field.style.borderColor = '#ff0000';
+                            
+                            // Remove shake animation after it completes
+                            setTimeout(() => {
+                                field.classList.remove('error-shake');
+                            }, 500);
+                        }
+                    } else if (field.type === 'email' && !validateEmail(field.value)) {
+                        isValid = false;
+                        const errorMsg = field.parentElement.querySelector('.error-message');
+                        if (errorMsg) {
+                            errorMsg.classList.remove('hidden');
+                            field.classList.add('error-shake');
+                            field.style.borderColor = '#ff0000';
+                            
+                            setTimeout(() => {
+                                field.classList.remove('error-shake');
+                            }, 500);
+                        }
+                    } else {
+                        field.style.borderColor = '#3a0404';
+                    }
+                });
+                
+                return isValid;
+            }
+            
+            // Email validation
+            function validateEmail(email) {
+                const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(String(email).toLowerCase());
+            }
+            
+            // Form submission
+            contactFormElement.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                if (validateForm()) {
+                    // Prepare form data
+                    const formData = {
+                        user_name: document.getElementById('name').value,
+                        user_email: document.getElementById('email').value,
+                        user_number: document.getElementById('phone').value,
+                        user_subject: document.getElementById('subject').value,
+                        user_message: document.getElementById('message').value,
+                        user_subscribe: document.getElementById('newsletter').checked
+                    };
+
+                    // Log data to console (debugging)
+                    console.log(formData);
+
+                    // Optional: Send data to server
+                    fetch('http://127.0.0.1:8000/feedback/contact-us/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok.');
+                        return response.json();
+                    })
+                    .then(data => {
+                        alert('Your message has been sent successfully!');
+                        successMessage.style.display = 'flex';
+                        formSection.style.display = 'none';
+                        contactFormElement.reset();
+                    })
+                    .catch(error => {
+                        alert('An error occurred. Please try again later.');
+                        console.error('Error:', error);
+                    });
+                }
+            });
+                        
+            // Reset form to send another message
+            sendAnotherBtn.addEventListener('click', () => {
+                successMessage.style.display = 'none';
+                formSection.style.display = 'block';
+            });
+            
+            // Clear error styling when user starts typing
+            requiredFields.forEach(field => {
+                field.addEventListener('input', () => {
+                    field.style.borderColor = '#3a0404';
+                    const errorMsg = field.parentElement.querySelector('.error-message');
+                    if (errorMsg) {
+                        errorMsg.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // Mobile menu toggle (simplified for demo)
+            const mobileMenuButton = document.querySelector('button.text-white');
+            mobileMenuButton.addEventListener('click', () => {
+                alert('Mobile menu would open here');
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93db70a64558c508',t:'MTc0NjkwMTExNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

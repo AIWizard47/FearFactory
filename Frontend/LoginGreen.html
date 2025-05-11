@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FearFactory - Demo Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Eater&family=Special+Elite&display=swap">
+    <style>
+        body {
+            font-family: 'Special Elite', cursive;
+            background-color: #0a0a0a;
+            color: #c9c9c9;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .horror-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)), 
+                        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23300000' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z'%3E%3C/path%3E%3C/svg%3E"),
+                        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23003300' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+        }
+        
+        .fear-element {
+            position: absolute;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .horror-title {
+            font-family: 'Nosifer', cursive;
+            text-shadow: 0 0 5px #00ff00, 0 0 10px #006600;
+            letter-spacing: 2px;
+            color: #1aff1a;
+        }
+        
+        .form-container {
+            background-color: rgba(10, 10, 10, 0.8);
+            border: 1px solid #003300;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+        
+        .input-field {
+            background-color: rgba(20, 20, 20, 0.8);
+            border: 1px solid #003300;
+            color: #c9c9c9;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            border-color: #006600;
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+            outline: none;
+        }
+        
+        .horror-btn {
+            background-color: #003300;
+            color: #c9c9c9;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 3px #00ff00;
+            box-shadow: 0 0 10px rgba(0, 102, 0, 0.5);
+            font-family: 'Eater', cursive;
+        }
+        
+        .horror-btn:hover {
+            background-color: #006600;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+            transform: scale(1.03);
+        }
+        
+        .tab {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Eater', cursive;
+        }
+        
+        .tab.active {
+            color: #00ff00;
+            text-shadow: 0 0 5px #006600;
+            border-bottom: 2px solid #006600;
+        }
+        
+        .slime-drip {
+            position: absolute;
+            width: 8px;
+            background-color: #00cc00;
+            top: 0;
+            animation: drip 4s infinite;
+            border-radius: 0 0 4px 4px;
+            opacity: 0.8;
+        }
+        
+        @keyframes drip {
+            0% { height: 0; opacity: 0; }
+            20% { height: 0; opacity: 0.8; }
+            80% { height: 60px; opacity: 0.8; }
+            100% { height: 60px; opacity: 0; }
+        }
+        
+        .demo-badge {
+            background-color: rgba(0, 255, 0, 0.2);
+            border: 1px solid #006600;
+            color: #66ff66;
+            font-family: 'Special Elite', cursive;
+        }
+        
+        .fog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3CradialGradient id='a' cx='50%25' cy='50%25' r='50%25' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23003300' stop-opacity='.1'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23a)'/%3E%3C/svg%3E");
+            opacity: 0.7;
+            z-index: -1;
+            animation: fog-move 60s infinite alternate linear;
+        }
+        
+        @keyframes fog-move {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+        
+        .spider {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            animation: spider-dangle 10s infinite;
+        }
+        
+        @keyframes spider-dangle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    <!-- Background elements -->
+    <div class="horror-background"></div>
+    <div class="fog"></div>
+    
+    <!-- Fear elements -->
+    <div class="fear-element" style="top: 10%; left: 5%; font-size: 80px; transform: rotate(-15deg);">👻</div>
+    <div class="fear-element" style="top: 70%; left: 85%; font-size: 100px; transform: rotate(10deg);">💀</div>
+    <div class="fear-element" style="top: 30%; left: 90%; font-size: 60px; transform: rotate(5deg);">🕷️</div>
+    
+    <!-- Spider on web -->
+    <div class="spider" style="top: 5%; left: 50%;">
+        <svg viewBox="0 0 100 100" width="30" height="30">
+            <line x1="50" y1="0" x2="50" y2="30" stroke="#666" stroke-width="1"/>
+            <circle cx="50" cy="50" r="20" fill="#111"/>
+            <line x1="30" y1="40" x2="10" y2="30" stroke="#111" stroke-width="2"/>
+            <line x1="30" y1="50" x2="5" y2="50" stroke="#111" stroke-width="2"/>
+            <line x1="30" y1="60" x2="10" y2="70" stroke="#111" stroke-width="2"/>
+            <line x1="70" y1="40" x2="90" y2="30" stroke="#111" stroke-width="2"/>
+            <line x1="70" y1="50" x2="95" y2="50" stroke="#111" stroke-width="2"/>
+            <line x1="70" y1="60" x2="90" y2="70" stroke="#111" stroke-width="2"/>
+        </svg>
+    </div>
+    
+    <!-- Slime drips -->
+    <div class="slime-drip" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="slime-drip" style="left: 25%; animation-delay: 2.5s;"></div>
+    <div class="slime-drip" style="left: 45%; animation-delay: 1.2s;"></div>
+    <div class="slime-drip" style="left: 65%; animation-delay: 3.7s;"></div>
+    <div class="slime-drip" style="left: 85%; animation-delay: 0.8s;"></div>
+    
+    <div class="form-container w-full max-w-md p-8 rounded-lg relative">
+
+        <h1 class="horror-title text-4xl mb-6 text-center">FEARFACTORY</h1>
+        
+        <!-- Tabs -->
+        <div class="flex mb-6 border-b border-gray-800">
+            <div id="login-tab" class="tab active px-4 py-2 w-1/2 text-center">LOGIN</div>
+            <div id="signup-tab" class="tab px-4 py-2 w-1/2 text-center">SIGN UP</div>
+        </div>
+        
+        <!-- Login Form -->
+        <div id="login-form" class="space-y-4">
+            <div>
+                <label class="block mb-2 text-sm">USERNAME</label>
+                <input type="text" class="input-field w-full p-3 rounded-md" placeholder="Enter your username">
+            </div>
+            <div>
+                <label class="block mb-2 text-sm">PASSWORD</label>
+                <input type="password" class="input-field w-full p-3 rounded-md" placeholder="Enter your password">
+            </div>
+            <div class="pt-2">
+                <button class="horror-btn w-full p-3 rounded-md font-bold">ENTER FEARFACTORY</button>
+            </div>
+            <div class="text-center text-sm mt-4">
+                <a href="#" class="text-green-500 hover:text-green-400">Forgot your nightmare?</a>
+            </div>
+        </div>
+        
+        <!-- Signup Form (hidden by default) -->
+        <div id="signup-form" class="space-y-4 hidden">
+            <div>
+                <label class="block mb-2 text-sm">USERNAME</label>
+                <input type="text" class="input-field w-full p-3 rounded-md" placeholder="Enter your username">
+            </div>
+            <div>
+                <label class="block mb-2 text-sm">EMAIL</label>
+                <input type="email" class="input-field w-full p-3 rounded-md" placeholder="Enter your email">
+            </div>
+            <div>
+                <label class="block mb-2 text-sm">PASSWORD</label>
+                <input type="password" class="input-field w-full p-3 rounded-md" placeholder="Create a password">
+            </div>
+            <div class="pt-2">
+                <button class="horror-btn w-full p-3 rounded-md font-bold">JOIN FEARFACTORY</button>
+            </div>
+        </div>
+        
+        <div class="text-center text-xs mt-6 text-green-700">
+            By entering, you agree to face your deepest fears
+        </div>
+    </div>
+
+    <script>
+
+        function setCookie(name, value, days) {
+            const expires = new Date(Date.now() + days * 86400000).toUTCString();
+            document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+        }
+
+        // Tab switching
+        const loginTab = document.getElementById('login-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            signupTab.classList.remove('active');
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+        });
+
+        signupTab.addEventListener('click', () => {
+            signupTab.classList.add('active');
+            loginTab.classList.remove('active');
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        });
+
+        const loginBtn = loginForm.querySelector('.horror-btn');
+        const signupBtn = signupForm.querySelector('.horror-btn');
+
+        loginBtn.addEventListener('click', async () => {
+            const username = loginForm.querySelector('input[placeholder="Enter your username"]').value.trim();
+            const password = loginForm.querySelector('input[placeholder="Enter your password"]').value.trim();
+
+            if (!username || !password) {
+                alert("Username and password are required.");
+                return;
+            }
+
+            try {
+                const res = await fetch('http://127.0.0.1:8000/auth/api/token/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) throw new Error(data.message || 'Login failed');
+
+                setCookie('access_token', data.access, 1);
+                setCookie('refresh_token', data.refresh, 7);
+
+                // remove alert box in user mode.
+                alert("Login successful. Welcome to FearFactory.");
+                
+                window.location.href = "http://127.0.0.1:5500/UserHome.html";
+            } catch (err) {
+                alert("Error: " + err.message);
+            }
+        });
+
+        signupBtn.addEventListener('click', async () => {
+            const username = signupForm.querySelector('input[placeholder="Enter your username"]').value.trim();
+            const email = signupForm.querySelector('input[placeholder="Enter your email"]').value.trim();
+            const password = signupForm.querySelector('input[placeholder="Create a password"]').value.trim();
+
+            if (!username || !email || !password) {
+                alert("All fields are required.");
+                return;
+            }
+
+            try {
+                const res = await fetch('http://127.0.0.1:8000/auth/api/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.message || 'Signup failed');
+
+                alert("Signup successful. You may now log in.");
+                signupTab.classList.remove('active');
+                loginTab.classList.add('active');
+                signupForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+            } catch (err) {
+                alert("Error: " + err.message);
+            }
+        });
+        // Redirecting to the UserHome page.
+        // Cookie functions
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            return parts.length === 2 ? parts.pop().split(';').shift() : null;
+        }
+
+        function setCookie(name, value, days) {
+            const expires = new Date(Date.now() + days * 86400000).toUTCString();
+            document.cookie = `${name}=${value}; expires=${expires}; path=/; secure; SameSite=Strict`;
+        }
+
+        // Try to refresh token
+        async function tryRefreshToken() {
+            const refreshToken = getCookie('refresh_token');
+
+            if (!refreshToken) {
+                alert("Session expired. Please log in again.");
+                return false;
+            }
+
+            try {
+                const res = await fetch('http://127.0.0.1:8000/auth/api/token/refresh/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ refresh: refreshToken })
+                });
+
+                if (!res.ok) {
+                    throw new Error("Refresh token invalid");
+                }
+
+                const data = await res.json();
+                setCookie('access_token', data.access, 1);
+                return true;
+            } catch (err) {
+                alert("Authentication failed. Please log in again.");
+                return false;
+            }
+        }
+
+        // Fetch protected data
+        async function fetchProtectedData() {
+            let token = getCookie('access_token');
+            if (!token) {
+                check.innerText = "You are not logged in.";
+                return;
+            }
+
+            try {
+                let res = await fetch('http://127.0.0.1:8000/auth/api/hello', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                // If token expired, try refresh
+                if (res.status === 401) {
+                    const refreshed = await tryRefreshToken();
+                    if (refreshed) {
+                        return fetchProtectedData(); // retry after refresh
+                    } else {
+                        check.innerText = "Session expired. Please log in again.";
+                        return;
+                    }
+                }
+                //Redirecting to the UserHome Page.
+                window.location.href = "http://127.0.0.1:5500/UserHome.html";
+            } catch (err) {
+                console.error(err);
+                check.innerText = "Error fetching data.";
+            }
+        }
+
+        // On page load
+        window.onload = () => {
+            fetchProtectedData();
+        };
+
+
+
+
+
+        
+        // Add random fear elements occasionally
+        function addRandomFearElement() {
+            const fearEmojis = ['👻', '💀', '🕷️', '🦇', '🧟', '👹', '👺', '🔪'];
+            const body = document.querySelector('body');
+            const fear = document.createElement('div');
+            fear.className = 'fear-element';
+            fear.style.top = Math.random() * 100 + '%';
+            fear.style.left = Math.random() * 100 + '%';
+            fear.style.fontSize = (Math.random() * 40 + 30) + 'px';
+            fear.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
+            fear.style.opacity = '0';
+            fear.textContent = fearEmojis[Math.floor(Math.random() * fearEmojis.length)];
+            body.appendChild(fear);
+            
+            setTimeout(() => {
+                fear.style.opacity = '0.1';
+                fear.style.transition = 'opacity 2s ease';
+            }, 100);
+            
+            setTimeout(() => {
+                fear.style.opacity = '0';
+                setTimeout(() => {
+                    body.removeChild(fear);
+                }, 2000);
+            }, 10000);
+        }
+        
+        setInterval(addRandomFearElement, 8000);
+        setTimeout(() => addRandomFearElement(), 2000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93d791fcf18285bf',t:'MTc0Njg2MDUzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

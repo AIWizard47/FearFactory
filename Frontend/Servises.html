@@ -1,0 +1,1023 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FearFactory - Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Special+Elite&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 0.99;
+                text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.4;
+                text-shadow: none;
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bloodDrip {
+            0% { height: 0; opacity: 0; }
+            10% { opacity: 1; }
+            70% { height: 100px; }
+            100% { height: 100px; opacity: 0; }
+        }
+
+        @keyframes fogAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #f8f8f8;
+            font-family: 'Roboto', sans-serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .creepy-font {
+            font-family: 'Creepster', cursive;
+        }
+
+        .nosifer-font {
+            font-family: 'Nosifer', cursive;
+        }
+
+        .elite-font {
+            font-family: 'Special Elite', cursive;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+        }
+
+        .flicker {
+            animation: flicker 5s infinite alternate;
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .blood-drip {
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 0;
+            background: linear-gradient(to bottom, #8b0000, #ff0000);
+            border-radius: 0 0 5px 5px;
+            animation: bloodDrip 10s infinite;
+            z-index: 1;
+        }
+
+        .fog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, 
+                rgba(0,0,0,0) 0%, 
+                rgba(50,50,50,0.1) 25%, 
+                rgba(50,50,50,0.1) 75%, 
+                rgba(0,0,0,0) 100%);
+            background-size: 200% 100%;
+            animation: fogAnimation 60s ease infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .menu-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .menu-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ff0000;
+            transition: width 0.3s ease;
+        }
+
+        .menu-item:hover::after {
+            width: 100%;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(30,30,30,0.8) 0%, rgba(20,20,20,0.9) 100%);
+            border: 1px solid #3a0404;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2);
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.2);
+        }
+
+        .service-image {
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover .service-image img {
+            transform: scale(1.1);
+        }
+
+        .service-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .service-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+
+        .tab-button {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ff0000;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .tab-button.active::before,
+        .tab-button:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .decorative {
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .cta-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Fog effect -->
+    <div class="fog decorative"></div>
+    <div class="fog decorative" style="animation-delay: -30s;"></div>
+    
+    <!-- Blood drips -->
+    <div class="blood-drip decorative" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="blood-drip decorative" style="left: 25%; animation-delay: 2s;"></div>
+    <div class="blood-drip decorative" style="left: 40%; animation-delay: 1s;"></div>
+    <div class="blood-drip decorative" style="left: 60%; animation-delay: 3s;"></div>
+    <div class="blood-drip decorative" style="left: 75%; animation-delay: 0.5s;"></div>
+    <div class="blood-drip decorative" style="left: 90%; animation-delay: 2.5s;"></div>
+    
+    <!-- Navigation -->
+    <nav class="relative px-6 py-4 flex justify-between items-center border-b border-red-900 z-20">
+        <div class="flex items-center">
+            <div class="text-red-600 mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9c.83 0 1.5-.67 1.5-1.5S7.83 8 7 8s-1.5.67-1.5 1.5S6.17 11 7 11zm5-2c.83 0 1.5-.67 1.5-1.5S12.83 6 12 6s-1.5.67-1.5 1.5S11.17 9 12 9zm5 2c.83 0 1.5-.67 1.5-1.5S17.83 8 17 8s-1.5.67-1.5 1.5.67 1.5 1.5 1.5z"/>
+                </svg>
+            </div>
+            <a href="index.html" class="text-2xl font-bold creepy-font glow-text flicker">FearFactory</a>
+        </div>
+        <div class="hidden md:flex space-x-8">
+            <a href="index.html" class="menu-item text-white hover:text-red-500 transition-colors">Home</a>
+            <a href="#" class="menu-item text-white hover:text-red-500 transition-colors font-bold text-red-500">Services</a>
+            <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Experiences</a>
+            <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Community</a>
+            <a href="contact.html" class="menu-item text-white hover:text-red-500 transition-colors">Contact Us</a>
+        </div>
+        <div class="md:hidden">
+            <button class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content container mx-auto px-4 py-8">
+        <!-- Page Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold nosifer-font glow-text mb-4">Our Services</h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Explore our terrifying collection of horror services designed to bring your darkest nightmares to life. From haunting templates to spine-chilling events, we have everything to satisfy your thirst for fear.</p>
+        </div>
+
+        <!-- Service Categories Tabs -->
+        <div class="mb-12">
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button class="tab-button active bg-gradient-to-r from-red-900 to-black px-6 py-3 rounded-lg text-white font-bold" data-tab="all">
+                    All Services
+                </button>
+                <button class="tab-button bg-gradient-to-r from-gray-800 to-black px-6 py-3 rounded-lg text-white font-bold" data-tab="templates">
+                    Templates
+                </button>
+                <button class="tab-button bg-gradient-to-r from-gray-800 to-black px-6 py-3 rounded-lg text-white font-bold" data-tab="events">
+                    Events
+                </button>
+                <button class="tab-button bg-gradient-to-r from-gray-800 to-black px-6 py-3 rounded-lg text-white font-bold" data-tab="assets">
+                    Assets
+                </button>
+                <button class="tab-button bg-gradient-to-r from-gray-800 to-black px-6 py-3 rounded-lg text-white font-bold" data-tab="games">
+                    Games
+                </button>
+                <button class="tab-button bg-gradient-to-r from-gray-800 to-black px-6 py-3 rounded-lg text-white font-bold" data-tab="models">
+                    Models
+                </button>
+                <button class="tab-button bg-gradient-to-r from-gray-800 to-black px-6 py-3 rounded-lg text-white font-bold" data-tab="hackathons">
+                    Hackathons
+                </button>
+            </div>
+
+            <!-- All Services Tab Content -->
+            <div id="all" class="tab-content active">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Templates -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <div class="service-badge bg-red-700 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                Popular
+                            </div>
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#3a0404;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#8b0000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad1)" />
+                                <text x="50%" y="50%" font-family="'Creepster', cursive" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle">Gothic Mansion Template</text>
+                                <path d="M100,180 L150,100 L200,180 L250,100 L300,180" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none" />
+                                <circle cx="200" cy="70" r="30" fill="rgba(0,0,0,0.5)" />
+                                <path d="M185,70 A15,15 0 0,1 215,70" stroke="white" stroke-width="2" fill="none" />
+                                <rect x="185" y="55" width="5" height="5" fill="white" />
+                                <rect x="210" y="55" width="5" height="5" fill="white" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Gothic Mansion Template</h3>
+                            <p class="text-gray-300 mb-4">A haunting template for creating Victorian-era haunted mansions with secret passages and ghostly apparitions.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$49.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Events -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#4a0000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad2)" />
+                                <text x="50%" y="50%" font-family="'Nosifer', cursive" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">Midnight Séance</text>
+                                <circle cx="200" cy="100" r="60" stroke="rgba(255,0,0,0.3)" stroke-width="2" fill="none" />
+                                <circle cx="200" cy="100" r="40" stroke="rgba(255,0,0,0.5)" stroke-width="2" fill="none" />
+                                <circle cx="200" cy="100" r="20" stroke="rgba(255,0,0,0.7)" stroke-width="2" fill="none" />
+                                <circle cx="170" cy="80" r="5" fill="white" opacity="0.7" />
+                                <circle cx="230" cy="80" r="5" fill="white" opacity="0.7" />
+                                <circle cx="200" cy="130" r="5" fill="white" opacity="0.7" />
+                                <circle cx="180" cy="110" r="3" fill="white" opacity="0.5" />
+                                <circle cx="220" cy="110" r="3" fill="white" opacity="0.5" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Midnight Séance Event</h3>
+                            <p class="text-gray-300 mb-4">Host a spine-chilling séance event to communicate with spirits from beyond the veil. Includes professional mediums.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$299.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    Book Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Assets -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <div class="service-badge bg-purple-700 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                New
+                            </div>
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad3" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#380000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad3)" />
+                                <text x="50%" y="40" font-family="'Special Elite', cursive" font-size="20" fill="white" text-anchor="middle">Lovecraftian Sound Pack</text>
+                                
+                                <!-- Sound wave visualization -->
+                                <path d="M50,100 Q75,70 100,100 Q125,130 150,100 Q175,70 200,100 Q225,130 250,100 Q275,70 300,100 Q325,130 350,100" 
+                                      stroke="rgba(255,255,255,0.6)" stroke-width="2" fill="none" />
+                                
+                                <path d="M50,100 Q75,80 100,100 Q125,120 150,100 Q175,80 200,100 Q225,120 250,100 Q275,80 300,100 Q325,120 350,100" 
+                                      stroke="rgba(255,0,0,0.4)" stroke-width="2" fill="none" />
+                                
+                                <path d="M50,100 Q75,90 100,100 Q125,110 150,100 Q175,90 200,100 Q225,110 250,100 Q275,90 300,100 Q325,110 350,100" 
+                                      stroke="rgba(255,0,0,0.2)" stroke-width="2" fill="none" />
+                                
+                                <!-- Speaker icon -->
+                                <circle cx="200" cy="150" r="20" fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <circle cx="200" cy="150" r="10" fill="rgba(255,0,0,0.3)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <circle cx="200" cy="150" r="5" fill="rgba(255,255,255,0.5)" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Lovecraftian Sound Pack</h3>
+                            <p class="text-gray-300 mb-4">Eldritch audio assets inspired by H.P. Lovecraft's cosmic horror. Perfect for creating an atmosphere of dread.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$34.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Games -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+                                        <stop offset="50%" style="stop-color:#300000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad4)" />
+                                <text x="50%" y="50" font-family="'Creepster', cursive" font-size="24" fill="white" text-anchor="middle">Silent Asylum</text>
+                                
+                                <!-- Asylum building silhouette -->
+                                <path d="M100,150 L100,100 L150,80 L250,80 L300,100 L300,150 Z" fill="rgba(20,20,20,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                
+                                <!-- Windows -->
+                                <rect x="120" y="110" width="10" height="15" fill="rgba(255,0,0,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <rect x="150" y="110" width="10" height="15" fill="rgba(255,0,0,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <rect x="180" y="110" width="10" height="15" fill="rgba(255,0,0,0.3)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <rect x="210" y="110" width="10" height="15" fill="rgba(255,0,0,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <rect x="240" y="110" width="10" height="15" fill="rgba(255,0,0,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <rect x="270" y="110" width="10" height="15" fill="rgba(255,0,0,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                
+                                <!-- Door -->
+                                <rect x="190" y="130" width="20" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                
+                                <!-- Moon -->
+                                <circle cx="50" cy="50" r="20" fill="rgba(255,255,255,0.2)" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Silent Asylum Game</h3>
+                            <p class="text-gray-300 mb-4">A psychological horror game set in an abandoned asylum. Navigate through dark corridors while evading the tormented spirits.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$59.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    Play Demo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Models -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#1a0000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad5)" />
+                                <text x="50%" y="40" font-family="'Special Elite', cursive" font-size="20" fill="white" text-anchor="middle">Wendigo 3D Model</text>
+                                
+                                <!-- Stylized creature silhouette -->
+                                <path d="M200,60 L190,100 L170,120 L160,150 L200,170 L240,150 L230,120 L210,100 Z" fill="rgba(20,20,20,0.8)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                
+                                <!-- Antlers -->
+                                <path d="M190,80 L170,50 L160,60 L180,70 Z" fill="rgba(20,20,20,0.8)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <path d="M210,80 L230,50 L240,60 L220,70 Z" fill="rgba(20,20,20,0.8)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                
+                                <!-- Eyes -->
+                                <circle cx="185" cy="90" r="5" fill="rgba(255,0,0,0.7)" />
+                                <circle cx="215" cy="90" r="5" fill="rgba(255,0,0,0.7)" />
+                                
+                                <!-- Grid lines to suggest 3D space -->
+                                <line x1="100" y1="170" x2="300" y2="170" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                                <line x1="120" y1="150" x2="280" y2="150" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                                <line x1="140" y1="130" x2="260" y2="130" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Wendigo 3D Model</h3>
+                            <p class="text-gray-300 mb-4">High-quality 3D model of the terrifying Wendigo creature from Native American folklore. Fully rigged for animation.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$79.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    View Model
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hackathons -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <div class="service-badge bg-green-700 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                Limited
+                            </div>
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad6" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#200020;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad6)" />
+                                <text x="50%" y="50" font-family="'Nosifer', cursive" font-size="20" fill="white" text-anchor="middle">Code of Shadows</text>
+                                
+                                <!-- Computer screen with code -->
+                                <rect x="120" y="80" width="160" height="90" rx="5" fill="rgba(30,30,30,0.8)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <rect x="130" y="90" width="140" height="70" fill="rgba(0,0,0,0.9)" stroke="rgba(0,255,0,0.2)" stroke-width="1" />
+                                
+                                <!-- Code lines -->
+                                <line x1="140" y1="100" x2="200" y2="100" stroke="rgba(255,0,0,0.7)" stroke-width="1" />
+                                <line x1="140" y1="110" x2="220" y2="110" stroke="rgba(255,0,0,0.7)" stroke-width="1" />
+                                <line x1="150" y1="120" x2="190" y2="120" stroke="rgba(255,0,0,0.7)" stroke-width="1" />
+                                <line x1="140" y1="130" x2="230" y2="130" stroke="rgba(255,0,0,0.7)" stroke-width="1" />
+                                <line x1="160" y1="140" x2="210" y2="140" stroke="rgba(255,0,0,0.7)" stroke-width="1" />
+                                <line x1="140" y1="150" x2="180" y2="150" stroke="rgba(255,0,0,0.7)" stroke-width="1" />
+                                
+                                <!-- Keyboard -->
+                                <rect x="140" y="175" width="120" height="10" rx="2" fill="rgba(40,40,40,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Code of Shadows Hackathon</h3>
+                            <p class="text-gray-300 mb-4">48-hour horror game development challenge. Create the most terrifying experience and win prizes worth up to $10,000.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$149.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    Register
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More Templates -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad7" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#200000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad7)" />
+                                <text x="50%" y="50" font-family="'Creepster', cursive" font-size="24" fill="white" text-anchor="middle">Abandoned Hospital</text>
+                                
+                                <!-- Hospital building -->
+                                <rect x="100" y="70" width="200" height="100" fill="rgba(30,30,30,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                
+                                <!-- Windows -->
+                                <rect x="120" y="90" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="150" y="90" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="180" y="90" width="15" height="20" fill="rgba(255,0,0,0.2)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="210" y="90" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="240" y="90" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                
+                                <rect x="120" y="130" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="150" y="130" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="210" y="130" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="240" y="130" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                
+                                <!-- Door -->
+                                <rect x="180" y="130" width="20" height="40" fill="rgba(20,20,20,0.9)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                
+                                <!-- Red cross (faded) -->
+                                <path d="M190,80 L190,60 L200,60 L200,80 L220,80 L220,90 L200,90 L200,110 L190,110 L190,90 L170,90 L170,80 Z" fill="rgba(255,0,0,0.2)" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Abandoned Hospital Template</h3>
+                            <p class="text-gray-300 mb-4">Create a chilling abandoned hospital scene with decaying corridors, rusted medical equipment, and ghostly patients.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$39.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More Events -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad8" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#300030;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad8)" />
+                                <text x="50%" y="40" font-family="'Nosifer', cursive" font-size="20" fill="white" text-anchor="middle">Crimson Masquerade</text>
+                                
+                                <!-- Masks -->
+                                <path d="M150,80 Q170,60 190,80 Q200,90 210,80 Q230,60 250,80 Q260,100 250,120 Q230,140 200,130 Q170,140 150,120 Q140,100 150,80 Z" fill="rgba(30,0,0,0.8)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                
+                                <!-- Mask details -->
+                                <circle cx="180" cy="90" r="10" fill="none" stroke="rgba(255,0,0,0.5)" stroke-width="1" />
+                                <circle cx="220" cy="90" r="10" fill="none" stroke="rgba(255,0,0,0.5)" stroke-width="1" />
+                                
+                                <path d="M190,110 Q200,120 210,110" stroke="rgba(255,0,0,0.5)" stroke-width="1" fill="none" />
+                                
+                                <!-- Decorative elements -->
+                                <circle cx="150" cy="70" r="5" fill="rgba(255,0,0,0.3)" />
+                                <circle cx="250" cy="70" r="5" fill="rgba(255,0,0,0.3)" />
+                                
+                                <path d="M150,150 Q200,170 250,150" stroke="rgba(255,0,0,0.3)" stroke-width="2" fill="none" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Crimson Masquerade Ball</h3>
+                            <p class="text-gray-300 mb-4">An elegant yet terrifying masquerade ball with a vampire theme. Includes professional actors, gothic decor, and blood-red refreshments.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$499.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    Book Event
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- More Assets -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad9" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad9)" />
+                                <text x="50%" y="40" font-family="'Special Elite', cursive" font-size="20" fill="white" text-anchor="middle">Paranormal VFX Pack</text>
+                                
+                                <!-- Ghost/spirit visualization -->
+                                <ellipse cx="200" cy="110" rx="60" ry="40" fill="rgba(255,255,255,0.1)" />
+                                <ellipse cx="200" cy="110" rx="40" ry="25" fill="rgba(255,255,255,0.15)" />
+                                <ellipse cx="200" cy="110" rx="20" ry="15" fill="rgba(255,255,255,0.2)" />
+                                
+                                <!-- Particle effects -->
+                                <circle cx="170" cy="90" r="3" fill="rgba(255,255,255,0.6)" />
+                                <circle cx="230" cy="90" r="2" fill="rgba(255,255,255,0.6)" />
+                                <circle cx="190" cy="130" r="2" fill="rgba(255,255,255,0.6)" />
+                                <circle cx="210" cy="70" r="2" fill="rgba(255,255,255,0.6)" />
+                                <circle cx="160" cy="110" r="2" fill="rgba(255,255,255,0.6)" />
+                                <circle cx="240" cy="110" r="3" fill="rgba(255,255,255,0.6)" />
+                                <circle cx="200" cy="150" r="2" fill="rgba(255,255,255,0.6)" />
+                                
+                                <!-- Energy lines -->
+                                <path d="M140,110 Q170,90 200,110 Q230,130 260,110" stroke="rgba(100,100,255,0.3)" stroke-width="2" fill="none" />
+                                <path d="M140,110 Q170,130 200,110 Q230,90 260,110" stroke="rgba(100,100,255,0.3)" stroke-width="2" fill="none" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Paranormal VFX Pack</h3>
+                            <p class="text-gray-300 mb-4">High-quality visual effects for creating ghostly apparitions, ectoplasm, and supernatural phenomena in your horror projects.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$89.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    Preview
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Templates Tab Content -->
+            <div id="templates" class="tab-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Template 1 -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <div class="service-badge bg-red-700 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                Popular
+                            </div>
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad1t" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#3a0404;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#8b0000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad1t)" />
+                                <text x="50%" y="50%" font-family="'Creepster', cursive" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle">Gothic Mansion Template</text>
+                                <path d="M100,180 L150,100 L200,180 L250,100 L300,180" stroke="rgba(255,255,255,0.2)" stroke-width="2" fill="none" />
+                                <circle cx="200" cy="70" r="30" fill="rgba(0,0,0,0.5)" />
+                                <path d="M185,70 A15,15 0 0,1 215,70" stroke="white" stroke-width="2" fill="none" />
+                                <rect x="185" y="55" width="5" height="5" fill="white" />
+                                <rect x="210" y="55" width="5" height="5" fill="white" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Gothic Mansion Template</h3>
+                            <p class="text-gray-300 mb-4">A haunting template for creating Victorian-era haunted mansions with secret passages and ghostly apparitions.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$49.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Template 2 -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad7t" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#200000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad7t)" />
+                                <text x="50%" y="50" font-family="'Creepster', cursive" font-size="24" fill="white" text-anchor="middle">Abandoned Hospital</text>
+                                
+                                <!-- Hospital building -->
+                                <rect x="100" y="70" width="200" height="100" fill="rgba(30,30,30,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                
+                                <!-- Windows -->
+                                <rect x="120" y="90" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="150" y="90" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="180" y="90" width="15" height="20" fill="rgba(255,0,0,0.2)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="210" y="90" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="240" y="90" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                
+                                <rect x="120" y="130" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="150" y="130" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="210" y="130" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <rect x="240" y="130" width="15" height="20" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                
+                                <!-- Door -->
+                                <rect x="180" y="130" width="20" height="40" fill="rgba(20,20,20,0.9)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                
+                                <!-- Red cross (faded) -->
+                                <path d="M190,80 L190,60 L200,60 L200,80 L220,80 L220,90 L200,90 L200,110 L190,110 L190,90 L170,90 L170,80 Z" fill="rgba(255,0,0,0.2)" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Abandoned Hospital Template</h3>
+                            <p class="text-gray-300 mb-4">Create a chilling abandoned hospital scene with decaying corridors, rusted medical equipment, and ghostly patients.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$39.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Template 3 -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <div class="service-badge bg-purple-700 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                New
+                            </div>
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad10" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#1a0000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad10)" />
+                                <text x="50%" y="40" font-family="'Creepster', cursive" font-size="24" fill="white" text-anchor="middle">Cursed Forest</text>
+                                
+                                <!-- Trees -->
+                                <path d="M100,150 L100,100 L80,120 L100,100 L90,80 L100,100 L120,80 L100,100 L120,120" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none" />
+                                <path d="M150,150 L150,110 L130,125 L150,110 L140,90 L150,110 L170,90 L150,110 L170,125" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none" />
+                                <path d="M200,150 L200,90 L180,110 L200,90 L190,70 L200,90 L220,70 L200,90 L220,110" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none" />
+                                <path d="M250,150 L250,100 L230,120 L250,100 L240,80 L250,100 L270,80 L250,100 L270,120" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none" />
+                                <path d="M300,150 L300,110 L280,125 L300,110 L290,90 L300,110 L320,90 L300,110 L320,125" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none" />
+                                
+                                <!-- Fog -->
+                                <path d="M50,140 Q125,120 200,140 Q275,160 350,140" stroke="rgba(255,255,255,0.2)" stroke-width="3" fill="none" />
+                                <path d="M50,150 Q125,170 200,150 Q275,130 350,150" stroke="rgba(255,255,255,0.1)" stroke-width="3" fill="none" />
+                                
+                                <!-- Moon -->
+                                <circle cx="320" cy="50" r="20" fill="rgba(255,255,255,0.2)" />
+                                <circle cx="315" cy="45" r="5" fill="rgba(255,255,255,0.3)" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Cursed Forest Template</h3>
+                            <p class="text-gray-300 mb-4">Design an eerie forest environment with twisted trees, mysterious fog, and supernatural entities lurking in the shadows.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$44.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Template 4 -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad11" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#1a001a;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad11)" />
+                                <text x="50%" y="40" font-family="'Special Elite', cursive" font-size="20" fill="white" text-anchor="middle">Haunted Carnival</text>
+                                
+                                <!-- Ferris wheel -->
+                                <circle cx="200" cy="110" r="50" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <circle cx="200" cy="110" r="5" fill="rgba(255,255,255,0.2)" />
+                                <line x1="200" y1="110" x2="200" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <line x1="200" y1="110" x2="200" y2="160" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <line x1="200" y1="110" x2="150" y2="110" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <line x1="200" y1="110" x2="250" y2="110" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <line x1="200" y1="110" x2="165" y2="75" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <line x1="200" y1="110" x2="235" y2="75" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <line x1="200" y1="110" x2="165" y2="145" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <line x1="200" y1="110" x2="235" y2="145" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                
+                                <circle cx="200" cy="60" r="8" fill="rgba(255,0,0,0.3)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <circle cx="200" cy="160" r="8" fill="rgba(255,0,0,0.3)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <circle cx="150" cy="110" r="8" fill="rgba(255,0,0,0.3)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <circle cx="250" cy="110" r="8" fill="rgba(255,0,0,0.3)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <circle cx="165" cy="75" r="8" fill="rgba(255,0,0,0.3)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <circle cx="235" cy="75" r="8" fill="rgba(255,0,0,0.3)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <circle cx="165" cy="145" r="8" fill="rgba(255,0,0,0.3)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <circle cx="235" cy="145" r="8" fill="rgba(255,0,0,0.3)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                
+                                <!-- Tent -->
+                                <path d="M100,150 L130,90 L160,150 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <path d="M110,150 L130,100 L150,150" fill="none" stroke="rgba(255,0,0,0.3)" stroke-width="1" />
+                                
+                                <!-- Tent -->
+                                <path d="M300,150 L330,90 L360,150 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <path d="M310,150 L330,100 L350,150" fill="none" stroke="rgba(255,0,0,0.3)" stroke-width="1" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Haunted Carnival Template</h3>
+                            <p class="text-gray-300 mb-4">Build a sinister carnival environment with creepy clowns, malfunctioning rides, and cursed attractions that come alive at night.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$54.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Tab Content -->
+            <div id="events" class="tab-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Event 1 -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad2e" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#4a0000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad2e)" />
+                                <text x="50%" y="50%" font-family="'Nosifer', cursive" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">Midnight Séance</text>
+                                <circle cx="200" cy="100" r="60" stroke="rgba(255,0,0,0.3)" stroke-width="2" fill="none" />
+                                <circle cx="200" cy="100" r="40" stroke="rgba(255,0,0,0.5)" stroke-width="2" fill="none" />
+                                <circle cx="200" cy="100" r="20" stroke="rgba(255,0,0,0.7)" stroke-width="2" fill="none" />
+                                <circle cx="170" cy="80" r="5" fill="white" opacity="0.7" />
+                                <circle cx="230" cy="80" r="5" fill="white" opacity="0.7" />
+                                <circle cx="200" cy="130" r="5" fill="white" opacity="0.7" />
+                                <circle cx="180" cy="110" r="3" fill="white" opacity="0.5" />
+                                <circle cx="220" cy="110" r="3" fill="white" opacity="0.5" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Midnight Séance Event</h3>
+                            <p class="text-gray-300 mb-4">Host a spine-chilling séance event to communicate with spirits from beyond the veil. Includes professional mediums.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$299.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    Book Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event 2 -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad8e" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#300030;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad8e)" />
+                                <text x="50%" y="40" font-family="'Nosifer', cursive" font-size="20" fill="white" text-anchor="middle">Crimson Masquerade</text>
+                                
+                                <!-- Masks -->
+                                <path d="M150,80 Q170,60 190,80 Q200,90 210,80 Q230,60 250,80 Q260,100 250,120 Q230,140 200,130 Q170,140 150,120 Q140,100 150,80 Z" fill="rgba(30,0,0,0.8)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                
+                                <!-- Mask details -->
+                                <circle cx="180" cy="90" r="10" fill="none" stroke="rgba(255,0,0,0.5)" stroke-width="1" />
+                                <circle cx="220" cy="90" r="10" fill="none" stroke="rgba(255,0,0,0.5)" stroke-width="1" />
+                                
+                                <path d="M190,110 Q200,120 210,110" stroke="rgba(255,0,0,0.5)" stroke-width="1" fill="none" />
+                                
+                                <!-- Decorative elements -->
+                                <circle cx="150" cy="70" r="5" fill="rgba(255,0,0,0.3)" />
+                                <circle cx="250" cy="70" r="5" fill="rgba(255,0,0,0.3)" />
+                                
+                                <path d="M150,150 Q200,170 250,150" stroke="rgba(255,0,0,0.3)" stroke-width="2" fill="none" />
+                            </svg>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 elite-font">Crimson Masquerade Ball</h3>
+                            <p class="text-gray-300 mb-4">An elegant yet terrifying masquerade ball with a vampire theme. Includes professional actors, gothic decor, and blood-red refreshments.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-red-500 font-bold">$499.99</span>
+                                <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors">
+                                    Book Event
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event 3 -->
+                    <div class="service-card rounded-lg overflow-hidden shadow-lg">
+                        <div class="service-image h-48 relative">
+                            <div class="service-badge bg-green-700 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                Limited
+                            </div>
+                            <svg class="w-full h-full" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="grad12" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#002000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#grad12)" />
+                                <text x="50%" y="40" font-family="'Creepster', cursive" font-size="24" fill="white" text-anchor="middle">Zombie Survival</text>
+                                
+                                <!-- Zombie silhouettes -->
+                                <path d="M100,150 L100,120 L95,110 L105,110 L100,120" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <path d="M100,120 L90,130" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <path d="M100,120 L110,130" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <circle cx="100" cy="100" r="10" fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <circle cx="95" cy="98" r="2" fill="rgba(255,0,0,0.5)" />
+                                <circle cx="105" cy="98" r="2" fill="rgba(255,0,0,0.5)" />
+                                
+                                <path d="M150,150 L150,120 L145,110 L155,110 L150,120" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <path d="M150,120 L140,130" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <path d="M150,120 L160,130" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <circle cx="150" cy="100" r="10" fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <circle cx="145" cy="98" r="2" fill="rgba(255,0,0,0.5)" />
+                                <circle cx="155" cy="98" r="2" fill="rgba(255,0,0,0.5)" />
+                                
+                                <!-- Barricade -->
+                                <rect x="200" y="100" width="150" height="20" fill="rgba(50,30,0,0.5)" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+                                <line x1="220" y1="100" x2="220" y2="80" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+                                <line x1="250" y1="100" x2="250" y2="70" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+                                <line x1="280" y1="100" x2="280" y2="85" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+                                <line x1="310" y1="100" x2="310" y2="75" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+                                <line x1="330" y1="100" x2="330" y2="90" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+                                
+                                <!-- Survivor -->
+                                <circle cx="280" cy="130" r="10" fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <path d="M280,140 L280,160" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+                                <path d="M280,145 L270,155" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1" /><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93db8b3fe5d2cd03',t:'MTc0NjkwMjIwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>

@@ -1,0 +1,751 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About FearFactory | The Darkness Behind the Nightmares</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Roboto:wght@300;400;500;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23300000' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .logo-font {
+            font-family: 'Creepster', cursive;
+        }
+        .typewriter-font {
+            font-family: 'Special Elite', cursive;
+        }
+        .blood-btn {
+            background: linear-gradient(to bottom, #900, #600);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .blood-btn:hover {
+            background: linear-gradient(to bottom, #a00, #700);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+        .about-section {
+            background: linear-gradient(to bottom, rgba(30,30,30,0.9), rgba(15,15,15,0.95));
+            border: 1px solid #3a0000;
+        }
+        .about-section:hover {
+            box-shadow: 0 10px 25px rgba(200, 0, 0, 0.2);
+            border: 1px solid #600;
+        }
+        .timeline-item {
+            position: relative;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, #600, transparent);
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #600;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        .skill-bar {
+            height: 8px;
+            background: #300;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(to right, #600, #900);
+            border-radius: 4px;
+            position: relative;
+        }
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .profile-border {
+            position: relative;
+            border: 2px solid #600;
+            padding: 5px;
+        }
+        .profile-border::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid #300;
+            z-index: -1;
+        }
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            }
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="bg-black bg-opacity-80 shadow-lg border-b border-red-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-red-600 text-2xl logo-font">FearFactory</span>
+                    </div>
+                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                        <a href="LoginGreen.html" class="border-transparent text-gray-400 hover:text-red-500 hover:border-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Dashboard
+                        </a>
+                        <a href="Projects.html" class="border-transparent text-gray-400 hover:text-red-500 hover:border-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Templates
+                        </a>
+                        <a href="Projects.html" class="border-transparent text-gray-400 hover:text-red-500 hover:border-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            Projects
+                        </a>
+                        <a href="Abouts.html" class="border-red-600 text-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            About
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden sm:ml-6 sm:flex sm:items-center">
+                    <button class="bg-black p-1 rounded-full text-gray-400 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                        <span class="sr-only">View notifications</span>
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="relative z-10 pb-8 bg-transparent sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+                <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+                    <div class="sm:text-center lg:text-left">
+                        <h1 class="text-4xl tracking-tight font-extrabold text-gray-100 sm:text-5xl md:text-6xl">
+                            <span class="block logo-font text-red-600">The Darkness</span>
+                            <span class="block typewriter-font text-gray-300">Behind the Nightmares</span>
+                        </h1>
+                        <p class="mt-3 text-base text-gray-400 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                            Welcome to the shadows where your darkest fears are crafted into digital reality. Discover the twisted minds behind FearFactory and the developer who brings nightmares to life.
+                        </p>
+                        <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                            <div class="rounded-md shadow">
+                                <a href="#company" class="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white blood-btn md:py-4 md:text-lg md:px-10">
+                                    Our Story
+                                </a>
+                            </div>
+                            <div class="mt-3 sm:mt-0 sm:ml-3">
+                                <a href="#developer" class="w-full flex items-center justify-center px-8 py-3 border border-red-900 text-base font-medium rounded-md text-red-500 bg-black hover:bg-gray-900 md:py-4 md:text-lg md:px-10">
+                                    Meet the Developer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+            <svg class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+                <defs>
+                    <radialGradient id="heroGrad" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
+                        <stop offset="0%" style="stop-color:#400;stop-opacity:0.8" />
+                        <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
+                    </radialGradient>
+                </defs>
+                <rect width="800" height="600" fill="url(#heroGrad)"/>
+                
+                <!-- Haunted House Silhouette -->
+                <path d="M400,100 L600,250 L600,500 L200,500 L200,250 Z" fill="#100" stroke="#300" stroke-width="2"/>
+                <path d="M350,500 L350,400 L450,400 L450,500 Z" fill="#200" stroke="#300" stroke-width="2"/>
+                <path d="M250,350 L300,350 L300,400 L250,400 Z" fill="#200" stroke="#300" stroke-width="2"/>
+                <path d="M500,350 L550,350 L550,400 L500,400 Z" fill="#200" stroke="#300" stroke-width="2"/>
+                
+                <!-- Moon -->
+                <circle cx="650" cy="150" r="60" fill="#300" stroke="#400" stroke-width="1"/>
+                <circle cx="630" cy="130" r="15" fill="#200" stroke="none"/>
+                <circle cx="670" cy="160" r="10" fill="#200" stroke="none"/>
+                <circle cx="640" cy="170" r="12" fill="#200" stroke="none"/>
+                
+                <!-- Bats -->
+                <path d="M150,150 L130,130 L150,120 L170,130 L150,150 Z" fill="#000" stroke="#300" stroke-width="1"/>
+                <path d="M180,180 L160,160 L180,150 L200,160 L180,180 Z" fill="#000" stroke="#300" stroke-width="1"/>
+                <path d="M220,130 L200,110 L220,100 L240,110 L220,130 Z" fill="#000" stroke="#300" stroke-width="1"/>
+                
+                <!-- Fog -->
+                <path d="M0,450 Q100,420 200,450 T400,450 T600,450 T800,450 V600 H0 Z" fill="#111" fill-opacity="0.7"/>
+                
+                <!-- Trees -->
+                <path d="M100,500 L100,350 L50,400 L100,350 L150,400 Z" fill="#111" stroke="#222" stroke-width="1"/>
+                <path d="M700,500 L700,320 L650,370 L700,320 L750,370 Z" fill="#111" stroke="#222" stroke-width="1"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Company About Section -->
+    <div id="company" class="py-16 bg-black bg-opacity-70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-red-600 logo-font mb-2">The FearFactory Legacy</h2>
+                <p class="mt-2 text-lg text-gray-400 max-w-3xl mx-auto">
+                    Creating digital nightmares since 2010
+                </p>
+            </div>
+            
+            <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
+                <div class="about-section rounded-lg p-6 fade-in">
+                    <h3 class="text-xl font-bold text-red-500 mb-4">Our Dark Origins</h3>
+                    <p class="text-gray-300 mb-4">
+                        FearFactory was born in the shadows of a small indie game studio that specialized in psychological horror. What began as a passion project between three horror enthusiasts quickly evolved into a full-fledged digital nightmare factory.
+                    </p>
+                    <p class="text-gray-300">
+                        Our first project, "Whispers in the Dark," gained cult status in the horror gaming community, establishing our reputation for creating experiences that linger in players' minds long after they've stopped playing.
+                    </p>
+                    
+                    <div class="mt-6 pl-6 border-l border-red-900">
+                        <blockquote class="text-gray-400 italic">
+                            "We don't just create games and websites—we craft psychological experiences that tap into primal fears."
+                        </blockquote>
+                        <p class="text-right text-sm text-gray-500 mt-2">— Founder, FearFactory</p>
+                    </div>
+                </div>
+                
+                <div class="about-section rounded-lg p-6 fade-in" style="animation-delay: 0.2s;">
+                    <h3 class="text-xl font-bold text-red-500 mb-4">What We Do</h3>
+                    <p class="text-gray-300 mb-4">
+                        Today, FearFactory has expanded beyond games into a comprehensive horror media company. We specialize in:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-300 space-y-2 mb-4">
+                        <li>Immersive horror game development</li>
+                        <li>Atmospheric website design for horror brands</li>
+                        <li>High-quality 3D models for horror projects</li>
+                        <li>VR horror experiences</li>
+                        <li>Horror sound design and audio engineering</li>
+                    </ul>
+                    <p class="text-gray-300">
+                        Our team of dark artists, developers, and sound engineers work together to create cohesive experiences that terrify and captivate audiences across multiple platforms.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Timeline -->
+            <div class="mt-16 max-w-3xl mx-auto fade-in" style="animation-delay: 0.4s;">
+                <h3 class="text-2xl font-bold text-red-500 mb-6 text-center">Our Haunted Timeline</h3>
+                <div class="pl-8 space-y-8">
+                    <div class="timeline-item pb-8">
+                        <div class="timeline-dot" style="top: 0;"></div>
+                        <h4 class="text-lg font-semibold text-gray-200">2010 - The Beginning</h4>
+                        <p class="text-gray-400 mt-2">
+                            Three horror enthusiasts founded FearFactory in a basement studio, releasing their first indie horror game "Whispers in the Dark."
+                        </p>
+                    </div>
+                    
+                    <div class="timeline-item pb-8">
+                        <div class="timeline-dot" style="top: 0;"></div>
+                        <h4 class="text-lg font-semibold text-gray-200">2013 - Expansion</h4>
+                        <p class="text-gray-400 mt-2">
+                            After several successful game releases, FearFactory expanded into website design for horror attractions and events.
+                        </p>
+                    </div>
+                    
+                    <div class="timeline-item pb-8">
+                        <div class="timeline-dot" style="top: 0;"></div>
+                        <h4 class="text-lg font-semibold text-gray-200">2016 - The Breakthrough</h4>
+                        <p class="text-gray-400 mt-2">
+                            "Crimson Hollow" was released to critical acclaim, winning several indie game awards and establishing FearFactory as a major player in horror gaming.
+                        </p>
+                    </div>
+                    
+                    <div class="timeline-item pb-8">
+                        <div class="timeline-dot" style="top: 0;"></div>
+                        <h4 class="text-lg font-semibold text-gray-200">2020 - VR Revolution</h4>
+                        <p class="text-gray-400 mt-2">
+                            Launched our first VR horror experience "Paranormal Nexus," pushing the boundaries of immersive terror.
+                        </p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="top: 0;"></div>
+                        <h4 class="text-lg font-semibold text-gray-200">2025 - Present Day</h4>
+                        <p class="text-gray-400 mt-2">
+                            FearFactory now offers a comprehensive suite of horror-themed digital products and services, with a growing community of horror enthusiasts and creators.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Developer Profile Section -->
+    <div id="developer" class="py-16 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-red-600 logo-font mb-2">The Mind Behind the Madness</h2>
+                <p class="mt-2 text-lg text-gray-400 max-w-3xl mx-auto">
+                    Meet the developer who brings digital nightmares to life
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Profile Image -->
+                <div class="md:col-span-1 fade-in">
+                    <div class="bg-black bg-opacity-70 rounded-lg p-4 border border-red-900">
+                        <div class="profile-border rounded-lg overflow-hidden">
+                            <svg class="w-full h-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+                                <defs>
+                                    <linearGradient id="profileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#300;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="500" fill="url(#profileGrad)"/>
+                                
+                                <!-- Stylized Developer Silhouette -->
+                                <circle cx="200" cy="150" r="100" fill="#111" stroke="#300" stroke-width="2"/>
+                                <path d="M200,100 Q230,100 230,130 Q230,160 200,160 Q170,160 170,130 Q170,100 200,100 Z" fill="#222"/>
+                                <path d="M170,130 Q150,140 150,160 Q150,180 170,190 Q190,200 200,200 Q210,200 230,190 Q250,180 250,160 Q250,140 230,130" fill="none" stroke="#300" stroke-width="2"/>
+                                
+                                <!-- Glasses -->
+                                <rect x="170" y="130" width="20" height="10" rx="5" fill="none" stroke="#600" stroke-width="1"/>
+                                <rect x="210" y="130" width="20" height="10" rx="5" fill="none" stroke="#600" stroke-width="1"/>
+                                <line x1="190" y1="135" x2="210" y2="135" stroke="#600" stroke-width="1"/>
+                                
+                                <!-- Body -->
+                                <path d="M150,250 L250,250 L270,500 L130,500 Z" fill="#111" stroke="#222" stroke-width="1"/>
+                                <path d="M200,250 L200,500" stroke="#222" stroke-width="1" stroke-dasharray="5,5"/>
+                                
+                                <!-- Computer -->
+                                <rect x="130" y="300" width="140" height="80" rx="5" fill="#222" stroke="#333" stroke-width="1"/>
+                                <rect x="140" y="310" width="120" height="60" rx="2" fill="#300" stroke="#600" stroke-width="1"/>
+                                <text x="200" y="345" font-family="monospace" font-size="16" fill="#900" text-anchor="middle">&lt;/&gt;</text>
+                                
+                                <!-- Code Elements -->
+                                <path d="M300,100 L320,120 L300,140" fill="none" stroke="#600" stroke-width="1"/>
+                                <path d="M100,100 L80,120 L100,140" fill="none" stroke="#600" stroke-width="1"/>
+                                <text x="100" y="80" font-family="monospace" font-size="14" fill="#600" text-anchor="middle">function</text>
+                                <text x="300" y="80" font-family="monospace" font-size="14" fill="#600" text-anchor="middle">horror()</text>
+                            </svg>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <h3 class="text-xl font-bold text-red-500">Sam FearFactory</h3>
+                            <p class="text-gray-400">Lead Horror Developer</p>
+                            <div class="flex justify-center space-x-4 mt-3">
+                                <a href="#" class="text-gray-400 hover:text-red-500">
+                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                                <a href="#" class="text-gray-400 hover:text-red-500">
+                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                    </svg>
+                                </a>
+                                <a href="#" class="text-gray-400 hover:text-red-500">
+                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.054 10.054 0 01-3.127 1.184 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Developer Bio -->
+                <div class="md:col-span-2 fade-in" style="animation-delay: 0.2s;">
+                    <div class="about-section rounded-lg p-6 h-full">
+                        <h3 class="text-xl font-bold text-red-500 mb-4">The Developer's Tale</h3>
+                        <p class="text-gray-300 mb-4">
+                            With over a decade of experience in horror game development and web design, I've dedicated my career to exploring the digital manifestation of fear. My journey began with a fascination for both code and horror stories, eventually leading me to combine these passions at FearFactory.
+                        </p>
+                        <p class="text-gray-300 mb-4">
+                            My approach to horror development is psychological rather than relying on cheap jump scares. I believe true horror comes from atmosphere, anticipation, and the unknown. This philosophy guides all my projects, whether I'm designing immersive game environments or creating unsettling web experiences.
+                        </p>
+                        <p class="text-gray-300">
+                            When I'm not coding nightmares, I'm researching folklore, visiting haunted locations, and studying the psychology of fear to bring authenticity to my digital creations.
+                        </p>
+                        
+                        <div class="mt-8">
+                            <h4 class="text-lg font-semibold text-gray-200 mb-4">Technical Arsenal</h4>
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-gray-400">Horror Game Development</span>
+                                        <span class="text-gray-500">95%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-gray-400">Atmospheric Web Design</span>
+                                        <span class="text-gray-500">90%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-gray-400">3D Modeling & Animation</span>
+                                        <span class="text-gray-500">85%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-gray-400">Horror Sound Design</span>
+                                        <span class="text-gray-500">80%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between mb-1">
+                                        <span class="text-gray-400">VR Development</span>
+                                        <span class="text-gray-500">75%</span>
+                                    </div>
+                                    <div class="skill-bar">
+                                        <div class="skill-progress" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Notable Projects -->
+            <div class="mt-16 fade-in" style="animation-delay: 0.4s;">
+                <h3 class="text-2xl font-bold text-red-500 mb-6 text-center">Notable Projects</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="about-section rounded-lg overflow-hidden">
+                        <div class="h-48 relative">
+                            <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+                                <defs>
+                                    <linearGradient id="projGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#400;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#projGrad1)"/>
+                                <path d="M0,150 Q100,120 200,150 T400,150 V200 H0 Z" fill="#100" fill-opacity="0.7"/>
+                                <path d="M200,50 L225,100 L200,150 L175,100 Z" fill="#600" fill-opacity="0.3"/>
+                                <text x="200" y="50" font-family="Creepster" font-size="20" fill="#900" text-anchor="middle">CRIMSON HOLLOW</text>
+                                <text x="200" y="180" font-family="Arial" font-size="10" fill="#aaa" text-anchor="middle">Award-winning psychological horror game</text>
+                            </svg>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-semibold text-lg text-red-500">Crimson Hollow</h4>
+                            <p class="text-gray-400 text-sm mt-1">
+                                A psychological horror game that explores the depths of guilt and paranoia through a haunted mansion setting.
+                            </p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-xs bg-red-900 bg-opacity-30 text-red-400 px-2 py-1 rounded">Game</span>
+                                <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded ml-2">Award Winner</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-section rounded-lg overflow-hidden">
+                        <div class="h-48 relative">
+                            <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+                                <defs>
+                                    <linearGradient id="projGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#300;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#projGrad2)"/>
+                                <circle cx="200" cy="100" r="50" fill="none" stroke="#600" stroke-width="2"/>
+                                <circle cx="200" cy="100" r="35" fill="none" stroke="#600" stroke-width="2"/>
+                                <path d="M175,75 L225,125" stroke="#600" stroke-width="2"/>
+                                <path d="M225,75 L175,125" stroke="#600" stroke-width="2"/>
+                                <text x="200" y="50" font-family="Creepster" font-size="20" fill="#900" text-anchor="middle">PARANORMAL NEXUS</text>
+                                <text x="200" y="180" font-family="Arial" font-size="10" fill="#aaa" text-anchor="middle">VR ghost hunting experience</text>
+                            </svg>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-semibold text-lg text-red-500">Paranormal Nexus</h4>
+                            <p class="text-gray-400 text-sm mt-1">
+                                An immersive VR experience that puts users in the role of paranormal investigators in haunted locations.
+                            </p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-xs bg-red-900 bg-opacity-30 text-red-400 px-2 py-1 rounded">VR</span>
+                                <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded ml-2">Interactive</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-section rounded-lg overflow-hidden">
+                        <div class="h-48 relative">
+                            <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+                                <defs>
+                                    <linearGradient id="projGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#300;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <rect width="400" height="200" fill="url(#projGrad3)"/>
+                                <rect x="100" y="50" width="200" height="100" rx="5" fill="#100" stroke="#600" stroke-width="2"/>
+                                <line x1="100" y1="75" x2="300" y2="75" stroke="#600" stroke-width="1"/>
+                                <text x="200" y="67" font-family="Creepster" font-size="12" fill="#900" text-anchor="middle">NIGHTMARE CHRONICLES</text>
+                                <text x="200" y="100" font-family="Arial" font-size="8" fill="#aaa" text-anchor="middle" width="180">An interactive anthology of horror stories</text>
+                                <rect x="125" y="120" width="70" height="15" rx="5" fill="#300"/>
+                                <rect x="205" y="120" width="70" height="15" rx="5" fill="#300"/>
+                                <text x="160" y="130" font-family="Arial" font-size="8" fill="white" text-anchor="middle">Begin</text>
+                                <text x="240" y="130" font-family="Arial" font-size="8" fill="white" text-anchor="middle">Chapters</text>
+                                <text x="200" y="180" font-family="Arial" font-size="10" fill="#aaa" text-anchor="middle">Interactive horror anthology</text>
+                            </svg>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-semibold text-lg text-red-500">Nightmare Chronicles</h4>
+                            <p class="text-gray-400 text-sm mt-1">
+                                A web-based interactive anthology of horror stories where reader choices affect the narrative outcome.
+                            </p>
+                            <div class="mt-3 flex items-center">
+                                <span class="text-xs bg-red-900 bg-opacity-30 text-red-400 px-2 py-1 rounded">Web</span>
+                                <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded ml-2">Interactive Fiction</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Contact Section -->
+    <div class="py-16 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-red-600 logo-font mb-2">Dare to Connect</h2>
+                <p class="mt-2 text-lg text-gray-400 max-w-3xl mx-auto">
+                    Have a nightmare you want to bring to life? Reach out if you dare.
+                </p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-black bg-opacity-70 rounded-lg shadow-lg p-6 border border-red-900 fade-in" style="animation-delay: 0.2s;">
+                    <form>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Your Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-3 py-2 bg-gray-900 border border-red-900 text-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                                <input type="email" id="email" name="email" class="w-full px-3 py-2 bg-gray-900 border border-red-900 text-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block text-sm font-medium text-gray-300 mb-1">Subject</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-3 py-2 bg-gray-900 border border-red-900 text-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Your Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 bg-gray-900 border border-red-900 text-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500" placeholder="Describe your darkest digital desires..."></textarea>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="w-full blood-btn pulse text-white py-3 px-4 rounded-md font-medium logo-font text-lg">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-80 border-t border-red-900">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="flex justify-center md:justify-start">
+                    <span class="text-red-600 text-2xl logo-font">FearFactory</span>
+                </div>
+                <div class="mt-8 md:mt-0 flex flex-wrap justify-center space-x-6">
+                    <a href="Home.html" class="text-gray-400 hover:text-red-500">Home</a>
+                    <a href="Projects.html" class="text-gray-400 hover:text-red-500">Templates</a>
+                    <a href="Projects.html" class="text-gray-400 hover:text-red-500">Projects</a>
+                    <a href="Abouts.html" class="text-gray-400 hover:text-red-500">About</a>
+                    <a href="ContactUs.html" class="text-gray-400 hover:text-red-500">Contact</a>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-800 pt-8 md:flex md:items-center md:justify-between">
+                <div class="flex space-x-6 md:order-2">
+                    <a href="#" class="text-gray-400 hover:text-red-500">
+                        <span class="sr-only">Facebook</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-red-500">
+                        <span class="sr-only">Instagram</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-red-500">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-red-500">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+                <p class="mt-8 text-base text-gray-500 md:mt-0 md:order-1">
+                    &copy; 2023 FearFactory. Enter at your own risk.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Fade-in animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            fadeElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            if (!name || !email || !subject || !message) {
+                alert('Please fill in all fields before submitting.');
+                return;
+            }
+            
+
+            // Send form data to the Django API
+
+            fetch('http://127.0.0.1:8000/feedback/about-us/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_name: name,
+                    user_email: email,
+                    user_subject: subject,
+                    user_message: message,
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                // In a real application, this would submit the form data remove in user mode
+                alert(data.message || 'Your message has been sent to the shadows. We will respond soon...');
+                // Reset form
+                e.target.reset();
+            })
+            .catch(error => {
+                console.error('Submission failed:', error);
+                alert('Something went wrong. Please try again later.');
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93dc0ad851b74e3d',t:'MTc0NjkwNzQzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

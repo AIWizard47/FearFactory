@@ -1,0 +1,1439 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FearFactory - User Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Roboto+Mono:wght@400;700&display=swap');
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #0a0a0a;
+            color: #c9c9c9;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .horror-font {
+            font-family: 'Creepster', cursive;
+        }
+        
+        .typewriter-font {
+            font-family: 'Special Elite', cursive;
+        }
+        
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff0000;
+            animation: glitch-animation 3s infinite linear alternate-reverse;
+            clip: rect(44px, 450px, 56px, 0);
+        }
+        
+        .glitch::after {
+            left: -2px;
+            text-shadow: -1px 0 #00ff00;
+            animation: glitch-animation2 2s infinite linear alternate-reverse;
+            clip: rect(24px, 450px, 36px, 0);
+        }
+        
+        @keyframes glitch-animation {
+            0% {
+                clip: rect(42px, 9999px, 44px, 0);
+            }
+            20% {
+                clip: rect(12px, 9999px, 59px, 0);
+            }
+            40% {
+                clip: rect(62px, 9999px, 78px, 0);
+            }
+            60% {
+                clip: rect(22px, 9999px, 11px, 0);
+            }
+            80% {
+                clip: rect(92px, 9999px, 35px, 0);
+            }
+            100% {
+                clip: rect(49px, 9999px, 92px, 0);
+            }
+        }
+        
+        @keyframes glitch-animation2 {
+            0% {
+                clip: rect(27px, 9999px, 31px, 0);
+            }
+            20% {
+                clip: rect(52px, 9999px, 83px, 0);
+            }
+            40% {
+                clip: rect(12px, 9999px, 71px, 0);
+            }
+            60% {
+                clip: rect(62px, 9999px, 22px, 0);
+            }
+            80% {
+                clip: rect(45px, 9999px, 51px, 0);
+            }
+            100% {
+                clip: rect(39px, 9999px, 17px, 0);
+            }
+        }
+        
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 10%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            opacity: 0.1;
+            pointer-events: none;
+            animation: scanline 6s linear infinite;
+        }
+        
+        @keyframes scanline {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100%);
+            }
+        }
+        
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.05;
+            z-index: 100;
+        }
+        
+        .vhs-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                transparent 0%,
+                rgba(255, 0, 0, 0.2) 50%,
+                transparent 51%,
+                rgba(0, 255, 255, 0.2) 100%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            opacity: 0.1;
+            z-index: 101;
+        }
+        
+        .crt-flicker {
+            animation: flicker 0.3s infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes flicker {
+            0% { opacity: 0.7; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.7; }
+        }
+        
+        .blood-drip {
+            position: absolute;
+            width: 3px;
+            background-color: #990000;
+            top: 0;
+            animation: drip 4s ease-in infinite;
+            border-radius: 0 0 3px 3px;
+        }
+        
+        @keyframes drip {
+            0% { height: 0; opacity: 1; }
+            70% { height: var(--drip-height); opacity: 1; }
+            100% { height: var(--drip-height); opacity: 0; }
+        }
+        
+        .achievement {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .achievement:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #333;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #600 0%, #f00 100%);
+            border-radius: 4px;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        
+        .tab {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab:hover {
+            color: #ff0000;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+        }
+        
+        .tab.active {
+            color: #ff0000;
+            border-bottom: 2px solid #ff0000;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.5);
+        }
+        
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .content-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .static-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            opacity: 0.05;
+            z-index: 99;
+        }
+        
+        .flicker-text {
+            animation: textFlicker 3s infinite alternate;
+        }
+        
+        @keyframes textFlicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 1;
+                text-shadow: 0 0 4px rgba(255, 0, 0, 0.5), 0 0 11px rgba(255, 0, 0, 0.5), 0 0 19px rgba(255, 0, 0, 0.5);
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.4;
+                text-shadow: none;
+            }
+        }
+        
+        .heartbeat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background-color: #1a1a1a;
+            border: 2px solid #600;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+        
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .form-input {
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            color: #c9c9c9;
+            padding: 10px;
+            border-radius: 4px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: #600;
+            box-shadow: 0 0 0 2px rgba(102, 0, 0, 0.3);
+            outline: none;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        .btn {
+            padding: 10px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .btn-primary {
+            background-color: #600;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #800;
+        }
+        
+        .btn-secondary {
+            background-color: #333;
+            color: #ccc;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #444;
+        }
+        
+        .avatar-upload {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+        }
+        
+        .avatar-upload .avatar-edit {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            z-index: 1;
+        }
+        
+        .avatar-upload .avatar-edit input {
+            display: none;
+        }
+        
+        .avatar-upload .avatar-edit label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #600;
+            border: 1px solid #fff;
+            cursor: pointer;
+            color: white;
+        }
+        
+        .avatar-upload .avatar-preview {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            border-radius: 50%;
+            border: 4px solid #600;
+            overflow: hidden;
+        }
+        
+        .avatar-upload .avatar-preview svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .glitch-effect {
+            position: relative;
+        }
+        
+        .glitch-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 0, 0, 0.2);
+            mix-blend-mode: overlay;
+            animation: glitchEffect 2s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes glitchEffect {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); }
+            60% { transform: translate(5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+            100% { transform: translate(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="noise"></div>
+    <div class="static-overlay"></div>
+    <div class="vhs-effect"></div>
+    <div class="scanline"></div>
+    
+    <!-- Blood drips -->
+    <div class="blood-drip" style="left: 10%; --drip-height: 120px;"></div>
+    <div class="blood-drip" style="left: 25%; --drip-height: 180px; animation-delay: 1s;"></div>
+    <div class="blood-drip" style="left: 45%; --drip-height: 150px; animation-delay: 2s;"></div>
+    <div class="blood-drip" style="left: 65%; --drip-height: 200px; animation-delay: 0.5s;"></div>
+    <div class="blood-drip" style="left: 85%; --drip-height: 140px; animation-delay: 1.5s;"></div>
+    
+    <header class="py-6 border-b border-red-900 relative">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-4xl horror-font glitch text-red-600" data-text="FearFactory">FearFactory</h1>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <span class="absolute -top-1 -right-1 bg-red-600 text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">3</span>
+                        <i class="fas fa-bell text-gray-400 hover:text-red-600 transition-colors cursor-pointer text-xl"></i>
+                    </div>
+                    <div class="relative">
+                        <span class="absolute -top-1 -right-1 bg-red-600 text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">5</span>
+                        <i class="fas fa-envelope text-gray-400 hover:text-red-600 transition-colors cursor-pointer text-xl"></i>
+                    </div>
+                    <div class="h-8 w-px bg-gray-700"></div>
+                    <div class="flex items-center space-x-2 cursor-pointer group">
+                        <div class="w-10 h-10 rounded-full bg-gray-800 border-2 border-red-900 overflow-hidden">
+                            <svg id="header-avatar" class="w-full h-full text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <span id="header-username" class="text-gray-400 group-hover:text-red-600 transition-colors">NightmareSeeker</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Column - User Profile -->
+            <div class="lg:col-span-1">
+                <div class="bg-gray-900 border border-red-900 rounded-lg p-6 mb-6 relative overflow-hidden">
+                    <div class="flex flex-col items-center">
+                        <div class="w-32 h-32 rounded-full bg-gray-800 border-4 border-red-900 overflow-hidden mb-4 relative crt-flicker">
+                            <svg id="profile-avatar" class="w-full h-full text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h2 id="profile-username" class="text-2xl typewriter-font mb-1 flicker-text">NightmareSeeker</h2>
+                        <p id="profile-tagline" class="text-red-600 mb-4">"Fear is just the beginning..."</p>
+                        
+                        <div class="flex items-center space-x-2 mb-6">
+                            <div class="px-3 py-1 bg-red-900 bg-opacity-50 rounded-full text-sm flex items-center">
+                                <i class="fas fa-skull mr-2"></i>
+                                <span id="profile-level">Level 13</span>
+                            </div>
+                            <div class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-sm flex items-center">
+                                <i class="fas fa-ghost mr-2"></i>
+                                <span id="profile-status">Premium</span>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full mb-6">
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm">Fear Level</span>
+                                <span class="text-sm text-red-600" id="fear-level-text">666/1000</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="fear-level-bar" class="progress-fill" style="width: 66.6%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4 w-full text-center mb-6">
+                            <div>
+                                <div id="nightmares-count" class="text-2xl text-red-600 font-bold heartbeat">42</div>
+                                <div class="text-xs text-gray-400">Nightmares</div>
+                            </div>
+                            <div>
+                                <div id="followers-count" class="text-2xl text-red-600 font-bold">156</div>
+                                <div class="text-xs text-gray-400">Followers</div>
+                            </div>
+                            <div>
+                                <div id="following-count" class="text-2xl text-red-600 font-bold">89</div>
+                                <div class="text-xs text-gray-400">Following</div>
+                            </div>
+                        </div>
+                        
+                        <button id="edit-profile-btn" class="w-full py-2 bg-red-900 hover:bg-red-800 rounded-md transition-colors flex items-center justify-center">
+                            <i class="fas fa-edit mr-2"></i> Edit Profile
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 border border-red-900 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl mb-4 typewriter-font">Personal Stats</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm">Nightmares Survived</span>
+                                <span id="nightmares-survived" class="text-sm text-red-600">87%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="nightmares-survived-bar" class="progress-fill" style="width: 87%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm">Sanity Level</span>
+                                <span id="sanity-level" class="text-sm text-red-600">42%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="sanity-level-bar" class="progress-fill" style="width: 42%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-sm">Paranormal Encounters</span>
+                                <span id="paranormal-encounters" class="text-sm text-red-600">63%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div id="paranormal-encounters-bar" class="progress-fill" style="width: 63%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 border border-red-900 rounded-lg p-6">
+                    <h3 class="text-xl mb-4 typewriter-font">Top Fears</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <i class="fas fa-spider text-red-600 mr-3 text-xl"></i>
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <span id="fear1-name">Arachnophobia</span>
+                                    <span id="fear1-value" class="text-red-600">92%</span>
+                                </div>
+                                <div class="progress-bar mt-1">
+                                    <div id="fear1-bar" class="progress-fill" style="width: 92%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-skull text-red-600 mr-3 text-xl"></i>
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <span id="fear2-name">Thanatophobia</span>
+                                    <span id="fear2-value" class="text-red-600">85%</span>
+                                </div>
+                                <div class="progress-bar mt-1">
+                                    <div id="fear2-bar" class="progress-fill" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-house-damage text-red-600 mr-3 text-xl"></i>
+                            <div class="flex-1">
+                                <div class="flex justify-between">
+                                    <span id="fear3-name">Claustrophobia</span>
+                                    <span id="fear3-value" class="text-red-600">78%</span>
+                                </div>
+                                <div class="progress-bar mt-1">
+                                    <div id="fear3-bar" class="progress-fill" style="width: 78%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Content -->
+            <div class="lg:col-span-2">
+                <div class="bg-gray-900 border border-red-900 rounded-lg p-6 mb-6">
+                    <div class="flex border-b border-gray-700 mb-6">
+                        <div class="tab active px-4 py-2" data-tab="activity">Activity</div>
+                        <div class="tab px-4 py-2" data-tab="achievements">Achievements</div>
+                        <div class="tab px-4 py-2" data-tab="nightmares">Nightmares</div>
+                    </div>
+                    
+                    <!-- Activity Tab -->
+                    <div id="activity" class="content-section active">
+                        <div class="space-y-6">
+                            <div class="border-b border-gray-800 pb-6">
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 rounded-full bg-gray-800 border-2 border-red-900 overflow-hidden mr-4">
+                                        <svg class="w-full h-full text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center mb-2">
+                                            <span class="font-bold mr-2">NightmareSeeker</span>
+                                            <span class="text-gray-500 text-sm">completed a nightmare challenge</span>
+                                            <span class="text-gray-500 text-xs ml-auto">2 hours ago</span>
+                                        </div>
+                                        <p class="mb-3">Survived "The Abandoned Hospital" nightmare scenario with 92% sanity remaining!</p>
+                                        <div class="bg-gray-800 rounded-lg p-4 mb-3">
+                                            <div class="flex items-center mb-2">
+                                                <i class="fas fa-hospital-alt text-red-600 mr-2"></i>
+                                                <span class="font-bold">The Abandoned Hospital</span>
+                                                <span class="ml-auto text-red-600">Extreme</span>
+                                            </div>
+                                            <p class="text-sm text-gray-400 mb-2">Navigate through the haunted corridors of St. Mary's Abandoned Hospital, where the ghosts of patients past still roam...</p>
+                                            <div class="flex justify-between text-xs text-gray-500">
+                                                <span>Duration: 45 minutes</span>
+                                                <span>Completion Rate: 23%</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center space-x-4">
+                                            <button class="flex items-center text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-heart mr-1"></i>
+                                                <span>42</span>
+                                            </button>
+                                            <button class="flex items-center text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-comment mr-1"></i>
+                                                <span>12</span>
+                                            </button>
+                                            <button class="flex items-center text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-share mr-1"></i>
+                                                <span>Share</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border-b border-gray-800 pb-6">
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 rounded-full bg-gray-800 border-2 border-red-900 overflow-hidden mr-4">
+                                        <svg class="w-full h-full text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center mb-2">
+                                            <span class="font-bold mr-2">NightmareSeeker</span>
+                                            <span class="text-gray-500 text-sm">earned a new badge</span>
+                                            <span class="text-gray-500 text-xs ml-auto">1 day ago</span>
+                                        </div>
+                                        <div class="bg-gray-800 rounded-lg p-4 flex items-center">
+                                            <div class="w-16 h-16 bg-red-900 bg-opacity-30 rounded-full flex items-center justify-center mr-4">
+                                                <i class="fas fa-ghost text-3xl text-red-600"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold mb-1">Ghost Whisperer</h4>
+                                                <p class="text-sm text-gray-400">Successfully communicated with 10 different entities from the other side.</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center space-x-4 mt-3">
+                                            <button class="flex items-center text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-heart mr-1"></i>
+                                                <span>28</span>
+                                            </button>
+                                            <button class="flex items-center text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-comment mr-1"></i>
+                                                <span>5</span>
+                                            </button>
+                                            <button class="flex items-center text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-share mr-1"></i>
+                                                <span>Share</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="flex items-start">
+                                    <div class="w-10 h-10 rounded-full bg-gray-800 border-2 border-red-900 overflow-hidden mr-4">
+                                        <svg class="w-full h-full text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center mb-2">
+                                            <span class="font-bold mr-2">NightmareSeeker</span>
+                                            <span class="text-gray-500 text-sm">shared a story</span>
+                                            <span class="text-gray-500 text-xs ml-auto">3 days ago</span>
+                                        </div>
+                                        <p class="mb-3">Just experienced the most terrifying nightmare of my life. I was trapped in an endless maze of mirrors, each reflection showing a slightly different version of myself. As I moved through the maze, the reflections began to move independently...</p>
+                                        <div class="flex items-center space-x-4">
+                                            <button class="flex items-center text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-heart mr-1"></i>
+                                                <span>76</span>
+                                            </button>
+                                            <button class="flex items-center text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-comment mr-1"></i>
+                                                <span>31</span>
+                                            </button>
+                                            <button class="flex items-center text-gray-400 hover:text-red-600 transition-colors">
+                                                <i class="fas fa-share mr-1"></i>
+                                                <span>Share</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Achievements Tab -->
+                    <div id="achievements" class="content-section">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="achievement bg-gray-800 border border-red-900 rounded-lg p-4 flex items-center">
+                                <div class="w-16 h-16 bg-red-900 bg-opacity-30 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-ghost text-3xl text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Ghost Whisperer</h4>
+                                    <p class="text-sm text-gray-400 mb-1">Successfully communicated with 10 different entities.</p>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-calendar-alt text-gray-500 mr-1 text-xs"></i>
+                                        <span class="text-xs text-gray-500">Earned 1 day ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="achievement bg-gray-800 border border-red-900 rounded-lg p-4 flex items-center">
+                                <div class="w-16 h-16 bg-red-900 bg-opacity-30 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-skull text-3xl text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Death Defier</h4>
+                                    <p class="text-sm text-gray-400 mb-1">Survived 5 near-death experiences in nightmares.</p>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-calendar-alt text-gray-500 mr-1 text-xs"></i>
+                                        <span class="text-xs text-gray-500">Earned 1 week ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="achievement bg-gray-800 border border-red-900 rounded-lg p-4 flex items-center">
+                                <div class="w-16 h-16 bg-red-900 bg-opacity-30 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-hospital-alt text-3xl text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Hospital Horror</h4>
+                                    <p class="text-sm text-gray-400 mb-1">Completed "The Abandoned Hospital" scenario.</p>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-calendar-alt text-gray-500 mr-1 text-xs"></i>
+                                        <span class="text-xs text-gray-500">Earned 2 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="achievement bg-gray-800 border border-red-900 rounded-lg p-4 flex items-center">
+                                <div class="w-16 h-16 bg-red-900 bg-opacity-30 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-spider text-3xl text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Arachnophobia Master</h4>
+                                    <p class="text-sm text-gray-400 mb-1">Faced your fear of spiders in 3 different scenarios.</p>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-calendar-alt text-gray-500 mr-1 text-xs"></i>
+                                        <span class="text-xs text-gray-500">Earned 2 weeks ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="achievement bg-gray-800 border border-gray-700 rounded-lg p-4 flex items-center opacity-50">
+                                <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-question text-3xl text-gray-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">???</h4>
+                                    <p class="text-sm text-gray-400 mb-1">Complete 10 extreme difficulty nightmares.</p>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-lock text-gray-500 mr-1 text-xs"></i>
+                                        <span class="text-xs text-gray-500">Locked (2/10 completed)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="achievement bg-gray-800 border border-gray-700 rounded-lg p-4 flex items-center opacity-50">
+                                <div class="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-question text-3xl text-gray-500"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">???</h4>
+                                    <p class="text-sm text-gray-400 mb-1">Reach level 20 to unlock this achievement.</p>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-lock text-gray-500 mr-1 text-xs"></i>
+                                        <span class="text-xs text-gray-500">Locked (Level 13/20)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Nightmares Tab -->
+                    <div id="nightmares" class="content-section">
+                        <div class="space-y-4">
+                            <div class="bg-gray-800 border border-red-900 rounded-lg p-4 hover:border-red-600 transition-colors cursor-pointer">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-hospital-alt text-red-600 mr-2"></i>
+                                        <h4 class="font-bold">The Abandoned Hospital</h4>
+                                    </div>
+                                    <span class="px-2 py-1 bg-red-900 bg-opacity-50 rounded-md text-xs">Extreme</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mb-3">Navigate through the haunted corridors of St. Mary's Abandoned Hospital, where the ghosts of patients past still roam...</p>
+                                <div class="flex justify-between text-xs text-gray-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        <span>45 minutes</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-trophy text-yellow-600 mr-1"></i>
+                                        <span>Completed</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-users mr-1"></i>
+                                        <span>23% completion rate</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-800 border border-red-900 rounded-lg p-4 hover:border-red-600 transition-colors cursor-pointer">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-home text-red-600 mr-2"></i>
+                                        <h4 class="font-bold">The Haunted Mansion</h4>
+                                    </div>
+                                    <span class="px-2 py-1 bg-orange-900 bg-opacity-50 rounded-md text-xs">Hard</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mb-3">Spend a night in the infamous Blackwood Manor, where the previous owners mysteriously disappeared without a trace...</p>
+                                <div class="flex justify-between text-xs text-gray-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        <span>60 minutes</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-trophy text-yellow-600 mr-1"></i>
+                                        <span>Completed</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-users mr-1"></i>
+                                        <span>45% completion rate</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-800 border border-red-900 rounded-lg p-4 hover:border-red-600 transition-colors cursor-pointer">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-spider text-red-600 mr-2"></i>
+                                        <h4 class="font-bold">Arachnophobia</h4>
+                                    </div>
+                                    <span class="px-2 py-1 bg-yellow-900 bg-opacity-50 rounded-md text-xs">Medium</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mb-3">Face your fear of spiders in this immersive experience. Navigate through a forest filled with increasingly large arachnids...</p>
+                                <div class="flex justify-between text-xs text-gray-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        <span>30 minutes</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-trophy text-yellow-600 mr-1"></i>
+                                        <span>Completed</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-users mr-1"></i>
+                                        <span>68% completion rate</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 hover:border-gray-600 transition-colors cursor-pointer opacity-70">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-skull text-gray-500 mr-2"></i>
+                                        <h4 class="font-bold">The Catacombs</h4>
+                                    </div>
+                                    <span class="px-2 py-1 bg-red-900 bg-opacity-30 rounded-md text-xs">Extreme</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mb-3">Descend into the ancient catacombs beneath the city, where the dead don't rest peacefully...</p>
+                                <div class="flex justify-between text-xs text-gray-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        <span>90 minutes</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-lock mr-1"></i>
+                                        <span>Locked (Requires Level 15)</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-users mr-1"></i>
+                                        <span>12% completion rate</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 border border-red-900 rounded-lg p-6">
+                    <h3 class="text-xl mb-4 typewriter-font">Recommended Nightmares</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 hover:border-red-600 transition-colors cursor-pointer relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-door-closed text-red-600 mr-2"></i>
+                                        <h4 class="font-bold">Room 1408</h4>
+                                    </div>
+                                    <span class="px-2 py-1 bg-red-900 bg-opacity-50 rounded-md text-xs">Extreme</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mb-3">Spend a night in the notorious hotel room where no guest has lasted more than an hour...</p>
+                                <div class="flex justify-between text-xs text-gray-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        <span>60 minutes</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-users mr-1"></i>
+                                        <span>8% completion rate</span>
+                                    </div>
+                                </div>
+                                <button class="mt-3 w-full py-2 bg-red-900 hover:bg-red-800 rounded-md transition-colors opacity-0 group-hover:opacity-100">
+                                    Start Nightmare
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 hover:border-red-600 transition-colors cursor-pointer relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-child text-red-600 mr-2"></i>
+                                        <h4 class="font-bold">The Playground</h4>
+                                    </div>
+                                    <span class="px-2 py-1 bg-orange-900 bg-opacity-50 rounded-md text-xs">Hard</span>
+                                </div>
+                                <p class="text-sm text-gray-400 mb-3">Visit an abandoned playground at midnight, where the laughter of children can still be heard...</p>
+                                <div class="flex justify-between text-xs text-gray-500">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-clock mr-1"></i>
+                                        <span>45 minutes</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-users mr-1"></i>
+                                        <span>32% completion rate</span>
+                                    </div>
+                                </div>
+                                <button class="mt-3 w-full py-2 bg-red-900 hover:bg-red-800 rounded-md transition-colors opacity-0 group-hover:opacity-100">
+                                    Start Nightmare
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="py-6 border-t border-red-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-2xl horror-font text-red-600">FearFactory</h2>
+                    <p class="text-sm text-gray-500">"Where your nightmares become reality"</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-red-600 transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-red-600 transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-red-600 transition-colors">
+                        <i class="fab fa-discord text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-red-600 transition-colors">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-6 text-center text-xs text-gray-500">
+                <p>© 2023 FearFactory. All nightmares reserved.</p>
+                <p class="mt-1">Warning: Not responsible for psychological trauma, insomnia, or existential dread.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Edit Profile Modal -->
+    <div id="edit-profile-modal" class="modal">
+        <div class="modal-content p-6 glitch-effect">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl typewriter-font">Edit Your Profile</h3>
+                <button id="close-modal" class="text-gray-400 hover:text-red-600 transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <form id="profile-form">
+                <div class="mb-6">
+                    <div class="avatar-upload">
+                        <div class="avatar-edit">
+                            <input type="file" id="avatar-upload" accept="image/*" />
+                            <label for="avatar-upload">
+                                <i class="fas fa-camera"></i>
+                            </label>
+                        </div>
+                        <div class="avatar-preview">
+                            <svg id="edit-avatar" class="w-full h-full text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" class="form-input" value="NightmareSeeker">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="tagline" class="form-label">Tagline</label>
+                    <input type="text" id="tagline" class="form-input" value="Fear is just the beginning...">
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="fear1" class="form-label">Top Fear #1</label>
+                        <select id="fear1" class="form-input">
+                            <option value="Arachnophobia" selected>Arachnophobia</option>
+                            <option value="Acrophobia">Acrophobia (Heights)</option>
+                            <option value="Nyctophobia">Nyctophobia (Darkness)</option>
+                            <option value="Trypophobia">Trypophobia (Holes)</option>
+                            <option value="Coulrophobia">Coulrophobia (Clowns)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="fear1-percentage" class="form-label">Fear Level (%)</label>
+                        <input type="number" id="fear1-percentage" class="form-input" min="1" max="100" value="92">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="fear2" class="form-label">Top Fear #2</label>
+                        <select id="fear2" class="form-input">
+                            <option value="Thanatophobia" selected>Thanatophobia (Death)</option>
+                            <option value="Acrophobia">Acrophobia (Heights)</option>
+                            <option value="Nyctophobia">Nyctophobia (Darkness)</option>
+                            <option value="Trypophobia">Trypophobia (Holes)</option>
+                            <option value="Coulrophobia">Coulrophobia (Clowns)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="fear2-percentage" class="form-label">Fear Level (%)</label>
+                        <input type="number" id="fear2-percentage" class="form-input" min="1" max="100" value="85">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label for="fear3" class="form-label">Top Fear #3</label>
+                        <select id="fear3" class="form-input">
+                            <option value="Claustrophobia" selected>Claustrophobia</option>
+                            <option value="Acrophobia">Acrophobia (Heights)</option>
+                            <option value="Nyctophobia">Nyctophobia (Darkness)</option>
+                            <option value="Trypophobia">Trypophobia (Holes)</option>
+                            <option value="Coulrophobia">Coulrophobia (Clowns)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="fear3-percentage" class="form-label">Fear Level (%)</label>
+                        <input type="number" id="fear3-percentage" class="form-input" min="1" max="100" value="78">
+                    </div>
+                </div>
+                
+                <div class="flex justify-end space-x-3">
+                    <button type="button" id="cancel-edit" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Success Notification -->
+    <div id="success-notification" class="fixed bottom-4 right-4 bg-gray-900 border border-green-600 rounded-lg p-4 shadow-lg z-50 flex items-start max-w-xs transform transition-all duration-500 translate-y-20 opacity-0">
+        <div class="w-10 h-10 bg-green-900 bg-opacity-30 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
+            <i class="fas fa-check text-green-600"></i>
+        </div>
+        <div>
+            <h4 class="font-bold text-sm">Profile Updated</h4>
+            <p class="text-xs text-gray-400">Your changes have been saved successfully.</p>
+        </div>
+        <button id="close-notification" class="ml-3 text-gray-500 hover:text-gray-400 flex-shrink-0">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <script>
+        // Prevent auto-scrolling on page load
+        history.scrollRestoration = "manual";
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        };
+        
+        // User profile data
+        let userData = {
+            username: "NightmareSeeker",
+            tagline: "Fear is just the beginning...",
+            level: "Level 13",
+            status: "Premium",
+            fearLevel: {
+                current: 666,
+                max: 1000
+            },
+            stats: {
+                nightmares: 42,
+                followers: 156,
+                following: 89,
+                nightmaresSurvived: 87,
+                sanityLevel: 42,
+                paranormalEncounters: 63
+            },
+            fears: [
+                { name: "Arachnophobia", value: 92 },
+                { name: "Thanatophobia", value: 85 },
+                { name: "Claustrophobia", value: 78 }
+            ]
+        };
+        
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Hide all content sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the corresponding content section
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Add random blood drips periodically
+        function addRandomBloodDrip() {
+            const drip = document.createElement('div');
+            drip.className = 'blood-drip';
+            drip.style.left = Math.random() * 100 + '%';
+            drip.style.setProperty('--drip-height', (100 + Math.random() * 150) + 'px');
+            document.body.appendChild(drip);
+            
+            // Remove the drip after animation completes
+            setTimeout(() => {
+                drip.remove();
+            }, 5000);
+        }
+        
+        // Add new blood drips randomly
+        setInterval(addRandomBloodDrip, 8000);
+        
+        // Glitch effect for horror font elements
+        document.querySelectorAll('.horror-font').forEach(element => {
+            if (!element.classList.contains('glitch')) {
+                element.classList.add('glitch');
+                element.setAttribute('data-text', element.textContent);
+            }
+        });
+        
+        // Add hover effects to achievement cards
+        document.querySelectorAll('.achievement').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('transform', 'scale-105', 'transition-transform');
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('transform', 'scale-105');
+            });
+        });
+        
+        // Simulate notification system
+        function showNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-gray-900 border border-red-900 rounded-lg p-4 shadow-lg z-50 flex items-start max-w-xs transform transition-all duration-500 translate-y-20 opacity-0';
+            
+            const icon = document.createElement('div');
+            icon.className = 'w-10 h-10 bg-red-900 bg-opacity-30 rounded-full flex items-center justify-center mr-3 flex-shrink-0';
+            
+            const randomIcons = ['fa-ghost', 'fa-skull', 'fa-spider', 'fa-book-dead', 'fa-hat-witch'];
+            const randomIcon = randomIcons[Math.floor(Math.random() * randomIcons.length)];
+            
+            icon.innerHTML = `<i class="fas ${randomIcon} text-red-600"></i>`;
+            
+            const content = document.createElement('div');
+            
+            const titles = [
+                'New Nightmare Available',
+                'Achievement Unlocked',
+                'Friend Request',
+                'Weekly Challenge',
+                'Limited Time Event'
+            ];
+            
+            const messages = [
+                'A new extreme difficulty nightmare has been added!',
+                'You\'ve unlocked the "Midnight Wanderer" achievement!',
+                'GhostHunter42 wants to add you as a friend.',
+                'Complete 3 nightmares this week to earn bonus points!',
+                'The Halloween Special Event is now live! Limited time only!'
+            ];
+            
+            const randomIndex = Math.floor(Math.random() * titles.length);
+            
+            content.innerHTML = `
+                <h4 class="font-bold text-sm">${titles[randomIndex]}</h4>
+                <p class="text-xs text-gray-400">${messages[randomIndex]}</p>
+            `;
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'ml-3 text-gray-500 hover:text-gray-400 flex-shrink-0';
+            closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            closeBtn.addEventListener('click', () => {
+                notification.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            });
+            
+            notification.appendChild(icon);
+            notification.appendChild(content);
+            notification.appendChild(closeBtn);
+            
+            document.body.appendChild(notification);
+            
+            // Show notification with animation
+            setTimeout(() => {
+                notification.classList.remove('translate-y-20', 'opacity-0');
+            }, 100);
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-y-20', 'opacity-0');
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 5000);
+        }
+        
+        // Show random notifications
+        setTimeout(() => {
+            showNotification();
+            setInterval(showNotification, 45000); // Show notification every 45 seconds
+        }, 10000);
+        
+        // Edit Profile Modal Functionality
+        const editProfileBtn = document.getElementById('edit-profile-btn');
+        const editProfileModal = document.getElementById('edit-profile-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const cancelEditBtn = document.getElementById('cancel-edit');
+        const profileForm = document.getElementById('profile-form');
+        const successNotification = document.getElementById('success-notification');
+        const closeNotificationBtn = document.getElementById('close-notification');
+        
+        // Open modal
+        editProfileBtn.addEventListener('click', () => {
+            // Populate form with current data
+            document.getElementById('username').value = userData.username;
+            document.getElementById('tagline').value = userData.tagline;
+            document.getElementById('fear1').value = userData.fears[0].name;
+            document.getElementById('fear1-percentage').value = userData.fears[0].value;
+            document.getElementById('fear2').value = userData.fears[1].name;
+            document.getElementById('fear2-percentage').value = userData.fears[1].value;
+            document.getElementById('fear3').value = userData.fears[2].name;
+            document.getElementById('fear3-percentage').value = userData.fears[2].value;
+            
+            editProfileModal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+        });
+        
+        // Close modal functions
+        function closeModal() {
+            editProfileModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+        
+        closeModalBtn.addEventListener('click', closeModal);
+        cancelEditBtn.addEventListener('click', closeModal);
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === editProfileModal) {
+                closeModal();
+            }
+        });
+        
+        // Handle form submission
+        profileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Update user data
+            userData.username = document.getElementById('username').value;
+            userData.tagline = document.getElementById('tagline').value;
+            userData.fears[0].name = document.getElementById('fear1').value;
+            userData.fears[0].value = parseInt(document.getElementById('fear1-percentage').value);
+            userData.fears[1].name = document.getElementById('fear2').value;
+            userData.fears[1].value = parseInt(document.getElementById('fear2-percentage').value);
+            userData.fears[2].name = document.getElementById('fear3').value;
+            userData.fears[2].value = parseInt(document.getElementById('fear3-percentage').value);
+            
+            // Update UI with new data
+            updateProfileUI();
+            
+            // Close modal
+            closeModal();
+            
+            // Show success notification
+            showSuccessNotification();
+        });
+        
+        // Update UI with user data
+        function updateProfileUI() {
+            // Update header
+            document.getElementById('header-username').textContent = userData.username;
+            
+            // Update profile section
+            document.getElementById('profile-username').textContent = userData.username;
+            document.getElementById('profile-tagline').textContent = userData.tagline;
+            document.getElementById('profile-level').textContent = userData.level;
+            document.getElementById('profile-status').textContent = userData.status;
+            
+            // Update fear level
+            document.getElementById('fear-level-text').textContent = `${userData.fearLevel.current}/${userData.fearLevel.max}`;
+            document.getElementById('fear-level-bar').style.width = `${(userData.fearLevel.current / userData.fearLevel.max) * 100}%`;
+            
+            // Update stats
+            document.getElementById('nightmares-count').textContent = userData.stats.nightmares;
+            document.getElementById('followers-count').textContent = userData.stats.followers;
+            document.getElementById('following-count').textContent = userData.stats.following;
+            
+            document.getElementById('nightmares-survived').textContent = `${userData.stats.nightmaresSurvived}%`;
+            document.getElementById('nightmares-survived-bar').style.width = `${userData.stats.nightmaresSurvived}%`;
+            
+            document.getElementById('sanity-level').textContent = `${userData.stats.sanityLevel}%`;
+            document.getElementById('sanity-level-bar').style.width = `${userData.stats.sanityLevel}%`;
+            
+            document.getElementById('paranormal-encounters').textContent = `${userData.stats.paranormalEncounters}%`;
+            document.getElementById('paranormal-encounters-bar').style.width = `${userData.stats.paranormalEncounters}%`;
+            
+            // Update fears
+            document.getElementById('fear1-name').textContent = userData.fears[0].name;
+            document.getElementById('fear1-value').textContent = `${userData.fears[0].value}%`;
+            document.getElementById('fear1-bar').style.width = `${userData.fears[0].value}%`;
+            
+            document.getElementById('fear2-name').textContent = userData.fears[1].name;
+            document.getElementById('fear2-value').textContent = `${userData.fears[1].value}%`;
+            document.getElementById('fear2-bar').style.width = `${userData.fears[1].value}%`;
+            
+            document.getElementById('fear3-name').textContent = userData.fears[2].name;
+            document.getElementById('fear3-value').textContent = `${userData.fears[2].value}%`;
+            document.getElementById('fear3-bar').style.width = `${userData.fears[2].value}%`;
+        }
+        
+        // Show success notification
+        function showSuccessNotification() {
+            successNotification.classList.remove('translate-y-20', 'opacity-0');
+            
+            // Auto hide after 3 seconds
+            setTimeout(() => {
+                successNotification.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+        
+        // Close success notification
+        closeNotificationBtn.addEventListener('click', () => {
+            successNotification.classList.add('translate-y-20', 'opacity-0');
+        });
+        
+        // Avatar upload preview (simulated)
+        document.getElementById('avatar-upload').addEventListener('change', function() {
+            // In a real implementation, this would handle file upload
+            // For this demo, we'll just show a success message
+            const avatarPreview = document.getElementById('edit-avatar');
+            
+            // Simulate avatar change with a different color
+            const randomColor = `hsl(${Math.random() * 360}, 70%, 50%)`;
+            avatarPreview.style.color = randomColor;
+            
+            // Update all avatars with the same color
+            document.getElementById('header-avatar').style.color = randomColor;
+            document.getElementById('profile-avatar').style.color = randomColor;
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93e083d1377dc1ae',t:'MTc0Njk1NDMzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
