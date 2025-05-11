@@ -61,3 +61,20 @@ class UnfollowUserView(APIView):
             return Response({"detail": "Unfollowed successfully"}, status=status.HTTP_204_NO_CONTENT)
         except Friendship.DoesNotExist:
             return Response({"detail": "You are not following this user."}, status=status.HTTP_400_BAD_REQUEST)
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+
+        followers = Friendship.objects.filter(to_user=user).values_list('from_user__username', flat=True)
+        following = Friendship.objects.filter(from_user=user).values_list('to_user__username', flat=True)
+
+        data = {
+            "username": user.username,
+            "email": user.email,  # You can omit this if needed
+            "followers": list(followers),   # List of usernames
+            "following": list(following),
+        }
+        return Response(data)
