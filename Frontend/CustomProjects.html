@@ -1,0 +1,970 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FearFactory - Custom Project Request</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Nosifer&display=swap');
+        
+        :root {
+            --blood-red: #8a0303;
+            --dark-red: #5a0000;
+            --black: #0a0000;
+            --gray: #333;
+            --light-gray: #aaa;
+        }
+        
+        body {
+            font-family: 'Special Elite', cursive;
+            background-color: var(--black);
+            color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23300000' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .logo-text {
+            font-family: 'Nosifer', cursive;
+            color: var(--blood-red);
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.7), 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        .section-title {
+            font-family: 'Creepster', cursive;
+            color: var(--blood-red);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .blood-drip {
+            position: relative;
+        }
+        
+        .blood-drip::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 15px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='15' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L10,0 L5,15 L0,0 M20,0 L30,0 L25,15 L20,0 M40,0 L50,0 L45,15 L40,0 M60,0 L70,0 L65,15 L60,0 M80,0 L90,0 L85,15 L80,0' fill='%238a0303'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+        }
+        
+        .btn-primary {
+            background-color: var(--blood-red);
+            border: 1px solid #600;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn-primary:hover {
+            background-color: #b00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+            color: #ccc;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--blood-red);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--blood-red);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .search-input {
+            background-color: rgba(30, 0, 0, 0.7);
+            border: 1px solid var(--dark-red);
+            color: #fff;
+        }
+        
+        .search-input:focus {
+            border-color: var(--blood-red);
+            box-shadow: 0 0 0 2px rgba(138, 3, 3, 0.3);
+            outline: none;
+        }
+        
+        .footer {
+            background-color: rgba(10, 0, 0, 0.9);
+            border-top: 1px solid var(--dark-red);
+        }
+        
+        /* Animated blood effect */
+        .blood-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.05;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L20,0 L10,100 L0,0 M30,0 L50,0 L40,100 L30,0 M60,0 L80,0 L70,100 L60,0 M90,0 L100,0 L95,100 L90,0' fill='%238a0303' fill-opacity='0.3'/%3E%3C/svg%3E");
+            animation: blood-drip 10s linear infinite;
+        }
+        
+        @keyframes blood-drip {
+            from { background-position: 0 0; }
+            to { background-position: 0 100%; }
+        }
+        
+        /* Flickering effect */
+        .flicker {
+            animation: flicker 5s infinite alternate;
+        }
+        
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 1;
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.5;
+            }
+        }
+        
+        .form-container {
+            background: linear-gradient(135deg, #1a0000 0%, #3a0000 100%);
+            border: 1px solid var(--blood-red);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .form-input {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--dark-red);
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: var(--blood-red);
+            box-shadow: 0 0 0 2px rgba(138, 3, 3, 0.3);
+            outline: none;
+        }
+        
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .checkbox-container {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+        }
+        
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--dark-red);
+        }
+        
+        .checkbox-container:hover input ~ .checkmark {
+            background-color: rgba(30, 0, 0, 0.7);
+        }
+        
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: var(--blood-red);
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .checkbox-container .checkmark:after {
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .step-container {
+            position: relative;
+        }
+        
+        .step-container::before {
+            content: "";
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            height: calc(100% - 60px);
+            width: 2px;
+            background-color: var(--dark-red);
+        }
+        
+        .step-number {
+            background-color: var(--blood-red);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(138, 3, 3, 0.5);
+        }
+        
+        .price-card {
+            background: linear-gradient(135deg, #1a0000 0%, #2a0000 100%);
+            border: 1px solid var(--dark-red);
+            transition: all 0.3s ease;
+        }
+        
+        .price-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-color: var(--blood-red);
+        }
+        
+        .price-card.featured {
+            border: 2px solid var(--blood-red);
+            box-shadow: 0 0 15px rgba(138, 3, 3, 0.3);
+        }
+        
+        .price-tag {
+            font-family: 'Creepster', cursive;
+            font-size: 2.5rem;
+            color: var(--blood-red);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .feature-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+        
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--blood-red);
+        }
+        
+        .testimonial-card {
+            background-color: rgba(10, 0, 0, 0.7);
+            border-left: 3px solid var(--blood-red);
+        }
+        
+        .quote-mark {
+            font-size: 4rem;
+            line-height: 1;
+            font-family: Georgia, serif;
+            color: rgba(138, 3, 3, 0.3);
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid var(--dark-red);
+        }
+        
+        .faq-question {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            color: var(--blood-red);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        
+        .faq-toggle {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="blood-bg"></div>
+    
+    <!-- Header -->
+    <header class="py-4 px-6 md:px-10 border-b border-red-900">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <div class="w-12 h-12 mr-3">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 0 L95 25 L95 75 L50 100 L5 75 L5 25 Z" fill="#300" stroke="#8a0303" stroke-width="3"/>
+                            <path d="M30 30 L70 30 L70 70 L30 70 Z" fill="none" stroke="#8a0303" stroke-width="3"/>
+                            <path d="M40 40 L60 40 L60 60 L40 60 Z" fill="#8a0303"/>
+                            <path d="M20 20 L80 80 M80 20 L20 80" stroke="#8a0303" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <h1 class="logo-text text-2xl md:text-3xl font-bold tracking-wider flicker">FEAR<span class="text-white">FACTORY</span></h1>
+                </div>
+                
+                <nav class="flex flex-wrap justify-center gap-6">
+                    <a href="#" class="nav-link text-sm md:text-base">HOME</a>
+                    <a href="#" class="nav-link text-sm md:text-base">PROJECTS</a>
+                    <a href="#" class="nav-link text-sm md:text-base text-red-600 font-bold">CUSTOM PROJECT</a>
+                    <a href="#" class="nav-link text-sm md:text-base">SERVICES</a>
+                    <a href="#" class="nav-link text-sm md:text-base">ABOUT</a>
+                    <a href="#" class="nav-link text-sm md:text-base">CONTACT</a>
+                </nav>
+                
+                <div class="hidden md:flex items-center mt-4 md:mt-0">
+                    <div class="relative">
+                        <input type="text" placeholder="Search projects..." class="search-input py-1 px-3 pr-8 rounded text-sm w-40 md:w-48">
+                        <i class="fas fa-search absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <button class="btn-primary ml-3 py-1 px-4 rounded text-sm">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="mb-12 text-center">
+            <h2 class="section-title text-4xl md:text-5xl mb-4">CUSTOM PROJECT REQUEST</h2>
+            <p class="max-w-2xl mx-auto text-gray-300 mb-8">Can't find what you're looking for in our existing projects? Let us bring your darkest nightmares to life with a custom-built horror experience tailored specifically to your needs.</p>
+            
+            <div class="blood-drip relative inline-block mb-8">
+                <div class="flex flex-wrap justify-center gap-3 md:gap-4">
+                    <a href="#request-form" class="btn-primary py-2 px-6 rounded-md text-sm md:text-base">Start Your Request</a>
+                    <a href="#how-it-works" class="bg-transparent border border-red-900 hover:border-red-600 text-red-600 hover:text-red-500 transition-colors py-2 px-6 rounded-md text-sm md:text-base">How It Works</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="mb-16">
+            <h3 class="section-title text-3xl mb-8">HOW IT WORKS</h3>
+            
+            <div class="step-container pl-10 md:pl-0">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <!-- Step 1 -->
+                    <div class="relative md:pl-0 pl-8">
+                        <div class="md:hidden absolute left-0 top-0">
+                            <div class="step-number">1</div>
+                        </div>
+                        <div class="hidden md:flex justify-center mb-4">
+                            <div class="step-number">1</div>
+                        </div>
+                        <h4 class="text-xl font-bold text-red-500 mb-2">Submit Your Request</h4>
+                        <p class="text-sm text-gray-300">Fill out our detailed project request form. The more information you provide, the better we can understand your vision.</p>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="relative md:pl-0 pl-8">
+                        <div class="md:hidden absolute left-0 top-0">
+                            <div class="step-number">2</div>
+                        </div>
+                        <div class="hidden md:flex justify-center mb-4">
+                            <div class="step-number">2</div>
+                        </div>
+                        <h4 class="text-xl font-bold text-red-500 mb-2">Consultation</h4>
+                        <p class="text-sm text-gray-300">Our horror specialists will contact you to discuss your project in detail and provide initial recommendations.</p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="relative md:pl-0 pl-8">
+                        <div class="md:hidden absolute left-0 top-0">
+                            <div class="step-number">3</div>
+                        </div>
+                        <div class="hidden md:flex justify-center mb-4">
+                            <div class="step-number">3</div>
+                        </div>
+                        <h4 class="text-xl font-bold text-red-500 mb-2">Proposal & Agreement</h4>
+                        <p class="text-sm text-gray-300">We'll send you a detailed proposal including timeline, cost, and deliverables. Once approved, we begin work.</p>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="relative md:pl-0 pl-8">
+                        <div class="md:hidden absolute left-0 top-0">
+                            <div class="step-number">4</div>
+                        </div>
+                        <div class="hidden md:flex justify-center mb-4">
+                            <div class="step-number">4</div>
+                        </div>
+                        <h4 class="text-xl font-bold text-red-500 mb-2">Creation & Delivery</h4>
+                        <p class="text-sm text-gray-300">We bring your nightmare to life with regular updates throughout the process, culminating in the final delivery.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Request Form Section -->
+        <section id="request-form" class="mb-16">
+            <div class="form-container p-6 md:p-8 rounded-lg">
+                <h3 class="section-title text-2xl md:text-3xl mb-6">PROJECT REQUEST FORM</h3>
+                
+                <form id="custom-project-form">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- Personal Information -->
+                        <div>
+                            <h4 class="text-xl font-bold text-red-500 mb-4">Personal Information</h4>
+                            
+                            <div class="mb-4">
+                                <label for="name" class="block text-sm mb-1">Full Name *</label>
+                                <input type="text" id="name" class="form-input w-full py-2 px-3 rounded" required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="email" class="block text-sm mb-1">Email Address *</label>
+                                <input type="email" id="email" class="form-input w-full py-2 px-3 rounded" required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="phone" class="block text-sm mb-1">Phone Number</label>
+                                <input type="tel" id="phone" class="form-input w-full py-2 px-3 rounded">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="company" class="block text-sm mb-1">Company/Organization (if applicable)</label>
+                                <input type="text" id="company" class="form-input w-full py-2 px-3 rounded">
+                            </div>
+                        </div>
+                        
+                        <!-- Project Details -->
+                        <div>
+                            <h4 class="text-xl font-bold text-red-500 mb-4">Project Details</h4>
+                            
+                            <div class="mb-4">
+                                <label for="project-type" class="block text-sm mb-1">Project Type *</label>
+                                <select id="project-type" class="form-input w-full py-2 px-3 rounded" required>
+                                    <option value="" disabled selected>Select project type</option>
+                                    <option value="website">Website</option>
+                                    <option value="android-app">Android App</option>
+                                    <option value="game">Game</option>
+                                    <option value="3d-model">3D Model</option>
+                                    <option value="vr-experience">VR Experience</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="project-name" class="block text-sm mb-1">Project Name *</label>
+                                <input type="text" id="project-name" class="form-input w-full py-2 px-3 rounded" required>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="budget" class="block text-sm mb-1">Budget Range *</label>
+                                <select id="budget" class="form-input w-full py-2 px-3 rounded" required>
+                                    <option value="" disabled selected>Select budget range</option>
+                                    <option value="under-500">Under $500</option>
+                                    <option value="500-1000">$500 - $1,000</option>
+                                    <option value="1000-2500">$1,000 - $2,500</option>
+                                    <option value="2500-5000">$2,500 - $5,000</option>
+                                    <option value="5000-10000">$5,000 - $10,000</option>
+                                    <option value="over-10000">Over $10,000</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="timeline" class="block text-sm mb-1">Desired Timeline *</label>
+                                <select id="timeline" class="form-input w-full py-2 px-3 rounded" required>
+                                    <option value="" disabled selected>Select timeline</option>
+                                    <option value="urgent">Urgent (1-2 weeks)</option>
+                                    <option value="standard">Standard (3-4 weeks)</option>
+                                    <option value="relaxed">Relaxed (1-2 months)</option>
+                                    <option value="flexible">Flexible</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project Description -->
+                    <div class="mb-6">
+                        <h4 class="text-xl font-bold text-red-500 mb-4">Project Description</h4>
+                        
+                        <div class="mb-4">
+                            <label for="description" class="block text-sm mb-1">Detailed Description *</label>
+                            <textarea id="description" rows="5" class="form-input w-full py-2 px-3 rounded" required placeholder="Describe your project in detail. What are your goals? What specific features do you need? What kind of horror theme are you looking for?"></textarea>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="references" class="block text-sm mb-1">References/Inspiration</label>
+                            <textarea id="references" rows="3" class="form-input w-full py-2 px-3 rounded" placeholder="List any websites, apps, games, movies, or other references that inspire your project."></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Features and Requirements -->
+                    <div class="mb-6">
+                        <h4 class="text-xl font-bold text-red-500 mb-4">Features and Requirements</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <p class="block text-sm mb-2">Required Features:</p>
+                                
+                                <label class="checkbox-container block mb-2 text-sm">
+                                    User Authentication
+                                    <input type="checkbox" name="features" value="authentication">
+                                    <span class="checkmark"></span>
+                                </label>
+                                
+                                <label class="checkbox-container block mb-2 text-sm">
+                                    Payment Processing
+                                    <input type="checkbox" name="features" value="payment">
+                                    <span class="checkmark"></span>
+                                </label>
+                                
+                                <label class="checkbox-container block mb-2 text-sm">
+                                    Database Integration
+                                    <input type="checkbox" name="features" value="database">
+                                    <span class="checkmark"></span>
+                                </label>
+                                
+                                <label class="checkbox-container block mb-2 text-sm">
+                                    Content Management System
+                                    <input type="checkbox" name="features" value="cms">
+                                    <span class="checkmark"></span>
+                                </label>
+                                
+                                <label class="checkbox-container block mb-2 text-sm">
+                                    Social Media Integration
+                                    <input type="checkbox" name="features" value="social">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            
+                            <div>
+                                <p class="block text-sm mb-2">Horror Elements:</p>
+                                
+                                <label class="checkbox-container block mb-2 text-sm">
+                                    Jump Scares
+                                    <input type="checkbox" name="horror" value="jump-scares">
+                                    <span class="checkmark"></span>
+                                </label>
+                                
+                                <label class="checkbox-container block mb-2 text-sm">
+                                    Psychological Horror
+                                    <input type="checkbox" name="horror" value="psychological">
+                                    <span class="checkmark"></span>
+                                </label>
+                                
+                                <label class="checkbox-container block mb-2 text-sm">
+                                    Gore/Body Horror
+                                    <input type="checkbox" name="horror" value="gore">
+                                    <span class="checkmark"></span>
+                                </label>
+                                
+                                <label class="checkbox-container block mb-2 text-sm">
+                                    Supernatural Elements
+                                    <input type="checkbox" name="horror" value="supernatural">
+                                    <span class="checkmark"></span>
+                                </label>
+                                
+                                <label class="checkbox-container block mb-2 text-sm">
+                                    Atmospheric/Creepy
+                                    <input type="checkbox" name="horror" value="atmospheric">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="additional-features" class="block text-sm mb-1">Additional Features/Requirements</label>
+                            <textarea id="additional-features" rows="3" class="form-input w-full py-2 px-3 rounded" placeholder="List any other specific features or requirements for your project."></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Information -->
+                    <div class="mb-6">
+                        <h4 class="text-xl font-bold text-red-500 mb-4">Additional Information</h4>
+                        
+                        <div class="mb-4">
+                            <label for="target-audience" class="block text-sm mb-1">Target Audience</label>
+                            <input type="text" id="target-audience" class="form-input w-full py-2 px-3 rounded" placeholder="Who is your project intended for?">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="questions" class="block text-sm mb-1">Questions or Concerns</label>
+                            <textarea id="questions" rows="3" class="form-input w-full py-2 px-3 rounded" placeholder="Any questions or concerns you'd like to address?"></textarea>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="checkbox-container block mb-2 text-sm">
+                                I agree to be contacted about my project request
+                                <input type="checkbox" required>
+                                <span class="checkmark"></span>
+                            </label>
+                            
+                            <label class="checkbox-container block mb-2 text-sm">
+                                I would like to receive updates about FearFactory products and services
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn-primary py-3 px-8 rounded-md text-lg">Submit Request</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        
+        <!-- Pricing Packages -->
+        <section class="mb-16">
+            <h3 class="section-title text-3xl mb-8">PRICING PACKAGES</h3>
+            <p class="text-gray-300 mb-8 max-w-3xl">While each custom project is unique, we offer the following packages as starting points. Final pricing will be determined based on your specific requirements.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Basic Package -->
+                <div class="price-card p-6 rounded-lg">
+                    <h4 class="text-2xl font-bold text-red-500 mb-2">BASIC NIGHTMARE</h4>
+                    <p class="text-sm text-gray-400 mb-4">Perfect for small projects with minimal complexity</p>
+                    <div class="price-tag mb-4">$499+</div>
+                    <ul class="feature-list text-sm text-gray-300 mb-6">
+                        <li>Single page design</li>
+                        <li>Basic horror elements</li>
+                        <li>Mobile responsive</li>
+                        <li>1 round of revisions</li>
+                        <li>Delivery within 2 weeks</li>
+                    </ul>
+                    <button class="btn-primary w-full py-2 rounded">Choose Basic</button>
+                </div>
+                
+                <!-- Standard Package -->
+                <div class="price-card featured p-6 rounded-lg">
+                    <div class="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
+                        <span class="bg-red-900 text-white text-xs py-1 px-3 rounded-full">POPULAR</span>
+                    </div>
+                    <h4 class="text-2xl font-bold text-red-500 mb-2">HAUNTED DELUXE</h4>
+                    <p class="text-sm text-gray-400 mb-4">Comprehensive solution for most horror projects</p>
+                    <div class="price-tag mb-4">$1,499+</div>
+                    <ul class="feature-list text-sm text-gray-300 mb-6">
+                        <li>Multi-page design</li>
+                        <li>Advanced horror elements</li>
+                        <li>Interactive features</li>
+                        <li>Mobile responsive</li>
+                        <li>3 rounds of revisions</li>
+                        <li>Delivery within 4 weeks</li>
+                    </ul>
+                    <button class="btn-primary w-full py-2 rounded">Choose Deluxe</button>
+                </div>
+                
+                <!-- Premium Package -->
+                <div class="price-card p-6 rounded-lg">
+                    <h4 class="text-2xl font-bold text-red-500 mb-2">ULTIMATE TERROR</h4>
+                    <p class="text-sm text-gray-400 mb-4">Complete solution for complex horror experiences</p>
+                    <div class="price-tag mb-4">$4,999+</div>
+                    <ul class="feature-list text-sm text-gray-300 mb-6">
+                        <li>Comprehensive project</li>
+                        <li>Premium horror elements</li>
+                        <li>Advanced interactivity</li>
+                        <li>Custom animations</li>
+                        <li>Unlimited revisions</li>
+                        <li>Priority support</li>
+                        <li>Delivery within 8 weeks</li>
+                    </ul>
+                    <button class="btn-primary w-full py-2 rounded">Choose Ultimate</button>
+                </div>
+            </div>
+            
+            <p class="text-center text-sm text-gray-400 mt-6">Not sure which package is right for you? Contact us for a custom quote.</p>
+        </section>
+        
+        <!-- Testimonials -->
+        <section class="mb-16">
+            <h3 class="section-title text-3xl mb-8">CLIENT TESTIMONIALS</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card p-6 rounded-lg relative">
+                    <div class="quote-mark">"</div>
+                    <p class="text-gray-300 mb-4 pl-6">FearFactory brought my haunted house website to life in ways I never imagined. The interactive elements and atmospheric design increased our visitor count by 200% this season.</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-red-900 flex items-center justify-center mr-3">
+                            <span class="text-white font-bold">MH</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-red-500">Michael Haunt</p>
+                            <p class="text-xs text-gray-400">Nightmare Manor</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card p-6 rounded-lg relative">
+                    <div class="quote-mark">"</div>
+                    <p class="text-gray-300 mb-4 pl-6">The custom horror game FearFactory developed for our escape room business has been a game-changer. Our customers love the immersive experience and it's set us apart from competitors.</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-red-900 flex items-center justify-center mr-3">
+                            <span class="text-white font-bold">SR</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-red-500">Sarah Raven</p>
+                            <p class="text-xs text-gray-400">Escape the Darkness</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card p-6 rounded-lg relative">
+                    <div class="quote-mark">"</div>
+                    <p class="text-gray-300 mb-4 pl-6">Working with FearFactory on our horror film promotion app was seamless from start to finish. They understood our vision perfectly and delivered beyond expectations.</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-red-900 flex items-center justify-center mr-3">
+                            <span class="text-white font-bold">JN</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-red-500">James Nightshade</p>
+                            <p class="text-xs text-gray-400">Crimson Films</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 4 -->
+                <div class="testimonial-card p-6 rounded-lg relative">
+                    <div class="quote-mark">"</div>
+                    <p class="text-gray-300 mb-4 pl-6">The 3D models FearFactory created for our VR horror experience were incredibly detailed and terrifying. Our users are genuinely scared, which is exactly what we wanted!</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-red-900 flex items-center justify-center mr-3">
+                            <span class="text-white font-bold">AW</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-red-500">Alex Wraith</p>
+                            <p class="text-xs text-gray-400">Phantom VR</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section class="mb-16">
+            <h3 class="section-title text-3xl mb-8">FREQUENTLY ASKED QUESTIONS</h3>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item pb-4">
+                    <div class="faq-question flex justify-between items-center">
+                        <h4 class="text-xl font-bold text-red-500">How long does a custom project take?</h4>
+                        <span class="faq-toggle text-2xl text-red-500">+</span>
+                    </div>
+                    <div class="faq-answer pt-2">
+                        <p class="text-gray-300">Project timelines vary based on complexity and scope. Simple projects may take as little as 2 weeks, while more complex projects can take 8 weeks or more. During our consultation, we'll provide a more accurate timeline based on your specific requirements.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="faq-item pb-4">
+                    <div class="faq-question flex justify-between items-center">
+                        <h4 class="text-xl font-bold text-red-500">What information do you need to get started?</h4>
+                        <span class="faq-toggle text-2xl text-red-500">+</span>
+                    </div>
+                    <div class="faq-answer pt-2">
+                        <p class="text-gray-300">The more information you can provide, the better. At minimum, we need to know your project goals, target audience, desired features, and any specific horror elements you want to include. References to existing projects you like are also helpful. Our project request form will guide you through providing all necessary information.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="faq-item pb-4">
+                    <div class="faq-question flex justify-between items-center">
+                        <h4 class="text-xl font-bold text-red-500">Do you offer ongoing support after project completion?</h4>
+                        <span class="faq-toggle text-2xl text-red-500">+</span>
+                    </div>
+                    <div class="faq-answer pt-2">
+                        <p class="text-gray-300">Yes, we offer various support packages to ensure your project continues to run smoothly after launch. These range from basic technical support to comprehensive maintenance plans. We'll discuss support options during the proposal phase.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="faq-item pb-4">
+                    <div class="faq-question flex justify-between items-center">
+                        <h4 class="text-xl font-bold text-red-500">What is your payment structure?</h4>
+                        <span class="faq-toggle text-2xl text-red-500">+</span>
+                    </div>
+                    <div class="faq-answer pt-2">
+                        <p class="text-gray-300">We typically require a 50% deposit to begin work, with the remaining 50% due upon project completion. For larger projects, we may establish a milestone-based payment schedule. All payment terms will be clearly outlined in our proposal.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="faq-item pb-4">
+                    <div class="faq-question flex justify-between items-center">
+                        <h4 class="text-xl font-bold text-red-500">Can you work with existing designs or code?</h4>
+                        <span class="faq-toggle text-2xl text-red-500">+</span>
+                    </div>
+                    <div class="faq-answer pt-2">
+                        <p class="text-gray-300">Yes, we can work with existing designs, code, or content. Whether you need to enhance an existing project or completely overhaul it with a horror theme, we can accommodate your needs. Please provide details about your existing assets in the project request form.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Call to Action -->
+        <section class="mb-16">
+            <div class="bg-gradient-to-r from-red-900 to-black p-8 rounded-lg text-center">
+                <h3 class="section-title text-3xl mb-4">READY TO UNLEASH YOUR NIGHTMARE?</h3>
+                <p class="text-gray-300 mb-6 max-w-2xl mx-auto">Don't wait any longer to bring your horror project to life. Our team of specialists is ready to create something truly terrifying.</p>
+                <a href="#request-form" class="bg-black text-red-500 border border-red-700 hover:bg-red-900 hover:text-white transition-colors py-3 px-8 rounded-md font-bold text-lg inline-block">Start Your Request Now</a>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer py-8 px-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">FEARFACTORY</h4>
+                    <p class="text-sm text-gray-400 mb-4">Creating digital nightmares since 2010. We specialize in horror-themed websites, apps, games, and 3D models.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">QUICK LINKS</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Projects</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Templates</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Custom Orders</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">CATEGORIES</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Websites</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Android Apps</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Games</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">3D Models</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">VR Experiences</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">NEWSLETTER</h4>
+                    <p class="text-sm text-gray-400 mb-4">Subscribe to our newsletter for the latest updates and exclusive offers.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="search-input py-2 px-3 rounded-l text-sm flex-grow">
+                        <button class="btn-primary py-2 px-4 rounded-r text-sm">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-sm text-gray-500">
+                <p>&copy; 2023 FearFactory. All rights reserved. Enter at your own risk.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Form submission handler
+        document.getElementById('custom-project-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real implementation, this would send the form data to a server
+            // For this demo, we'll just show a success message
+            
+            // Create modal overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50';
+            
+            // Create modal content
+            const modal = document.createElement('div');
+            modal.className = 'bg-gradient-to-br from-red-900 to-black p-8 rounded-lg max-w-md mx-4 relative border border-red-700';
+            
+            // Add content to modal
+            modal.innerHTML = `
+                <div class="text-center">
+                    <svg class="w-16 h-16 text-red-600 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <h3 class="text-2xl font-bold text-red-500 mb-2">Request Submitted</h3>
+                    <p class="text-gray-300 mb-6">Thank you for your project request. Our team will contact you within 24-48 hours to discuss your nightmare in detail.</p>
+                    <button id="close-modal" class="btn-primary py-2 px-6 rounded">Close</button>
+                </div>
+            `;
+            
+            // Add modal to page
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+            
+            // Add close functionality
+            document.getElementById('close-modal').addEventListener('click', function() {
+                document.body.removeChild(overlay);
+            });
+        });
+        
+        // FAQ toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', function() {
+                    // Toggle active class
+                    item.classList.toggle('active');
+                });
+            });
+            
+            // Add flickering effect to random elements
+            setInterval(() => {
+                const titles = document.querySelectorAll('.section-title');
+                const randomTitle = titles[Math.floor(Math.random() * titles.length)];
+                randomTitle.classList.add('flicker');
+                
+                setTimeout(() => {
+                    randomTitle.classList.remove('flicker');
+                }, 1000);
+            }, 5000);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93ea64aa91020c28',t:'MTc0NzA1NzkxMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

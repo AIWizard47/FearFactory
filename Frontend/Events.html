@@ -1,0 +1,1297 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FearFactory - Horror Events</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Nosifer&display=swap');
+        
+        :root {
+            --blood-red: #8a0303;
+            --dark-red: #5a0000;
+            --black: #0a0000;
+            --gray: #333;
+            --light-gray: #aaa;
+        }
+        
+        body {
+            font-family: 'Special Elite', cursive;
+            background-color: var(--black);
+            color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23300000' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+        
+        .logo-text {
+            font-family: 'Nosifer', cursive;
+            color: var(--blood-red);
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.7), 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        .section-title {
+            font-family: 'Creepster', cursive;
+            color: var(--blood-red);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .blood-drip {
+            position: relative;
+        }
+        
+        .blood-drip::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 15px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='15' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L10,0 L5,15 L0,0 M20,0 L30,0 L25,15 L20,0 M40,0 L50,0 L45,15 L40,0 M60,0 L70,0 L65,15 L60,0 M80,0 L90,0 L85,15 L80,0' fill='%238a0303'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+        }
+        
+        .btn-primary {
+            background-color: var(--blood-red);
+            border: 1px solid #600;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn-primary:hover {
+            background-color: #b00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+            color: #ccc;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--blood-red);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--blood-red);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .search-input {
+            background-color: rgba(30, 0, 0, 0.7);
+            border: 1px solid var(--dark-red);
+            color: #fff;
+        }
+        
+        .search-input:focus {
+            border-color: var(--blood-red);
+            box-shadow: 0 0 0 2px rgba(138, 3, 3, 0.3);
+            outline: none;
+        }
+        
+        .footer {
+            background-color: rgba(10, 0, 0, 0.9);
+            border-top: 1px solid var(--dark-red);
+        }
+        
+        /* Animated blood effect */
+        .blood-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.05;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L20,0 L10,100 L0,0 M30,0 L50,0 L40,100 L30,0 M60,0 L80,0 L70,100 L60,0 M90,0 L100,0 L95,100 L90,0' fill='%238a0303' fill-opacity='0.3'/%3E%3C/svg%3E");
+            animation: blood-drip 10s linear infinite;
+        }
+        
+        @keyframes blood-drip {
+            from { background-position: 0 0; }
+            to { background-position: 0 100%; }
+        }
+        
+        /* Flickering effect */
+        .flicker {
+            animation: flicker 5s infinite alternate;
+        }
+        
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 1;
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.5;
+            }
+        }
+        
+        /* Calendar styles */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+        
+        .calendar-header {
+            background-color: var(--dark-red);
+            text-align: center;
+            padding: 8px 0;
+            font-weight: bold;
+        }
+        
+        .calendar-day {
+            background-color: rgba(20, 0, 0, 0.7);
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 5px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-day:hover {
+            background-color: rgba(40, 0, 0, 0.9);
+            transform: scale(1.05);
+            z-index: 1;
+        }
+        
+        .calendar-day.has-event {
+            border: 1px solid var(--dark-red);
+        }
+        
+        .calendar-day.has-event:hover {
+            border-color: var(--blood-red);
+        }
+        
+        .day-number {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        
+        .event-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--blood-red);
+            margin-top: 2px;
+        }
+        
+        .event-name {
+            font-size: 0.7rem;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+            color: var(--blood-red);
+        }
+        
+        /* Event card styles */
+        .event-card {
+            background: linear-gradient(135deg, #1a0000 0%, #3a0000 100%);
+            border: 1px solid var(--dark-red);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            border-color: var(--blood-red);
+        }
+        
+        .event-image {
+            position: relative;
+            overflow: hidden;
+            height: 180px;
+        }
+        
+        .event-image::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(to top, rgba(10, 0, 0, 1), transparent);
+        }
+        
+        .event-date {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(138, 3, 3, 0.8);
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .event-category {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: var(--blood-red);
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            z-index: 1;
+        }
+        
+        .event-title {
+            font-family: 'Creepster', cursive;
+            color: var(--blood-red);
+            font-size: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .event-info {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 5px;
+        }
+        
+        .event-info i {
+            color: var(--blood-red);
+            width: 16px;
+            margin-right: 5px;
+        }
+        
+        /* Featured event styles */
+        .featured-event {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--dark-red);
+        }
+        
+        .featured-event::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(10, 0, 0, 0.9), rgba(10, 0, 0, 0.7) 50%, rgba(10, 0, 0, 0.4));
+            z-index: 1;
+        }
+        
+        .featured-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .countdown-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .countdown-item {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--dark-red);
+            padding: 8px;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .countdown-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--blood-red);
+        }
+        
+        .countdown-label {
+            font-size: 0.7rem;
+            color: #ccc;
+            text-transform: uppercase;
+        }
+        
+        /* Filter styles */
+        .filter-btn {
+            background-color: rgba(20, 0, 0, 0.7);
+            border: 1px solid var(--dark-red);
+            color: #ccc;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--blood-red);
+            color: white;
+        }
+        
+        /* Gallery styles */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+        
+        .gallery-item img {
+            transition: all 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            padding: 20px 10px 10px;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="blood-bg"></div>
+    
+    <!-- Header -->
+    <header class="py-4 px-6 md:px-10 border-b border-red-900">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <div class="w-12 h-12 mr-3">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 0 L95 25 L95 75 L50 100 L5 75 L5 25 Z" fill="#300" stroke="#8a0303" stroke-width="3"/>
+                            <path d="M30 30 L70 30 L70 70 L30 70 Z" fill="none" stroke="#8a0303" stroke-width="3"/>
+                            <path d="M40 40 L60 40 L60 60 L40 60 Z" fill="#8a0303"/>
+                            <path d="M20 20 L80 80 M80 20 L20 80" stroke="#8a0303" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <h1 class="logo-text text-2xl md:text-3xl font-bold tracking-wider flicker">FEAR<span class="text-white">FACTORY</span></h1>
+                </div>
+                
+                <nav class="flex flex-wrap justify-center gap-6">
+                    <a href="#" class="nav-link text-sm md:text-base">HOME</a>
+                    <a href="#" class="nav-link text-sm md:text-base">PROJECTS</a>
+                    <a href="#" class="nav-link text-sm md:text-base">CUSTOM PROJECT</a>
+                    <a href="#" class="nav-link text-sm md:text-base text-red-600 font-bold">EVENTS</a>
+                    <a href="#" class="nav-link text-sm md:text-base">ABOUT</a>
+                    <a href="#" class="nav-link text-sm md:text-base">CONTACT</a>
+                </nav>
+                
+                <div class="hidden md:flex items-center mt-4 md:mt-0">
+                    <div class="relative">
+                        <input type="text" placeholder="Search events..." class="search-input py-1 px-3 pr-8 rounded text-sm w-40 md:w-48">
+                        <i class="fas fa-search absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <button class="btn-primary ml-3 py-1 px-4 rounded text-sm">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="mb-12 text-center">
+            <h2 class="section-title text-4xl md:text-5xl mb-4">HORROR EVENTS</h2>
+            <p class="max-w-2xl mx-auto text-gray-300 mb-8">Experience the terror in person. Join us for exclusive horror events, workshops, screenings, and gatherings that will haunt your nightmares.</p>
+            
+            <div class="blood-drip relative inline-block mb-8">
+                <div class="flex flex-wrap justify-center gap-3 md:gap-4">
+                    <a href="#upcoming-events" class="btn-primary py-2 px-6 rounded-md text-sm md:text-base">Upcoming Events</a>
+                    <a href="#event-calendar" class="bg-transparent border border-red-900 hover:border-red-600 text-red-600 hover:text-red-500 transition-colors py-2 px-6 rounded-md text-sm md:text-base">View Calendar</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Featured Event -->
+        <section class="mb-16">
+            <h3 class="section-title text-3xl mb-8">FEATURED EVENT</h3>
+            
+            <div class="featured-event rounded-lg overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="featured-content p-6 md:p-8">
+                        <div class="inline-block bg-red-900 text-white text-xs py-1 px-3 rounded-full mb-4">FEATURED</div>
+                        <h4 class="text-3xl md:text-4xl font-bold text-red-500 mb-3">MIDNIGHT MASSACRE</h4>
+                        <p class="text-gray-300 mb-4">Join us for the most terrifying night of the year. Experience our haunted maze, encounter live actors portraying your worst nightmares, and witness horrifying special effects that will make your blood run cold.</p>
+                        
+                        <div class="event-info mb-2">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>October 31, 2023 | 10:00 PM - 2:00 AM</span>
+                        </div>
+                        
+                        <div class="event-info mb-2">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>FearFactory Warehouse, 666 Nightmare Lane</span>
+                        </div>
+                        
+                        <div class="event-info mb-4">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>$49.99 - Limited tickets available</span>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h5 class="text-lg font-bold text-white mb-2">EVENT COUNTDOWN</h5>
+                            <div class="countdown-container" id="countdown">
+                                <div class="countdown-item">
+                                    <div class="countdown-number" id="countdown-days">00</div>
+                                    <div class="countdown-label">Days</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div class="countdown-number" id="countdown-hours">00</div>
+                                    <div class="countdown-label">Hours</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div class="countdown-number" id="countdown-minutes">00</div>
+                                    <div class="countdown-label">Minutes</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div class="countdown-number" id="countdown-seconds">00</div>
+                                    <div class="countdown-label">Seconds</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-primary py-3 px-6 rounded-md">Register Now</button>
+                    </div>
+                    
+                    <div class="hidden md:block relative">
+                        <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <pattern id="haunted-house" patternUnits="userSpaceOnUse" width="100" height="100">
+                                    <rect width="100" height="100" fill="#1a0000"/>
+                                    <path d="M50 10 L80 30 L80 80 L20 80 L20 30 Z" fill="#300" stroke="#500" stroke-width="1"/>
+                                    <path d="M45 80 L45 60 L55 60 L55 80 Z" fill="#500" stroke="#600" stroke-width="1"/>
+                                    <path d="M30 50 L40 50 L40 60 L30 60 Z" fill="#000" stroke="#500" stroke-width="1"/>
+                                    <path d="M60 50 L70 50 L70 60 L60 60 Z" fill="#000" stroke="#500" stroke-width="1"/>
+                                    <path d="M50 10 L50 20 L60 25 Z" fill="#500"/>
+                                    <circle cx="50" cy="40" r="5" fill="#8a0303"/>
+                                </pattern>
+                                <radialGradient id="blood-splatter" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                    <stop offset="0%" stop-color="#8a0303" stop-opacity="0.7"/>
+                                    <stop offset="100%" stop-color="#8a0303" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                            <rect width="100" height="100" fill="url(#haunted-house)"/>
+                            <circle cx="30" cy="30" r="10" fill="url(#blood-splatter)"/>
+                            <circle cx="70" cy="60" r="15" fill="url(#blood-splatter)"/>
+                            <circle cx="20" cy="70" r="8" fill="url(#blood-splatter)"/>
+                            <circle cx="80" cy="20" r="12" fill="url(#blood-splatter)"/>
+                        </svg>
+                        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                            <div class="text-6xl font-bold text-red-600 transform rotate-12 opacity-80" style="font-family: 'Creepster', cursive; text-shadow: 0 0 10px rgba(0,0,0,0.8);">
+                                SOLD OUT!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Event Calendar -->
+        <section id="event-calendar" class="mb-16">
+            <h3 class="section-title text-3xl mb-8">EVENT CALENDAR</h3>
+            
+            <div class="flex justify-between items-center mb-6">
+                <button class="filter-btn py-1 px-3 rounded" id="prev-month">
+                    <i class="fas fa-chevron-left mr-1"></i> Previous
+                </button>
+                <h4 class="text-xl font-bold text-red-500" id="current-month">October 2023</h4>
+                <button class="filter-btn py-1 px-3 rounded" id="next-month">
+                    Next <i class="fas fa-chevron-right ml-1"></i>
+                </button>
+            </div>
+            
+            <div class="calendar mb-6">
+                <!-- Calendar Header -->
+                <div class="calendar-header">Sun</div>
+                <div class="calendar-header">Mon</div>
+                <div class="calendar-header">Tue</div>
+                <div class="calendar-header">Wed</div>
+                <div class="calendar-header">Thu</div>
+                <div class="calendar-header">Fri</div>
+                <div class="calendar-header">Sat</div>
+                
+                <!-- Calendar Days -->
+                <!-- Week 1 -->
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">24</div>
+                </div>
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">25</div>
+                </div>
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">26</div>
+                </div>
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">27</div>
+                </div>
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">28</div>
+                </div>
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">29</div>
+                </div>
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">30</div>
+                </div>
+                
+                <!-- Week 2 -->
+                <div class="calendar-day has-event">
+                    <div class="day-number">1</div>
+                    <div class="event-dot"></div>
+                    <div class="event-name">Horror Film</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">2</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">3</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">4</div>
+                </div>
+                <div class="calendar-day has-event">
+                    <div class="day-number">5</div>
+                    <div class="event-dot"></div>
+                    <div class="event-name">Workshop</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">6</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">7</div>
+                </div>
+                
+                <!-- Week 3 -->
+                <div class="calendar-day">
+                    <div class="day-number">8</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">9</div>
+                </div>
+                <div class="calendar-day has-event">
+                    <div class="day-number">10</div>
+                    <div class="event-dot"></div>
+                    <div class="event-name">Book Club</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">11</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">12</div>
+                </div>
+                <div class="calendar-day has-event">
+                    <div class="day-number">13</div>
+                    <div class="event-dot"></div>
+                    <div class="event-name">Friday 13th</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">14</div>
+                </div>
+                
+                <!-- Week 4 -->
+                <div class="calendar-day">
+                    <div class="day-number">15</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">16</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">17</div>
+                </div>
+                <div class="calendar-day has-event">
+                    <div class="day-number">18</div>
+                    <div class="event-dot"></div>
+                    <div class="event-name">Art Show</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">19</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">20</div>
+                </div>
+                <div class="calendar-day has-event">
+                    <div class="day-number">21</div>
+                    <div class="event-dot"></div>
+                    <div class="event-name">Haunted Tour</div>
+                </div>
+                
+                <!-- Week 5 -->
+                <div class="calendar-day">
+                    <div class="day-number">22</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">23</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">24</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">25</div>
+                </div>
+                <div class="calendar-day has-event">
+                    <div class="day-number">26</div>
+                    <div class="event-dot"></div>
+                    <div class="event-name">VR Experience</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">27</div>
+                </div>
+                <div class="calendar-day">
+                    <div class="day-number">28</div>
+                </div>
+                
+                <!-- Week 6 -->
+                <div class="calendar-day">
+                    <div class="day-number">29</div>
+                </div>
+                <div class="calendar-day has-event">
+                    <div class="day-number">30</div>
+                    <div class="event-dot"></div>
+                    <div class="event-name">Pre-Halloween</div>
+                </div>
+                <div class="calendar-day has-event">
+                    <div class="day-number">31</div>
+                    <div class="event-dot"></div>
+                    <div class="event-name">Midnight Massacre</div>
+                </div>
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">1</div>
+                </div>
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">2</div>
+                </div>
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">3</div>
+                </div>
+                <div class="calendar-day opacity-50">
+                    <div class="day-number">4</div>
+                </div>
+            </div>
+            
+            <p class="text-center text-sm text-gray-400">Click on a day with an event dot to see event details.</p>
+        </section>
+        
+        <!-- Upcoming Events -->
+        <section id="upcoming-events" class="mb-16">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                <h3 class="section-title text-3xl mb-4 md:mb-0">UPCOMING EVENTS</h3>
+                
+                <div class="flex flex-wrap gap-2">
+                    <button class="filter-btn py-1 px-3 rounded text-sm active" data-filter="all">All</button>
+                    <button class="filter-btn py-1 px-3 rounded text-sm" data-filter="workshop">Workshops</button>
+                    <button class="filter-btn py-1 px-3 rounded text-sm" data-filter="screening">Screenings</button>
+                    <button class="filter-btn py-1 px-3 rounded text-sm" data-filter="experience">Experiences</button>
+                    <button class="filter-btn py-1 px-3 rounded text-sm" data-filter="meetup">Meetups</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Event 1 -->
+                <div class="event-card rounded-lg overflow-hidden" data-category="screening">
+                    <div class="event-image">
+                        <div class="event-date">Oct 13</div>
+                        <div class="event-category">SCREENING</div>
+                        <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="bg-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#3a0000"/>
+                                    <stop offset="100%" stop-color="#1a0000"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="100" height="100" fill="url(#bg-gradient-1)"/>
+                            <rect x="20" y="20" width="60" height="40" fill="#000" stroke="#500" stroke-width="1"/>
+                            <path d="M50 30 L65 40 L50 50 Z" fill="#8a0303"/>
+                            <path d="M0 70 L100 70 L100 100 L0 100 Z" fill="#000" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="event-title mb-2">FRIDAY THE 13TH MARATHON</h4>
+                        <div class="event-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>October 13, 2023 | 6:00 PM</span>
+                        </div>
+                        <div class="event-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>FearFactory Theater</span>
+                        </div>
+                        <div class="event-info mb-3">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>$25.00</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-4">Join us for a terrifying marathon of the classic Friday the 13th films. Includes exclusive behind-the-scenes commentary and themed refreshments.</p>
+                        <button class="btn-primary w-full py-2 rounded">Register</button>
+                    </div>
+                </div>
+                
+                <!-- Event 2 -->
+                <div class="event-card rounded-lg overflow-hidden" data-category="workshop">
+                    <div class="event-image">
+                        <div class="event-date">Oct 18</div>
+                        <div class="event-category">WORKSHOP</div>
+                        <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="bg-gradient-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#2a0000"/>
+                                    <stop offset="100%" stop-color="#0a0000"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="100" height="100" fill="url(#bg-gradient-2)"/>
+                            <circle cx="50" cy="40" r="20" fill="#300" stroke="#500" stroke-width="1"/>
+                            <path d="M40 40 C40 30, 60 30, 60 40" stroke="#8a0303" stroke-width="2" fill="none"/>
+                            <path d="M45 35 A2 2 0 1 1 45 35.1" fill="#8a0303"/>
+                            <path d="M55 35 A2 2 0 1 1 55 35.1" fill="#8a0303"/>
+                            <path d="M30 60 L70 60 L70 80 L30 80 Z" fill="#300" stroke="#500" stroke-width="1"/>
+                            <path d="M0 70 L100 70 L100 100 L0 100 Z" fill="#000" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="event-title mb-2">HORROR MAKEUP MASTERCLASS</h4>
+                        <div class="event-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>October 18, 2023 | 2:00 PM</span>
+                        </div>
+                        <div class="event-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>FearFactory Studio</span>
+                        </div>
+                        <div class="event-info mb-3">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>$75.00</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-4">Learn professional horror makeup techniques from industry experts. All materials provided. Take home your own special effects makeup kit.</p>
+                        <button class="btn-primary w-full py-2 rounded">Register</button>
+                    </div>
+                </div>
+                
+                <!-- Event 3 -->
+                <div class="event-card rounded-lg overflow-hidden" data-category="experience">
+                    <div class="event-image">
+                        <div class="event-date">Oct 21</div>
+                        <div class="event-category">EXPERIENCE</div>
+                        <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="bg-gradient-3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#4a0000"/>
+                                    <stop offset="100%" stop-color="#2a0000"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="100" height="100" fill="url(#bg-gradient-3)"/>
+                            <path d="M20 30 L50 10 L80 30 L80 70 L50 90 L20 70 Z" fill="#300" stroke="#500" stroke-width="1"/>
+                            <path d="M35 40 L45 40 L45 50 L35 50 Z" fill="#000"/>
+                            <path d="M55 40 L65 40 L65 50 L55 50 Z" fill="#000"/>
+                            <path d="M45 60 L55 60 L55 70 L45 70 Z" fill="#8a0303"/>
+                            <path d="M0 70 L100 70 L100 100 L0 100 Z" fill="#000" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="event-title mb-2">HAUNTED WAREHOUSE TOUR</h4>
+                        <div class="event-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>October 21, 2023 | 8:00 PM</span>
+                        </div>
+                        <div class="event-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Abandoned Warehouse District</span>
+                        </div>
+                        <div class="event-info mb-3">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>$35.00</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-4">Explore a genuinely haunted warehouse with our paranormal experts. Equipment provided. Not for the faint of heart.</p>
+                        <button class="btn-primary w-full py-2 rounded">Register</button>
+                    </div>
+                </div>
+                
+                <!-- Event 4 -->
+                <div class="event-card rounded-lg overflow-hidden" data-category="experience">
+                    <div class="event-image">
+                        <div class="event-date">Oct 26</div>
+                        <div class="event-category">EXPERIENCE</div>
+                        <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="bg-gradient-4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#3a0000"/>
+                                    <stop offset="100%" stop-color="#1a0000"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="100" height="100" fill="url(#bg-gradient-4)"/>
+                            <rect x="30" y="20" width="40" height="60" fill="#300" stroke="#500" stroke-width="1"/>
+                            <circle cx="50" cy="40" r="15" fill="#000" stroke="#500" stroke-width="1"/>
+                            <path d="M45 40 A1 1 0 1 1 45 40.1" fill="#8a0303"/>
+                            <path d="M55 40 A1 1 0 1 1 55 40.1" fill="#8a0303"/>
+                            <path d="M0 70 L100 70 L100 100 L0 100 Z" fill="#000" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="event-title mb-2">VIRTUAL REALITY HORROR</h4>
+                        <div class="event-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>October 26, 2023 | 12:00 PM</span>
+                        </div>
+                        <div class="event-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>FearFactory VR Lab</span>
+                        </div>
+                        <div class="event-info mb-3">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>$45.00</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-4">Experience our latest horror VR simulation. Navigate through a haunted asylum with realistic graphics and binaural audio.</p>
+                        <button class="btn-primary w-full py-2 rounded">Register</button>
+                    </div>
+                </div>
+                
+                <!-- Event 5 -->
+                <div class="event-card rounded-lg overflow-hidden" data-category="meetup">
+                    <div class="event-image">
+                        <div class="event-date">Oct 30</div>
+                        <div class="event-category">MEETUP</div>
+                        <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="bg-gradient-5" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#2a0000"/>
+                                    <stop offset="100%" stop-color="#0a0000"/>
+                                </linearGradient>
+                            </defs>
+                            <rect width="100" height="100" fill="url(#bg-gradient-5)"/>
+                            <circle cx="30" cy="40" r="10" fill="#300" stroke="#500" stroke-width="1"/>
+                            <circle cx="50" cy="30" r="10" fill="#300" stroke="#500" stroke-width="1"/>
+                            <circle cx="70" cy="40" r="10" fill="#300" stroke="#500" stroke-width="1"/>
+                            <circle cx="40" cy="60" r="10" fill="#300" stroke="#500" stroke-width="1"/>
+                            <circle cx="60" cy="60" r="10" fill="#300" stroke="#500" stroke-width="1"/>
+                            <path d="M0 70 L100 70 L100 100 L0 100 Z" fill="#000" fill-opacity="0.7"/>
+                        </svg>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="event-title mb-2">HORROR AUTHORS MEETUP</h4>
+                        <div class="event-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>October 30, 2023 | 7:00 PM</span>
+                        </div>
+                        <div class="event-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Crimson Bookstore</span>
+                        </div>
+                        <div class="event-info mb-3">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>Free (Registration Required)</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-4">Meet local horror authors, discuss the craft of horror writing, and get books signed. Refreshments provided.</p>
+                        <button class="btn-primary w-full py-2 rounded">Register</button>
+                    </div>
+                </div>
+                
+                <!-- Event 6 -->
+                <div class="event-card rounded-lg overflow-hidden" data-category="experience">
+                    <div class="event-image">
+                        <div class="event-date">Oct 31</div>
+                        <div class="event-category">EXPERIENCE</div>
+                        <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="bg-gradient-6" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#5a0000"/>
+                                    <stop offset="100%" stop-color="#3a0000"/>
+                                </linearGradient>
+                                <radialGradient id="moon-glow" cx="70%" cy="30%" r="30%" fx="70%" fy="30%">
+                                    <stop offset="0%" stop-color="#aaa" stop-opacity="0.3"/>
+                                    <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                            <rect width="100" height="100" fill="url(#bg-gradient-6)"/>
+                            <circle cx="70" cy="30" r="15" fill="#aaa" stroke="#ccc" stroke-width="1"/>
+                            <rect width="100" height="100" fill="url(#moon-glow)"/>
+                            <path d="M10 70 L30 40 L50 70 L70 40 L90 70 L90 100 L10 100 Z" fill="#000" fill-opacity="0.8"/>
+                            <path d="M0 70 L100 70 L100 100 L0 100 Z" fill="#000" fill-opacity="0.5"/>
+                        </svg>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="event-title mb-2">MIDNIGHT MASSACRE</h4>
+                        <div class="event-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>October 31, 2023 | 10:00 PM</span>
+                        </div>
+                        <div class="event-info">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>FearFactory Warehouse</span>
+                        </div>
+                        <div class="event-info mb-3">
+                            <i class="fas fa-ticket-alt"></i>
+                            <span>$49.99</span>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-4">Our flagship Halloween event. Experience our haunted maze, live actors, and horrifying special effects. Not recommended for children.</p>
+                        <button class="btn-primary w-full py-2 rounded">Sold Out</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button class="bg-transparent border border-red-900 hover:border-red-600 text-red-600 hover:text-red-500 transition-colors py-2 px-6 rounded-md">Load More Events</button>
+            </div>
+        </section>
+        
+        <!-- Newsletter Section -->
+        <section class="mb-16">
+            <div class="bg-gradient-to-r from-red-900 to-black p-8 rounded-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="section-title text-3xl mb-4">NEVER MISS AN EVENT</h3>
+                        <p class="text-gray-300 mb-6">Subscribe to our newsletter to receive updates on upcoming events, exclusive offers, and horror content delivered straight to your inbox.</p>
+                        
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <input type="email" placeholder="Your email address" class="search-input py-2 px-4 rounded flex-grow">
+                            <button class="btn-primary py-2 px-6 rounded">Subscribe</button>
+                        </div>
+                        
+                        <p class="text-xs text-gray-400 mt-3">By subscribing, you agree to receive marketing emails. You can unsubscribe at any time.</p>
+                    </div>
+                    
+                    <div class="hidden md:block">
+                        <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                            <defs>
+                                <linearGradient id="envelope-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#300"/>
+                                    <stop offset="100%" stop-color="#100"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M10 30 L90 30 L90 70 L10 70 Z" fill="url(#envelope-gradient)" stroke="#500" stroke-width="1"/>
+                            <path d="M10 30 L50 50 L90 30" fill="none" stroke="#8a0303" stroke-width="2"/>
+                            <path d="M10 70 L40 50 M90 70 L60 50" fill="none" stroke="#8a0303" stroke-width="2"/>
+                            <circle cx="50" cy="50" r="5" fill="#8a0303"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Past Events Gallery -->
+        <section class="mb-16">
+            <h3 class="section-title text-3xl mb-8">PAST EVENTS GALLERY</h3>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <!-- Gallery Item 1 -->
+                <div class="gallery-item rounded-lg overflow-hidden">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="gallery-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#3a0000"/>
+                                <stop offset="100%" stop-color="#1a0000"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="100" height="100" fill="url(#gallery-1)"/>
+                        <circle cx="50" cy="40" r="20" fill="#300" stroke="#500" stroke-width="1"/>
+                        <path d="M40 40 C40 30, 60 30, 60 40" stroke="#8a0303" stroke-width="2" fill="none"/>
+                        <path d="M45 35 A2 2 0 1 1 45 35.1" fill="#8a0303"/>
+                        <path d="M55 35 A2 2 0 1 1 55 35.1" fill="#8a0303"/>
+                        <path d="M30 60 L70 60 L70 80 L30 80 Z" fill="#300" stroke="#500" stroke-width="1"/>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <h4 class="text-sm font-bold text-red-500">Horror Makeup Workshop</h4>
+                        <p class="text-xs text-gray-300">September 2023</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 2 -->
+                <div class="gallery-item rounded-lg overflow-hidden">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="gallery-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#4a0000"/>
+                                <stop offset="100%" stop-color="#2a0000"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="100" height="100" fill="url(#gallery-2)"/>
+                        <rect x="20" y="20" width="60" height="40" fill="#000" stroke="#500" stroke-width="1"/>
+                        <path d="M50 30 L65 40 L50 50 Z" fill="#8a0303"/>
+                        <path d="M20 70 L80 70 L80 80 L20 80 Z" fill="#300" stroke="#500" stroke-width="1"/>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <h4 class="text-sm font-bold text-red-500">Classic Horror Film Night</h4>
+                        <p class="text-xs text-gray-300">August 2023</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 3 -->
+                <div class="gallery-item rounded-lg overflow-hidden">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="gallery-3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2a0000"/>
+                                <stop offset="100%" stop-color="#0a0000"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="100" height="100" fill="url(#gallery-3)"/>
+                        <path d="M20 30 L50 10 L80 30 L80 70 L50 90 L20 70 Z" fill="#300" stroke="#500" stroke-width="1"/>
+                        <path d="M35 40 L45 40 L45 50 L35 50 Z" fill="#000"/>
+                        <path d="M55 40 L65 40 L65 50 L55 50 Z" fill="#000"/>
+                        <path d="M45 60 L55 60 L55 70 L45 70 Z" fill="#8a0303"/>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <h4 class="text-sm font-bold text-red-500">Summer Haunted House</h4>
+                        <p class="text-xs text-gray-300">July 2023</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 4 -->
+                <div class="gallery-item rounded-lg overflow-hidden">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="gallery-4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#3a0000"/>
+                                <stop offset="100%" stop-color="#1a0000"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="100" height="100" fill="url(#gallery-4)"/>
+                        <circle cx="30" cy="40" r="10" fill="#300" stroke="#500" stroke-width="1"/>
+                        <circle cx="50" cy="30" r="10" fill="#300" stroke="#500" stroke-width="1"/>
+                        <circle cx="70" cy="40" r="10" fill="#300" stroke="#500" stroke-width="1"/>
+                        <circle cx="40" cy="60" r="10" fill="#300" stroke="#500" stroke-width="1"/>
+                        <circle cx="60" cy="60" r="10" fill="#300" stroke="#500" stroke-width="1"/>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <h4 class="text-sm font-bold text-red-500">Horror Writers Convention</h4>
+                        <p class="text-xs text-gray-300">June 2023</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 5 -->
+                <div class="gallery-item rounded-lg overflow-hidden">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="gallery-5" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#5a0000"/>
+                                <stop offset="100%" stop-color="#3a0000"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="100" height="100" fill="url(#gallery-5)"/>
+                        <rect x="30" y="20" width="40" height="60" fill="#300" stroke="#500" stroke-width="1"/>
+                        <circle cx="50" cy="40" r="15" fill="#000" stroke="#500" stroke-width="1"/>
+                        <path d="M45 40 A1 1 0 1 1 45 40.1" fill="#8a0303"/>
+                        <path d="M55 40 A1 1 0 1 1 55 40.1" fill="#8a0303"/>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <h4 class="text-sm font-bold text-red-500">VR Horror Experience</h4>
+                        <p class="text-xs text-gray-300">May 2023</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 6 -->
+                <div class="gallery-item rounded-lg overflow-hidden">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="gallery-6" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#4a0000"/>
+                                <stop offset="100%" stop-color="#2a0000"/>
+                            </linearGradient>
+                            <radialGradient id="moon-glow-2" cx="70%" cy="30%" r="30%" fx="70%" fy="30%">
+                                <stop offset="0%" stop-color="#aaa" stop-opacity="0.3"/>
+                                <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+                            </radialGradient>
+                        </defs>
+                        <rect width="100" height="100" fill="url(#gallery-6)"/>
+                        <circle cx="70" cy="30" r="15" fill="#aaa" stroke="#ccc" stroke-width="1"/>
+                        <rect width="100" height="100" fill="url(#moon-glow-2)"/>
+                        <path d="M10 70 L30 40 L50 70 L70 40 L90 70 L90 100 L10 100 Z" fill="#000" fill-opacity="0.8"/>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <h4 class="text-sm font-bold text-red-500">Midnight Cemetery Tour</h4>
+                        <p class="text-xs text-gray-300">April 2023</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 7 -->
+                <div class="gallery-item rounded-lg overflow-hidden">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="gallery-7" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#3a0000"/>
+                                <stop offset="100%" stop-color="#1a0000"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="100" height="100" fill="url(#gallery-7)"/>
+                        <path d="M50 10 L80 30 L80 80 L20 80 L20 30 Z" fill="#300" stroke="#500" stroke-width="1"/>
+                        <path d="M45 80 L45 60 L55 60 L55 80 Z" fill="#500" stroke="#600" stroke-width="1"/>
+                        <path d="M30 50 L40 50 L40 60 L30 60 Z" fill="#000" stroke="#500" stroke-width="1"/>
+                        <path d="M60 50 L70 50 L70 60 L60 60 Z" fill="#000" stroke="#500" stroke-width="1"/>
+                        <path d="M50 10 L50 20 L60 25 Z" fill="#500"/>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <h4 class="text-sm font-bold text-red-500">Haunted House Design Workshop</h4>
+                        <p class="text-xs text-gray-300">March 2023</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Item 8 -->
+                <div class="gallery-item rounded-lg overflow-hidden">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="gallery-8" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#2a0000"/>
+                                <stop offset="100%" stop-color="#0a0000"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="100" height="100" fill="url(#gallery-8)"/>
+                        <rect x="20" y="20" width="60" height="60" fill="#300" stroke="#500" stroke-width="1"/>
+                        <path d="M30 30 L70 30 L70 70 L30 70 Z" fill="none" stroke="#8a0303" stroke-width="2"/>
+                        <path d="M40 40 L60 40 L60 60 L40 60 Z" fill="#8a0303"/>
+                        <path d="M20 20 L80 80 M80 20 L20 80" stroke="#8a0303" stroke-width="1"/>
+                    </svg>
+                    <div class="gallery-overlay">
+                        <h4 class="text-sm font-bold text-red-500">Horror Game Night</h4>
+                        <p class="text-xs text-gray-300">February 2023</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button class="bg-transparent border border-red-900 hover:border-red-600 text-red-600 hover:text-red-500 transition-colors py-2 px-6 rounded-md">View Full Gallery</button>
+            </div>
+        </section>
+        
+        <!-- Host Your Own Event -->
+        <section class="mb-16">
+            <div class="bg-gradient-to-r from-black to-red-900 p-8 rounded-lg text-center">
+                <h3 class="section-title text-3xl mb-4">HOST YOUR OWN HORROR EVENT</h3>
+                <p class="text-gray-300 mb-6 max-w-2xl mx-auto">Looking to host your own horror-themed event? FearFactory offers venue rental, equipment, props, and professional staff to make your nightmare a reality.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#" class="btn-primary py-3 px-8 rounded-md">Inquire Now</a>
+                    <a href="#" class="bg-transparent border border-red-700 text-red-500 hover:bg-red-900 hover:text-white transition-colors py-3 px-8 rounded-md">Learn More</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer py-8 px-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">FEARFACTORY</h4>
+                    <p class="text-sm text-gray-400 mb-4">Creating digital nightmares since 2010. We specialize in horror-themed websites, apps, games, and 3D models.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">QUICK LINKS</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Projects</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Custom Project</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Events</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">EVENT CATEGORIES</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Workshops</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Screenings</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Experiences</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Meetups</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Special Events</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">NEWSLETTER</h4>
+                    <p class="text-sm text-gray-400 mb-4">Subscribe to our newsletter for the latest updates and exclusive offers.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="search-input py-2 px-3 rounded-l text-sm flex-grow">
+                        <button class="btn-primary py-2 px-4 rounded-r text-sm">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-sm text-gray-500">
+                <p>&copy; 2023 FearFactory. All rights reserved. Enter at your own risk.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const eventDate = new Date('October 31, 2023 22:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = eventDate - now;
+            
+            if (timeLeft > 0) {
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                document.getElementById('countdown-days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('countdown-hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('countdown-minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('countdown-seconds').textContent = seconds.toString().padStart(2, '0');
+            } else {
+                document.getElementById('countdown').innerHTML = '<div class="text-red-500 font-bold">Event has started!</div>';
+            }
+        }
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Event filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn[data-filter]');
+            const eventCards = document.querySelectorAll('.event-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Show/hide events based on filter
+                    eventCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Calendar day click event
+            const calendarDays = document.querySelectorAll('.calendar-day.has-event');
+            
+            calendarDays.forEach(day => {
+                day.addEventListener('click', function() {
+                    const dayNumber = this<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93ea7637a11c0942',t:'MTc0NzA1ODYzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>

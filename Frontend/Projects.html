@@ -4,607 +4,632 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FearFactory - Project Templates</title>
+    <title>FearFactory - Projects</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Nosifer&display=swap');
+        
+        :root {
+            --blood-red: #8a0303;
+            --dark-red: #5a0000;
+            --black: #0a0000;
+            --gray: #333;
+            --light-gray: #aaa;
+        }
+        
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #0a0a0a;
-            color: #e0e0e0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23300000' fill-opacity='0.1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        .logo-font {
-            font-family: 'Creepster', cursive;
-        }
-        .template-card {
-            transition: all 0.3s ease;
-            background: linear-gradient(to bottom, rgba(30,30,30,0.9), rgba(15,15,15,0.95));
-            border: 1px solid #3a0000;
-        }
-        .template-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(200, 0, 0, 0.2);
-            border: 1px solid #600;
-        }
-        .category-pill.active {
-            background-color: #600;
+            font-family: 'Special Elite', cursive;
+            background-color: var(--black);
             color: #fff;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23300000' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
         }
-        .blood-btn {
-            background: linear-gradient(to bottom, #900, #600);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+        
+        .logo-text {
+            font-family: 'Nosifer', cursive;
+            color: var(--blood-red);
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.7), 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+        
+        .section-title {
+            font-family: 'Creepster', cursive;
+            color: var(--blood-red);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .blood-drip {
+            position: relative;
+        }
+        
+        .blood-drip::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 15px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='15' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L10,0 L5,15 L0,0 M20,0 L30,0 L25,15 L20,0 M40,0 L50,0 L45,15 L40,0 M60,0 L70,0 L65,15 L60,0 M80,0 L90,0 L85,15 L80,0' fill='%238a0303'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #1a0000 0%, #3a0000 100%);
+            border: 1px solid var(--blood-red);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(138, 3, 3, 0.4);
+        }
+        
+        .card-badge {
+            background-color: var(--blood-red);
+            font-family: 'Special Elite', cursive;
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-primary {
+            background-color: var(--blood-red);
+            border: 1px solid #600;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn-primary:hover {
+            background-color: #b00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .category-btn {
+            background-color: rgba(138, 3, 3, 0.2);
+            border: 1px solid var(--blood-red);
             transition: all 0.3s ease;
         }
-        .blood-btn:hover {
-            background: linear-gradient(to bottom, #a00, #700);
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        
+        .category-btn.active {
+            background-color: var(--blood-red);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
-        .preview-image {
+        
+        .category-btn:hover:not(.active) {
+            background-color: rgba(138, 3, 3, 0.4);
+        }
+        
+        .price-tag {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--blood-red);
+            font-family: 'Special Elite', cursive;
+        }
+        
+        .achievement-tag {
+            background-color: #3a0000;
+            border: 1px dashed var(--blood-red);
+            font-size: 0.7rem;
+        }
+        
+        .template-section {
+            background-color: rgba(10, 0, 0, 0.7);
+            border: 1px solid var(--dark-red);
+        }
+        
+        .template-card {
+            background-color: rgba(30, 0, 0, 0.5);
+            border: 1px solid var(--blood-red);
+        }
+        
+        .template-card:hover {
+            background-color: rgba(50, 0, 0, 0.7);
+        }
+        
+        .nav-link {
             position: relative;
-            overflow: hidden;
+            color: #ccc;
+            transition: all 0.3s ease;
         }
-        .preview-image::after {
+        
+        .nav-link:hover {
+            color: var(--blood-red);
+        }
+        
+        .nav-link::after {
             content: '';
             position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--blood-red);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .search-input {
+            background-color: rgba(30, 0, 0, 0.7);
+            border: 1px solid var(--dark-red);
+            color: #fff;
+        }
+        
+        .search-input:focus {
+            border-color: var(--blood-red);
+            box-shadow: 0 0 0 2px rgba(138, 3, 3, 0.3);
+        }
+        
+        .footer {
+            background-color: rgba(10, 0, 0, 0.9);
+            border-top: 1px solid var(--dark-red);
+        }
+        
+        /* Animated blood effect */
+        .blood-bg {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 100%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.05;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 L20,0 L10,100 L0,0 M30,0 L50,0 L40,100 L30,0 M60,0 L80,0 L70,100 L60,0 M90,0 L100,0 L95,100 L90,0' fill='%238a0303' fill-opacity='0.3'/%3E%3C/svg%3E");
+            animation: blood-drip 10s linear infinite;
         }
-        .form-input {
-            background-color: rgba(30,30,30,0.8);
-            border: 1px solid #3a0000;
-            color: #e0e0e0;
+        
+        @keyframes blood-drip {
+            from { background-position: 0 0; }
+            to { background-position: 0 100%; }
         }
-        .form-input:focus {
-            border-color: #600;
-            box-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+        
+        /* Flickering effect */
+        .flicker {
+            animation: flicker 5s infinite alternate;
         }
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
+        
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 1;
             }
-            70% {
-                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.5;
             }
         }
     </style>
 </head>
-<body>
-    <!-- Navigation Bar -->
-    <nav class="bg-black bg-opacity-80 shadow-lg border-b border-red-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <span class="text-red-600 text-2xl logo-font">FearFactory</span>
+<body class="min-h-screen">
+    <div class="blood-bg"></div>
+    
+    <!-- Header -->
+    <header class="py-4 px-6 md:px-10 border-b border-red-900">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <div class="w-12 h-12 mr-3">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M50 0 L95 25 L95 75 L50 100 L5 75 L5 25 Z" fill="#300" stroke="#8a0303" stroke-width="3"/>
+                            <path d="M30 30 L70 30 L70 70 L30 70 Z" fill="none" stroke="#8a0303" stroke-width="3"/>
+                            <path d="M40 40 L60 40 L60 60 L40 60 Z" fill="#8a0303"/>
+                            <path d="M20 20 L80 80 M80 20 L20 80" stroke="#8a0303" stroke-width="3"/>
+                        </svg>
                     </div>
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                        <a href="#" class="border-transparent text-gray-400 hover:text-red-500 hover:border-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Dashboard
-                        </a>
-                        <a href="#" class="border-red-600 text-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Templates
-                        </a>
-                        <a href="#" class="border-transparent text-gray-400 hover:text-red-500 hover:border-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Projects
-                        </a>
-                        <a href="#" class="border-transparent text-gray-400 hover:text-red-500 hover:border-red-500 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Team
-                        </a>
+                    <h1 class="logo-text text-2xl md:text-3xl font-bold tracking-wider flicker">FEAR<span class="text-white">FACTORY</span></h1>
+                </div>
+                
+                <nav class="flex flex-wrap justify-center gap-6">
+                    <a href="#" class="nav-link text-sm md:text-base">HOME</a>
+                    <a href="#" class="nav-link text-sm md:text-base text-red-600 font-bold">PROJECTS</a>
+                    <a href="#" class="nav-link text-sm md:text-base">SERVICES</a>
+                    <a href="#" class="nav-link text-sm md:text-base">ABOUT</a>
+                    <a href="#" class="nav-link text-sm md:text-base">CONTACT</a>
+                </nav>
+                
+                <div class="hidden md:flex items-center mt-4 md:mt-0">
+                    <div class="relative">
+                        <input type="text" placeholder="Search projects..." class="search-input py-1 px-3 pr-8 rounded text-sm w-40 md:w-48">
+                        <i class="fas fa-search absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                    <button class="btn-primary ml-3 py-1 px-4 rounded text-sm">Sign In</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="mb-12 text-center">
+            <h2 class="section-title text-4xl md:text-5xl mb-4">CHOOSE YOUR NIGHTMARE</h2>
+            <p class="max-w-2xl mx-auto text-gray-300 mb-8">Browse our collection of terrifying projects or create your own horror masterpiece. From haunting websites to spine-chilling games, we have everything to bring your darkest ideas to life.</p>
+            
+            <div class="blood-drip relative inline-block">
+                <div class="flex flex-wrap justify-center gap-3 md:gap-4">
+                    <button class="category-btn active py-2 px-4 rounded-md text-sm md:text-base">All Projects</button>
+                    <button class="category-btn py-2 px-4 rounded-md text-sm md:text-base">Websites</button>
+                    <button class="category-btn py-2 px-4 rounded-md text-sm md:text-base">Android Apps</button>
+                    <button class="category-btn py-2 px-4 rounded-md text-sm md:text-base">Games</button>
+                    <button class="category-btn py-2 px-4 rounded-md text-sm md:text-base">3D Models</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Featured Projects -->
+        <section class="mb-16">
+            <h3 class="section-title text-3xl mb-8">FEATURED PROJECTS</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project Card 1 -->
+                <div class="card rounded-lg overflow-hidden">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-red-900 to-black flex items-center justify-center">
+                            <svg class="w-24 h-24 text-red-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute top-2 left-2 flex gap-2">
+                            <span class="card-badge">PREMIUM</span>
+                            <span class="card-badge bg-black text-red-600">NEW</span>
+                        </div>
+                        <div class="absolute bottom-2 right-2">
+                            <span class="price-tag py-1 px-3 rounded-full text-sm">$199</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-red-500">Haunted Mansion</h4>
+                            <div class="text-xs text-gray-400">Launch: Oct 31, 2023</div>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-3">Interactive horror website with immersive storytelling and jump scares. Perfect for haunted attractions.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="achievement-tag px-2 py-1 rounded-sm">5K+ Downloads</span>
+                            <span class="achievement-tag px-2 py-1 rounded-sm">Award Winner</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Preview</button>
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Order Now</button>
+                        </div>
                     </div>
                 </div>
-                <div class="hidden sm:ml-6 sm:flex sm:items-center">
-                    <button class="bg-black p-1 rounded-full text-gray-400 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                        <span class="sr-only">View notifications</span>
-                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                        </svg>
-                    </button>
-
-                    <!-- Profile dropdown -->
-                    <div class="ml-3 relative">
-                        <div>
-                            <button type="button" class="bg-black rounded-full flex text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                                <span class="sr-only">Open user menu</span>
-                                <div class="h-8 w-8 rounded-full bg-red-900 flex items-center justify-center text-white font-medium">
-                                    FF
-                                </div>
-                            </button>
+                
+                <!-- Project Card 2 -->
+                <div class="card rounded-lg overflow-hidden">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-red-900 to-black flex items-center justify-center">
+                            <svg class="w-24 h-24 text-red-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute top-2 left-2 flex gap-2">
+                            <span class="card-badge">ANDROID APP</span>
+                        </div>
+                        <div class="absolute bottom-2 right-2">
+                            <span class="price-tag py-1 px-3 rounded-full text-sm">$149</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-red-500">Nightmare Tracker</h4>
+                            <div class="text-xs text-gray-400">Launch: Sep 13, 2023</div>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-3">Android app that tracks paranormal activity and creates personalized horror experiences based on user location.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="achievement-tag px-2 py-1 rounded-sm">10K+ Installs</span>
+                            <span class="achievement-tag px-2 py-1 rounded-sm">Editor's Choice</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Preview</button>
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card 3 -->
+                <div class="card rounded-lg overflow-hidden">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-red-900 to-black flex items-center justify-center">
+                            <svg class="w-24 h-24 text-red-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute top-2 left-2 flex gap-2">
+                            <span class="card-badge">GAME</span>
+                            <span class="card-badge bg-black text-red-600">BESTSELLER</span>
+                        </div>
+                        <div class="absolute bottom-2 right-2">
+                            <span class="price-tag py-1 px-3 rounded-full text-sm">$299</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-red-500">Asylum Escape</h4>
+                            <div class="text-xs text-gray-400">Launch: Aug 7, 2023</div>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-3">Psychological horror game with multiple endings. Players must escape an abandoned asylum while maintaining their sanity.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="achievement-tag px-2 py-1 rounded-sm">25K+ Players</span>
+                            <span class="achievement-tag px-2 py-1 rounded-sm">Top Rated</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Preview</button>
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card 4 -->
+                <div class="card rounded-lg overflow-hidden">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-red-900 to-black flex items-center justify-center">
+                            <svg class="w-24 h-24 text-red-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M9.504 1.132a1 1 0 01.992 0l1.75 1a1 1 0 11-.992 1.736L10 3.152l-1.254.716a1 1 0 11-.992-1.736l1.75-1zM5.618 4.504a1 1 0 01-.372 1.364L5.016 6l.23.132a1 1 0 11-.992 1.736L4 7.723V8a1 1 0 01-2 0V6a.996.996 0 01.52-.878l1.734-.99a1 1 0 011.364.372zm8.764 0a1 1 0 011.364-.372l1.733.99A1.002 1.002 0 0118 6v2a1 1 0 11-2 0v-.277l-.254.145a1 1 0 11-.992-1.736l.23-.132-.23-.132a1 1 0 01-.372-1.364zm-7 4a1 1 0 011.364-.372L10 8.848l1.254-.716a1 1 0 11.992 1.736L11 10.58V12a1 1 0 11-2 0v-1.42l-1.246-.712a1 1 0 01-.372-1.364zM3 11a1 1 0 011 1v1.42l1.246.712a1 1 0 11-.992 1.736l-1.75-1A1 1 0 012 14v-2a1 1 0 011-1zm14 0a1 1 0 011 1v2a1 1 0 01-.504.868l-1.75 1a1 1 0 11-.992-1.736L16 13.42V12a1 1 0 011-1zm-9.618 5.504a1 1 0 011.364-.372l.254.145V16a1 1 0 112 0v.277l.254-.145a1 1 0 11.992 1.736l-1.735.992a.995.995 0 01-1.022 0l-1.735-.992a1 1 0 01-.372-1.364z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute top-2 left-2 flex gap-2">
+                            <span class="card-badge">3D MODEL</span>
+                        </div>
+                        <div class="absolute bottom-2 right-2">
+                            <span class="price-tag py-1 px-3 rounded-full text-sm">$249</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-red-500">Demonic Entity</h4>
+                            <div class="text-xs text-gray-400">Launch: Nov 5, 2023</div>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-3">High-quality 3D model of a demonic entity with realistic textures and animations. Perfect for games and VR experiences.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="achievement-tag px-2 py-1 rounded-sm">Featured</span>
+                            <span class="achievement-tag px-2 py-1 rounded-sm">High Detail</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Preview</button>
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card 5 -->
+                <div class="card rounded-lg overflow-hidden">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-red-900 to-black flex items-center justify-center">
+                            <svg class="w-24 h-24 text-red-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3 5a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-2.22l.123.489.804.804A1 1 0 0113 18H7a1 1 0 01-.707-1.707l.804-.804L7.22 15H5a2 2 0 01-2-2V5zm5.771 7H5V5h10v7H8.771z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute top-2 left-2 flex gap-2">
+                            <span class="card-badge">WEBSITE</span>
+                            <span class="card-badge bg-black text-red-600">POPULAR</span>
+                        </div>
+                        <div class="absolute bottom-2 right-2">
+                            <span class="price-tag py-1 px-3 rounded-full text-sm">$179</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-red-500">Cursed Portfolio</h4>
+                            <div class="text-xs text-gray-400">Launch: Jul 13, 2023</div>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-3">A portfolio website with a horror twist. Features glitch effects, eerie animations, and a unique user experience.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="achievement-tag px-2 py-1 rounded-sm">Creative Award</span>
+                            <span class="achievement-tag px-2 py-1 rounded-sm">Mobile Ready</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Preview</button>
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Order Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card 6 -->
+                <div class="card rounded-lg overflow-hidden">
+                    <div class="relative">
+                        <div class="h-48 bg-gradient-to-br from-red-900 to-black flex items-center justify-center">
+                            <svg class="w-24 h-24 text-red-700" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="absolute top-2 left-2 flex gap-2">
+                            <span class="card-badge">ANDROID APP</span>
+                        </div>
+                        <div class="absolute bottom-2 right-2">
+                            <span class="price-tag py-1 px-3 rounded-full text-sm">$129</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="text-xl font-bold text-red-500">Ghost Detector</h4>
+                            <div class="text-xs text-gray-400">Launch: Dec 21, 2023</div>
+                        </div>
+                        <p class="text-sm text-gray-300 mb-3">Android app that uses device sensors to "detect" supernatural activity. Includes EVP recorder and thermal camera simulation.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="achievement-tag px-2 py-1 rounded-sm">15K+ Downloads</span>
+                            <span class="achievement-tag px-2 py-1 rounded-sm">4.8 Rating</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Preview</button>
+                            <button class="btn-primary py-1 px-4 rounded text-sm">Order Now</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <!-- Header -->
-        <div class="mb-8 text-center">
-            <h1 class="text-4xl font-bold text-red-600 logo-font mb-2">Nightmare Project Templates</h1>
-            <p class="mt-2 text-gray-400 max-w-2xl mx-auto">Choose from our collection of horrifying templates or request a custom one to bring your darkest visions to life</p>
-        </div>
-
-        <!-- Filter Categories -->
-        <div class="mb-8">
-            <div class="flex flex-wrap gap-2 justify-center">
-                <button class="category-pill active px-4 py-2 rounded-full text-sm font-medium">
-                    All Templates
-                </button>
-                <button class="category-pill bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-full text-sm font-medium">
-                    Horror Websites
-                </button>
-                <button class="category-pill bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-full text-sm font-medium">
-                    Horror Games
-                </button>
-                <button class="category-pill bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-full text-sm font-medium">
-                    3D Models
-                </button>
-                <button class="category-pill bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-full text-sm font-medium">
-                    VR Experiences
-                </button>
-                <button class="category-pill bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-full text-sm font-medium">
-                    Sound Design
-                </button>
-            </div>
-        </div>
-
-        <!-- Templates Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            <!-- Template 1 - Horror Website -->
-            <div class="template-card rounded-lg overflow-hidden shadow-lg">
-                <div class="h-48 preview-image relative">
-                    <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
-                        <defs>
-                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#300;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <rect width="800" height="400" fill="url(#grad1)"/>
-                        <path d="M0,100 Q200,150 400,100 T800,100 V400 H0 Z" fill="#100" fill-opacity="0.7"/>
-                        <text x="400" y="150" font-family="Creepster" font-size="40" fill="#900" text-anchor="middle">HAUNTED MANSION</text>
-                        <rect x="300" y="180" width="200" height="40" rx="5" fill="#600"/>
-                        <text x="400" y="208" font-family="Arial" font-size="16" fill="white" text-anchor="middle">ENTER IF YOU DARE</text>
-                        <path d="M650,50 Q670,60 690,50 T730,50" stroke="#600" stroke-width="2" fill="none"/>
-                        <path d="M670,70 Q690,80 710,70 T750,70" stroke="#600" stroke-width="2" fill="none"/>
-                        <circle cx="100" cy="80" r="30" fill="#300" fill-opacity="0.6"/>
-                        <circle cx="700" cy="300" r="40" fill="#300" fill-opacity="0.6"/>
-                    </svg>
-                    <div class="absolute top-2 right-2 bg-red-900 text-white text-xs px-2 py-1 rounded">
-                        Popular
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg text-red-500">Haunted Mansion Website</h3>
-                    <p class="text-gray-400 text-sm mt-1">Atmospheric template for haunted attractions</p>
-                    <div class="flex items-center mt-3">
-                        <span class="text-xs bg-red-900 bg-opacity-30 text-red-400 px-2 py-1 rounded">Horror Website</span>
-                        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded ml-2">Attraction</span>
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <button class="blood-btn text-white px-4 py-2 rounded text-sm font-medium">
-                            Use Template
-                        </button>
-                        <button class="text-red-500 hover:text-red-400 text-sm font-medium">
-                            Preview
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Template 2 - Horror Game -->
-            <div class="template-card rounded-lg overflow-hidden shadow-lg">
-                <div class="h-48 preview-image relative">
-                    <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
-                        <defs>
-                            <radialGradient id="grad2" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
-                                <stop offset="0%" style="stop-color:#300;stop-opacity:0.8" />
-                                <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
-                            </radialGradient>
-                        </defs>
-                        <rect width="800" height="400" fill="url(#grad2)"/>
-                        <path d="M400,100 L450,200 L400,300 L350,200 Z" fill="#600" fill-opacity="0.7"/>
-                        <circle cx="400" cy="200" r="30" fill="#000"/>
-                        <text x="400" y="100" font-family="Creepster" font-size="40" fill="#900" text-anchor="middle">ASYLUM ESCAPE</text>
-                        <path d="M100,300 L150,320 L200,300 L250,320 L300,300" stroke="#600" stroke-width="2" fill="none"/>
-                        <path d="M500,300 L550,320 L600,300 L650,320 L700,300" stroke="#600" stroke-width="2" fill="none"/>
-                        <circle cx="200" cy="150" r="20" fill="#300" fill-opacity="0.6"/>
-                        <circle cx="600" cy="150" r="20" fill="#300" fill-opacity="0.6"/>
-                    </svg>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg text-red-500">Asylum Escape Game</h3>
-                    <p class="text-gray-400 text-sm mt-1">First-person horror game template</p>
-                    <div class="flex items-center mt-3">
-                        <span class="text-xs bg-red-900 bg-opacity-30 text-red-400 px-2 py-1 rounded">Horror Game</span>
-                        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded ml-2">First-Person</span>
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <button class="blood-btn text-white px-4 py-2 rounded text-sm font-medium">
-                            Use Template
-                        </button>
-                        <button class="text-red-500 hover:text-red-400 text-sm font-medium">
-                            Preview
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Template 3 - 3D Models -->
-            <div class="template-card rounded-lg overflow-hidden shadow-lg">
-                <div class="h-48 preview-image relative">
-                    <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
-                        <defs>
-                            <linearGradient id="grad3" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#200;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <rect width="800" height="400" fill="url(#grad3)"/>
-                        <path d="M400,100 L500,150 L400,200 L300,150 Z" fill="none" stroke="#600" stroke-width="2"/>
-                        <path d="M400,200 L500,150 L500,250 L400,300 Z" fill="none" stroke="#600" stroke-width="2"/>
-                        <path d="M400,200 L400,300 L300,250 L300,150 Z" fill="none" stroke="#600" stroke-width="2"/>
-                        <path d="M400,100 L400,200 L300,150 Z" fill="#300" fill-opacity="0.6"/>
-                        <path d="M400,100 L500,150 L400,200 Z" fill="#400" fill-opacity="0.6"/>
-                        <path d="M400,200 L500,150 L500,250 Z" fill="#200" fill-opacity="0.6"/>
-                        <text x="400" y="350" font-family="Creepster" font-size="30" fill="#900" text-anchor="middle">MONSTER MODELS</text>
-                    </svg>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg text-red-500">Monster 3D Models</h3>
-                    <p class="text-gray-400 text-sm mt-1">High-quality creature model templates</p>
-                    <div class="flex items-center mt-3">
-                        <span class="text-xs bg-red-900 bg-opacity-30 text-red-400 px-2 py-1 rounded">3D Models</span>
-                        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded ml-2">Creatures</span>
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <button class="blood-btn text-white px-4 py-2 rounded text-sm font-medium">
-                            Use Template
-                        </button>
-                        <button class="text-red-500 hover:text-red-400 text-sm font-medium">
-                            Preview
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Template 4 - VR Experience -->
-            <div class="template-card rounded-lg overflow-hidden shadow-lg">
-                <div class="h-48 preview-image relative">
-                    <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
-                        <defs>
-                            <radialGradient id="grad4" cx="50%" cy="50%" r="70%" fx="50%" fy="50%">
-                                <stop offset="0%" style="stop-color:#400;stop-opacity:0.8" />
-                                <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
-                            </radialGradient>
-                        </defs>
-                        <rect width="800" height="400" fill="url(#grad4)"/>
-                        <path d="M300,150 Q400,50 500,150 Q550,200 500,250 Q400,350 300,250 Q250,200 300,150 Z" fill="none" stroke="#600" stroke-width="2"/>
-                        <ellipse cx="400" cy="200" rx="80" ry="30" fill="#300" fill-opacity="0.4"/>
-                        <path d="M350,150 Q400,100 450,150" fill="none" stroke="#600" stroke-width="2"/>
-                        <path d="M350,250 Q400,300 450,250" fill="none" stroke="#600" stroke-width="2"/>
-                        <text x="400" y="205" font-family="Creepster" font-size="30" fill="#900" text-anchor="middle">VR NIGHTMARE</text>
-                    </svg>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg text-red-500">VR Nightmare Experience</h3>
-                    <p class="text-gray-400 text-sm mt-1">Immersive virtual reality horror template</p>
-                    <div class="flex items-center mt-3">
-                        <span class="text-xs bg-red-900 bg-opacity-30 text-red-400 px-2 py-1 rounded">VR Experience</span>
-                        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded ml-2">Immersive</span>
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <button class="blood-btn text-white px-4 py-2 rounded text-sm font-medium">
-                            Use Template
-                        </button>
-                        <button class="text-red-500 hover:text-red-400 text-sm font-medium">
-                            Preview
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Template 5 - Sound Design -->
-            <div class="template-card rounded-lg overflow-hidden shadow-lg">
-                <div class="h-48 preview-image relative">
-                    <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
-                        <defs>
-                            <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#200;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <rect width="800" height="400" fill="url(#grad5)"/>
-                        <path d="M200,200 Q300,100 400,200 Q500,300 600,200" stroke="#600" stroke-width="2" fill="none"/>
-                        <path d="M200,220 Q300,170 400,220 Q500,270 600,220" stroke="#600" stroke-width="2" fill="none"/>
-                        <path d="M200,240 Q300,210 400,240 Q500,270 600,240" stroke="#600" stroke-width="2" fill="none"/>
-                        <circle cx="250" cy="150" r="30" fill="#300" fill-opacity="0.6"/>
-                        <circle cx="550" cy="150" r="30" fill="#300" fill-opacity="0.6"/>
-                        <text x="400" y="100" font-family="Creepster" font-size="35" fill="#900" text-anchor="middle">HORROR SOUNDSCAPES</text>
-                    </svg>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg text-red-500">Horror Soundscapes</h3>
-                    <p class="text-gray-400 text-sm mt-1">Atmospheric sound design templates</p>
-                    <div class="flex items-center mt-3">
-                        <span class="text-xs bg-red-900 bg-opacity-30 text-red-400 px-2 py-1 rounded">Sound Design</span>
-                        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded ml-2">Atmospheric</span>
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <button class="blood-btn text-white px-4 py-2 rounded text-sm font-medium">
-                            Use Template
-                        </button>
-                        <button class="text-red-500 hover:text-red-400 text-sm font-medium">
-                            Preview
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Template 6 - Interactive Story -->
-            <div class="template-card rounded-lg overflow-hidden shadow-lg">
-                <div class="h-48 preview-image relative">
-                    <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
-                        <defs>
-                            <linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#300;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <rect width="800" height="400" fill="url(#grad6)"/>
-                        <rect x="200" y="100" width="400" height="200" rx="5" fill="#100" stroke="#600" stroke-width="2"/>
-                        <line x1="200" y1="150" x2="600" y2="150" stroke="#600" stroke-width="1"/>
-                        <text x="400" y="135" font-family="Creepster" font-size="20" fill="#900" text-anchor="middle">THE DARK PATH</text>
-                        <text x="400" y="190" font-family="Arial" font-size="12" fill="#aaa" text-anchor="middle">You hear a noise coming from the basement...</text>
-                        <rect x="250" y="220" width="140" height="30" rx="5" fill="#300"/>
-                        <rect x="410" y="220" width="140" height="30" rx="5" fill="#300"/>
-                        <text x="320" y="240" font-family="Arial" font-size="12" fill="white" text-anchor="middle">Investigate</text>
-                        <text x="480" y="240" font-family="Arial" font-size="12" fill="white" text-anchor="middle">Run Away</text>
-                    </svg>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg text-red-500">Interactive Horror Story</h3>
-                    <p class="text-gray-400 text-sm mt-1">Choose-your-own-adventure horror template</p>
-                    <div class="flex items-center mt-3">
-                        <span class="text-xs bg-red-900 bg-opacity-30 text-red-400 px-2 py-1 rounded">Interactive</span>
-                        <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded ml-2">Storytelling</span>
-                    </div>
-                    <div class="mt-4 flex justify-between items-center">
-                        <button class="blood-btn text-white px-4 py-2 rounded text-sm font-medium">
-                            Use Template
-                        </button>
-                        <button class="text-red-500 hover:text-red-400 text-sm font-medium">
-                            Preview
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Request Custom Template Section -->
-        <div class="bg-black bg-opacity-70 rounded-lg shadow-lg p-6 mb-8 border border-red-900">
-            <h2 class="text-2xl font-bold text-red-600 logo-font mb-4">Summon Your Nightmare</h2>
-            <p class="text-gray-400 mb-6">Can't find what terrifies you? Request a custom template and our dark artists will create it for you.</p>
             
-            <form id="template-request-form">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label for="project-name" class="block text-sm font-medium text-gray-300 mb-1">Project Name</label>
-                        <input type="text" id="project-name" name="project-name" class="w-full px-3 py-2 form-input rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
+            <div class="text-center mt-8">
+                <button class="btn-primary py-2 px-6 rounded-md">Load More Projects</button>
+            </div>
+        </section>
+        
+        <!-- Templates Section -->
+        <section class="template-section p-6 rounded-lg mb-16">
+            <h3 class="section-title text-3xl mb-6">READY-MADE TEMPLATES</h3>
+            <p class="text-gray-300 mb-8 max-w-3xl">Not sure where to start? Choose from our collection of pre-designed templates and customize them to fit your needs. Perfect for those who want to get started quickly.</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Template 1 -->
+                <div class="template-card p-4 rounded-lg cursor-pointer">
+                    <div class="h-32 bg-gradient-to-br from-red-800 to-black mb-3 rounded flex items-center justify-center">
+                        <svg class="w-16 h-16 text-red-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z"></path>
+                        </svg>
                     </div>
-                    <div>
-                        <label for="project-type" class="block text-sm font-medium text-gray-300 mb-1">Project Type</label>
-                        <select id="project-type" name="project-type" class="w-full px-3 py-2 form-input rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                            <option value="">Select a type</option>
-                            <option value="horror-website">Horror Website</option>
-                            <option value="horror-game">Horror Game</option>
-                            <option value="3d-models">3D Models</option>
-                            <option value="vr-experience">VR Experience</option>
-                            <option value="sound-design">Sound Design</option>
-                            <option value="other">Other Nightmare</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="mb-6">
-                    <label for="project-description" class="block text-sm font-medium text-gray-300 mb-1">Project Description</label>
-                    <textarea id="project-description" name="project-description" rows="4" class="w-full px-3 py-2 form-input rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500" placeholder="Describe your darkest fears and how you want them brought to life..."></textarea>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label for="deadline" class="block text-sm font-medium text-gray-300 mb-1">Deadline (When do you need it by?)</label>
-                        <input type="date" id="deadline" name="deadline" class="w-full px-3 py-2 form-input rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                    </div>
-                    <div>
-                        <label for="fear-level" class="block text-sm font-medium text-gray-300 mb-1">Fear Level</label>
-                        <select id="fear-level" name="fear-level" class="w-full px-3 py-2 form-input rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500">
-                            <option value="">Select intensity</option>
-                            <option value="mild">Mild (Unsettling)</option>
-                            <option value="moderate">Moderate (Frightening)</option>
-                            <option value="intense">Intense (Terrifying)</option>
-                            <option value="extreme">Extreme (Nightmarish)</option>
-                        </select>
+                    <h4 class="text-lg font-bold text-red-500 mb-1">Horror Blog</h4>
+                    <p class="text-xs text-gray-400 mb-2">Perfect for sharing scary stories and paranormal experiences.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-red-400">$99</span>
+                        <button class="btn-primary py-1 px-3 rounded text-xs">Use Template</button>
                     </div>
                 </div>
                 
-                <div class="flex items-center mb-6">
-                    <input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-700 rounded">
-                    <label for="terms" class="ml-2 block text-sm text-gray-300">
-                        I agree to the terms and conditions (your soul is safe... for now)
-                    </label>
+                <!-- Template 2 -->
+                <div class="template-card p-4 rounded-lg cursor-pointer">
+                    <div class="h-32 bg-gradient-to-br from-red-800 to-black mb-3 rounded flex items-center justify-center">
+                        <svg class="w-16 h-16 text-red-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h4 class="text-lg font-bold text-red-500 mb-1">Event Countdown</h4>
+                    <p class="text-xs text-gray-400 mb-2">Build anticipation for your haunted house or horror event.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-red-400">$79</span>
+                        <button class="btn-primary py-1 px-3 rounded text-xs">Use Template</button>
+                    </div>
+                </div>
+                
+                <!-- Template 3 -->
+                <div class="template-card p-4 rounded-lg cursor-pointer">
+                    <div class="h-32 bg-gradient-to-br from-red-800 to-black mb-3 rounded flex items-center justify-center">
+                        <svg class="w-16 h-16 text-red-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="text-lg font-bold text-red-500 mb-1">Horror Portfolio</h4>
+                    <p class="text-xs text-gray-400 mb-2">Showcase your horror artwork, photography, or film projects.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-red-400">$129</span>
+                        <button class="btn-primary py-1 px-3 rounded text-xs">Use Template</button>
+                    </div>
+                </div>
+                
+                <!-- Template 4 -->
+                <div class="template-card p-4 rounded-lg cursor-pointer">
+                    <div class="h-32 bg-gradient-to-br from-red-800 to-black mb-3 rounded flex items-center justify-center">
+                        <svg class="w-16 h-16 text-red-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="text-lg font-bold text-red-500 mb-1">Horror Story App</h4>
+                    <p class="text-xs text-gray-400 mb-2">Interactive storytelling app with branching narratives.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-red-400">$149</span>
+                        <button class="btn-primary py-1 px-3 rounded text-xs">Use Template</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button class="btn-primary py-2 px-6 rounded-md">Browse All Templates</button>
+            </div>
+        </section>
+        
+        <!-- Custom Project Section -->
+        <section class="mb-16">
+            <div class="bg-gradient-to-r from-red-900 to-black p-8 rounded-lg text-center">
+                <h3 class="section-title text-3xl mb-4">CAN'T FIND WHAT YOU'RE LOOKING FOR?</h3>
+                <p class="text-gray-300 mb-6 max-w-2xl mx-auto">Let us bring your nightmares to life with a custom project tailored to your specific needs. Our team of horror specialists will work with you to create something truly terrifying.</p>
+                <button class="bg-black text-red-500 border border-red-700 hover:bg-red-900 hover:text-white transition-colors py-3 px-8 rounded-md font-bold text-lg">Request Custom Project</button>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer py-8 px-6">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">FEARFACTORY</h4>
+                    <p class="text-sm text-gray-400 mb-4">Creating digital nightmares since 2010. We specialize in horror-themed websites, apps, games, and 3D models.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-500"><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
                 
                 <div>
-                    <button type="submit" class="w-full blood-btn pulse text-white py-2 px-4 rounded-md font-medium logo-font text-lg">
-                        Summon Your Creation
-                    </button>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">QUICK LINKS</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Projects</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Templates</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Custom Orders</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Support</a></li>
+                    </ul>
                 </div>
-            </form>
-        </div>
-
-        <!-- Featured Projects -->
-        <div class="mb-12">
-            <h2 class="text-2xl font-bold text-red-600 logo-font mb-6 text-center">Featured Nightmares</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Featured Project 1 -->
-                <div class="bg-black bg-opacity-70 rounded-lg overflow-hidden shadow-lg border border-red-900">
-                    <div class="h-64 relative">
-                        <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
-                            <defs>
-                                <linearGradient id="featGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#400;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <rect width="800" height="400" fill="url(#featGrad1)"/>
-                            <path d="M0,300 Q200,250 400,300 T800,300 V400 H0 Z" fill="#100" fill-opacity="0.7"/>
-                            <path d="M400,100 L450,200 L400,300 L350,200 Z" fill="#600" fill-opacity="0.3"/>
-                            <path d="M200,150 L250,250 L150,250 Z" fill="#600" fill-opacity="0.3"/>
-                            <path d="M600,150 L650,250 L550,250 Z" fill="#600" fill-opacity="0.3"/>
-                            <text x="400" y="100" font-family="Creepster" font-size="40" fill="#900" text-anchor="middle">CRIMSON HOLLOW</text>
-                            <text x="400" y="350" font-family="Arial" font-size="16" fill="#aaa" text-anchor="middle">Award-winning horror game by DarkMind Studios</text>
-                        </svg>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-semibold text-xl text-red-500">Crimson Hollow</h3>
-                                <p class="text-gray-400 text-sm mt-1">Psychological horror game with multiple endings</p>
-                            </div>
-                            <span class="bg-red-900 text-white text-xs px-2 py-1 rounded">Featured</span>
-                        </div>
-                        <div class="mt-4">
-                            <button class="blood-btn text-white px-4 py-2 rounded text-sm font-medium">
-                                View Project
-                            </button>
-                        </div>
-                    </div>
+                
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">CATEGORIES</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Websites</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Android Apps</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">Games</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">3D Models</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-500">VR Experiences</a></li>
+                    </ul>
                 </div>
-
-                <!-- Featured Project 2 -->
-                <div class="bg-black bg-opacity-70 rounded-lg overflow-hidden shadow-lg border border-red-900">
-                    <div class="h-64 relative">
-                        <svg class="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
-                            <defs>
-                                <linearGradient id="featGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#300;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#000;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <rect width="800" height="400" fill="url(#featGrad2)"/>
-                            <circle cx="400" cy="200" r="100" fill="none" stroke="#600" stroke-width="2"/>
-                            <circle cx="400" cy="200" r="70" fill="none" stroke="#600" stroke-width="2"/>
-                            <path d="M350,150 L450,250" stroke="#600" stroke-width="2"/>
-                            <path d="M450,150 L350,250" stroke="#600" stroke-width="2"/>
-                            <text x="400" y="100" font-family="Creepster" font-size="40" fill="#900" text-anchor="middle">PARANORMAL NEXUS</text>
-                            <text x="400" y="350" font-family="Arial" font-size="16" fill="#aaa" text-anchor="middle">Interactive paranormal investigation experience</text>
-                        </svg>
-                    </div>
-                    <div class="p-4">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-semibold text-xl text-red-500">Paranormal Nexus</h3>
-                                <p class="text-gray-400 text-sm mt-1">VR ghost hunting simulation with real audio recordings</p>
-                            </div>
-                            <span class="bg-red-900 text-white text-xs px-2 py-1 rounded">Featured</span>
-                        </div>
-                        <div class="mt-4">
-                            <button class="blood-btn text-white px-4 py-2 rounded text-sm font-medium">
-                                View Project
-                            </button>
-                        </div>
+                
+                <div>
+                    <h4 class="text-red-500 text-lg font-bold mb-4">NEWSLETTER</h4>
+                    <p class="text-sm text-gray-400 mb-4">Subscribe to our newsletter for the latest updates and exclusive offers.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="search-input py-2 px-3 rounded-l text-sm flex-grow">
+                        <button class="btn-primary py-2 px-4 rounded-r text-sm">Subscribe</button>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-black bg-opacity-80 border-t border-red-900">
-        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div class="md:flex md:items-center md:justify-between">
-                <div class="flex justify-center md:justify-start">
-                    <span class="text-red-600 text-2xl logo-font">FearFactory</span>
-                </div>
-                <div class="mt-8 md:mt-0">
-                    <p class="text-center text-base text-gray-500">
-                        &copy; 2023 FearFactory. Enter at your own risk.
-                    </p>
-                </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-sm text-gray-500">
+                <p>&copy; 2023 FearFactory. All rights reserved. Enter at your own risk.</p>
             </div>
         </div>
     </footer>
-
+    
     <script>
         // Category filter functionality
-        document.querySelectorAll('.category-pill').forEach(pill => {
-            pill.addEventListener('click', function() {
-                // Remove active class from all pills
-                document.querySelectorAll('.category-pill').forEach(p => {
-                    p.classList.remove('active');
-                    p.classList.add('bg-gray-800');
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // In a real implementation, this would filter the projects
+                    // For this demo, we'll just show a message
+                    console.log('Filtering by: ' + this.textContent.trim());
                 });
+            });
+            
+            // Add flickering effect to random elements
+            setInterval(() => {
+                const cards = document.querySelectorAll('.card');
+                const randomCard = cards[Math.floor(Math.random() * cards.length)];
+                randomCard.classList.add('flicker');
                 
-                // Add active class to clicked pill
-                this.classList.add('active');
-                this.classList.remove('bg-gray-800');
-                
-                // In a real application, this would filter the templates
-                console.log('Filtering by: ' + this.innerText.trim());
-            });
-        });
-
-        // Preview functionality
-        document.querySelectorAll('.template-card button:nth-child(2)').forEach(button => {
-            button.addEventListener('click', function() {
-                const templateName = this.closest('.template-card').querySelector('h3').innerText;
-                alert(`Previewing ${templateName}... Prepare for terror!`);
-            });
-        });
-
-        // Form submission
-        document.getElementById('template-request-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validate form
-            const projectName = document.getElementById('project-name').value;
-            const projectType = document.getElementById('project-type').value;
-            const projectDescription = document.getElementById('project-description').value;
-            const termsChecked = document.getElementById('terms').checked;
-            
-            if (!projectName || !projectType || !projectDescription || !termsChecked) {
-                alert('Please fill in all required fields and accept the terms to summon your nightmare.');
-                return;
-            }
-            
-            // In a real application, this would submit the form data
-            alert('Your nightmare has been summoned! Our dark artists will begin crafting your vision soon.');
-            
-            // Reset form
-            this.reset();
-        });
-
-        // Add hover effects to buttons
-        document.querySelectorAll('.blood-btn').forEach(btn => {
-            btn.addEventListener('mouseover', function() {
-                this.style.transform = 'scale(1.05)';
-            });
-            btn.addEventListener('mouseout', function() {
-                this.style.transform = 'scale(1)';
-            });
+                setTimeout(() => {
+                    randomCard.classList.remove('flicker');
+                }, 1000);
+            }, 5000);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93dbff8a57c149d5',t:'MTc0NjkwNjk2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93ea5880f743af19',t:'MTc0NzA1NzQxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

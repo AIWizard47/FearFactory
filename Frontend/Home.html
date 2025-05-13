@@ -235,7 +235,7 @@
         <div class="hidden md:flex space-x-8">
             <a href="Home.html" class="text-white hover:text-red-500 transition-colors">Home</a>
             <a href="Servises.html" class="text-white hover:text-red-500 transition-colors">Services</a>
-            <a href="Projects.html" class="text-white hover:text-red-500 transition-colors">Projects</a>
+            <a href="TemplateProjects.html" class="text-white hover:text-red-500 transition-colors">Projects</a>
             <a href="Abouts.html" class="text-white hover:text-red-500 transition-colors">About</a>
             <a href="ContactUs.html" class="text-white hover:text-red-500 transition-colors">Contact</a>
         </div>
@@ -550,7 +550,7 @@
             </div>
             
             <div class="text-center mt-12">
-                <a href="Projects.html" class="inline-block px-8 py-3 rounded-lg btn-primary text-white text-lg font-medium">View All Projects</a>
+                <a href="TemplateProjects.html" class="inline-block px-8 py-3 rounded-lg btn-primary text-white text-lg font-medium">View All Projects</a>
             </div>
         </div>
     </section>
@@ -786,17 +786,17 @@
         });
 
         // Authentication
-                function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            return parts.length === 2 ? parts.pop().split(';').shift() : null;
+        function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                return parts.length === 2 ? parts.pop().split(';').shift() : null;
         }
 
         function setCookie(name, value, days) {
             const expires = new Date(Date.now() + days * 86400000).toUTCString();
             document.cookie = `${name}=${value}; expires=${expires}; path=/; secure; SameSite=Strict`;
         }
-
+        
         // Try to refresh token
         async function tryRefreshToken() {
             const refreshToken = getCookie('refresh_token');

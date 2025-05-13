@@ -2,23 +2,46 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-#---------------------------USERS----------------------------#
-# Optional tags for user profile
+#--------------------------REWARD-SYSTEM----------------------#
 
-# While User Create a New Profile this create automatic.
-class UserTag(models.Model):
-    category = models.CharField(max_length=50)
-    name = models.CharField(max_length=50)
-
+class Achievement(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
     def __str__(self):
         return self.name
 
+# this is a tag for users    
+class UserTag(models.Model):
+    category = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name    
+    
+# This is the progress Bar that show the user it experience and level
+class FearLevel(models.Model):
+    name = models.CharField(max_length=20)
+    description = models.TextField(max_length=100)
+    def __str__(self):
+        return self.name
+    
+# This is membership for my website.
+class MemberShip(models.Model):
+    name = models.CharField(max_length=20, default='Free Haunter')
+    description = models.TextField(max_length=100)
+    perk = models.TextField(max_length=100)
+    def __str__(self):
+        return self.name
+    
+    
+#---------------------------USERS----------------------------#
+
 # While user achieve Something then it get.
-class Achievement(models.Model):
+class UserAchievement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    description = models.TextField()
+    achieve = models.ManyToManyField('Achievement',blank=True)
     date_earned = models.DateField(auto_now_add=True)
+    def __str__(self):
+        return self.user.username
 
 # While user participate in any project or buy project then it get.
 #Projects
@@ -36,28 +59,19 @@ class Booking(models.Model):
     experience = models.ForeignKey(Experience, on_delete=models.CASCADE)
     date_time = models.DateTimeField()
     status = models.CharField(max_length=20, default='Upcoming')
+    def __str__(self):
+        return self.user.username
 
 # This is the progress Bar that show the user it experience and level
 class Progress(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     experiences_completed = models.IntegerField(default=0)
     achievements_unlocked = models.IntegerField(default=0)
-
-# This is membership for my website.
-class MemberShip(models.Model):
-    name = models.CharField(max_length=20, default='Free Haunter')
-    description = models.TextField(max_length=100)
-    perk = models.TextField(max_length=100)
     def __str__(self):
-        return self.name
+        return self.user.username
 
-# This is the progress Bar that show the user it experience and level
-class FearLevel(models.Model):
-    name = models.CharField(max_length=20)
-    description = models.TextField(max_length=100)
-    def __str__(self):
-        return self.name
 
+# While User Create a New Profile this create automatic.
 # Extra profile info (optional, linked to User)
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
