@@ -31,8 +31,7 @@ class MemberShip(models.Model):
     perk = models.TextField(max_length=100)
     def __str__(self):
         return self.name
-    
-    
+       
 #---------------------------USERS----------------------------#
 
 # While user achieve Something then it get.
@@ -42,9 +41,11 @@ class UserAchievement(models.Model):
     date_earned = models.DateField(auto_now_add=True)
     def __str__(self):
         return self.user.username
-
+    
 # While user participate in any project or buy project then it get.
 #Projects
+
+
 class Experience(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
@@ -52,6 +53,19 @@ class Experience(models.Model):
     difficulty = models.CharField(max_length=50)
     trending = models.BooleanField(default=False)
     popular = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
+
+class UserExperience(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    experience = models.ForeignKey(Experience, on_delete=models.CASCADE)
+    joined_at = models.DateTimeField(auto_now_add=True)
+    completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.experience.title}"
+
 
 # Buy a any projects or assets etc...
 class Booking(models.Model):

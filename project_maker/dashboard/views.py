@@ -25,14 +25,39 @@ class UserDetails(APIView):
             "fear_level_description" : user_profile.fear_level.description,
             "profile_tags": [tag.name for tag in user_profile.profile_tags.all()],
             "profile_tags_category": [tag.category for tag in user_profile.profile_tags.all()],
-            "user_achievements_name" : [a.name[2:] for a in user_achievement.achieve.all()],
-            "user_achievements_emoji" : [a.name[:1] for a in user_achievement.achieve.all()],
-            
         }
         return Response(data, status=status.HTTP_200_OK)
 
+class UserAchievementAPI(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        try:
+            user_achievement = UserAchievement.objects.get(user=user)
+        except (UserProfile.DoesNotExist, UserAchievement.DoesNotExist):
+            return Response({"error": "User profile not found."}, status=status.HTTP_404_NOT_FOUND)
 
+        data = {
+            "user_achievements_name" : [a.name[2:] for a in user_achievement.achieve.all()],
+            "user_achievements_emoji" : [a.name[:1] for a in user_achievement.achieve.all()],
+        }
+        return Response(data, status=status.HTTP_200_OK)
 
+# class UserExperienceAPI(APIView):
+#     permission_classes = [IsAuthenticated]
+#     def get(self, request, *args, **kwargs):
+#         user = request.user
+#         try:
+#             user_achievement = UserAchievement.objects.get(user=user)
+#         except (UserProfile.DoesNotExist, UserAchievement.DoesNotExist):
+#             return Response({"error": "User profile not found."}, status=status.HTTP_404_NOT_FOUND)
+
+#         data = {
+#             "user_achievements_name" : [a.name[2:] for a in user_achievement.achieve.all()],
+#             "user_achievements_emoji" : [a.name[:1] for a in user_achievement.achieve.all()],
+#         }
+#         return Response(data, status=status.HTTP_200_OK)
+    
 
 #---------------------TESTING-INSERTING-REWARDS--------------------#
 # Inserting of UserTag

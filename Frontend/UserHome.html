@@ -1181,7 +1181,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const token = getCookie("access_token");
 
-            fetch('http://127.0.0.1:8000/dashboard/users/', {
+            fetch('http://127.0.0.1:8000/dashboard/api/user-achievement/', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -1213,12 +1213,14 @@
                         </div>
                     `;
                     container.insertAdjacentHTML('beforeend', cardHTML);
+                    
                 });
             })
             .catch(error => {
                 console.error('Error loading achievements:', error);
             });
         });
+
         //---------------------Achievements-Panel---------------//
 
         
