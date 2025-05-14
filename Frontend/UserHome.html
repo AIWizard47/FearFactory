@@ -555,10 +555,10 @@
                         </div>
                         <div class="flex justify-between mb-1">
                             <span class="text-sm">Achievements</span>
-                            <span class="text-sm text-red-500 achievement-level-name">8/12</span>
+                            <span class="text-sm text-red-500 achievement-level-name">0/25</span>
                         </div>
                         <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="progress-bar achievement-level-progress-bar" style="width: 66%"></div>
+                            <div class="progress-bar achievement-level-progress-bar" style="width: 10%"></div>
                         </div>
                     </div>
                 </div>
@@ -575,9 +575,9 @@
 
                 <!-- Tab Content -->
                 <div class="content-panel active" id="upcoming-panel">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="user-experience-container">
                         <!-- Experience Card 1 -->
-                        <div class="card rounded-lg overflow-hidden">
+                        <!-- <div class="card rounded-lg overflow-hidden">
                             <div class="h-40 bg-gradient-to-r from-red-900 to-black relative">
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-red-500 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -598,10 +598,10 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Experience Card 2 -->
-                        <div class="card rounded-lg overflow-hidden">
+                        <!-- <div class="card rounded-lg overflow-hidden">
                             <div class="h-40 bg-gradient-to-r from-purple-900 to-black relative">
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-purple-500 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -622,14 +622,14 @@
                                     </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
                 <div class="content-panel" id="achievements-panel">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="achievements-container">
                         <!-- Achievement 1 -->
-                        <div class="achievement card rounded-lg p-4 text-center">
+                        <!-- <div class="achievement card rounded-lg p-4 text-center">
                             <div class="w-16 h-16 mx-auto mb-3 bg-red-900 rounded-full flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -638,10 +638,10 @@
                             <h4 class="font-bold">Fearless Explorer</h4>
                             <p class="text-sm text-gray-400">Completed 10 horror experiences</p>
                             <p class="text-xs text-red-500 mt-2">Earned 3 days ago</p>
-                        </div>
+                        </div> -->
 
                         <!-- Achievement 2 -->
-                        <div class="achievement card rounded-lg p-4 text-center">
+                        <!-- <div class="achievement card rounded-lg p-4 text-center">
                             <div class="w-16 h-16 mx-auto mb-3 bg-red-900 rounded-full flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -650,10 +650,10 @@
                             <h4 class="font-bold">Night Survivor</h4>
                             <p class="text-sm text-gray-400">Survived the overnight challenge</p>
                             <p class="text-xs text-red-500 mt-2">Earned 1 week ago</p>
-                        </div>
+                        </div> -->
 
                         <!-- Achievement 3 -->
-                        <div class="achievement card rounded-lg p-4 text-center">
+                        <!-- <div class="achievement card rounded-lg p-4 text-center">
                             <div class="w-16 h-16 mx-auto mb-3 bg-red-900 rounded-full flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
@@ -662,7 +662,7 @@
                             <h4 class="font-bold">Scream Master</h4>
                             <p class="text-sm text-gray-400">Scared 5 friends during an experience</p>
                             <p class="text-xs text-red-500 mt-2">Earned 2 weeks ago</p>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -1060,12 +1060,6 @@
                     el.style.width = "10%";
                 });
 
-                document.querySelectorAll(".achievement-level-name").forEach(el => {
-                    el.textContent = data.user_achievements_name.length + "/25";
-                });
-                document.querySelectorAll(".achievement-level-progress-bar").forEach(el => {
-                    el.style.width = (getPercentage(data.user_achievements_name.length, 25)) + "%";
-                });
 
             } catch (err) {
                 console.error("Error fetching user data:", err);
@@ -1091,6 +1085,51 @@
                     "Soul Survivor": 100
                 };
                 return levels[level] || 0;
+            }
+            function getPercentage(level,total){
+                    let num = (level/total)*100;
+                    return num;
+                
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            const token = getCookie("access_token");
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/dashboard/api/user-achievement/", {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    console.error("Failed to fetch user details");
+                    return;
+                }
+
+                const data = await response.json();
+                const achievements = data.user_achievements || [];
+
+                // 👇 Get the count of achievements
+                const achievementCount = achievements.length;
+
+                document.querySelectorAll(".achievement-level-name").forEach(el => {
+                    el.textContent = achievementCount + "/25";
+                });
+
+                document.querySelectorAll(".achievement-level-progress-bar").forEach(el => {
+                    el.style.width = (getPercentage(achievementCount, 25)) + "%";
+                });
+
+            } catch (err) {
+                console.error("Error fetching user data:", err);
+            }
+
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
             }
             function getPercentage(level,total){
                     let num = (level/total)*100;
@@ -1196,20 +1235,19 @@
             .then(data => {
                 const container = document.getElementById('achievements-container');
                 container.innerHTML = ''; // Clear existing content
+                const achievements = data.user_achievements || [];
 
-                const names = data.user_achievements_name || [];
-                const emojis = data.user_achievements_emoji || [];
+                achievements.forEach((item, index) => {
+                    if (index >= 6) return;  // Limit to 6 achievements
 
-                names.forEach((name, index) => {
-                    const emoji = emojis[index] || "🏆";
                     const cardHTML = `
                         <div class="achievement card rounded-lg p-4 text-center">
                             <div class="w-16 h-16 mx-auto mb-3 bg-red-900 rounded-full flex items-center justify-center text-white text-2xl">
-                                ${emoji}
+                                ${item.emoji || "🏆"}
                             </div>
-                            <h4 class="font-bold">${name}</h4>
+                            <h4 class="font-bold">${item.name}</h4>
                             <p class="text-sm text-gray-400">Achievement Unlocked</p>
-                            <p class="text-xs text-red-500 mt-2">Earned recently</p>
+                            <p class="text-xs text-red-500 mt-2">Earned on ${item.earned_on}</p>
                         </div>
                     `;
                     container.insertAdjacentHTML('beforeend', cardHTML);
@@ -1222,6 +1260,75 @@
         });
 
         //---------------------Achievements-Panel---------------//
+
+
+        //---------------------USER-EXPERIENCE----------------//
+
+                // Function to get token from cookies
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const token = getCookie("access_token");
+
+            fetch('http://127.0.0.1:8000/dashboard/api/experience/', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch Achievements');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const container = document.getElementById('user-experience-container');
+                container.innerHTML = ''; // Clear existing content
+                const experiences = data.user_experience || [];
+                const bgColors = ['purple', 'red', 'green', 'blue', 'yellow', 'pink', 'rose'];
+                experiences.forEach((item, index) => {
+                    if (index >= 4) return;  // Limit to 6 experience
+                    const color = bgColors[Math.floor(Math.random() * bgColors.length)];
+                    const cardHTML = `
+                                                <!-- Experience Card 1 -->
+                        <div class="card rounded-lg overflow-hidden">
+                            <div class="h-40 bg-gradient-to-r from-${color}-900 to-black relative">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-${color}-500 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div class="absolute top-2 right-2 bg-${color}-600 text-white text-xs px-2 py-1 rounded-full">
+                                    Tomorrow
+                                </div>
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-bold text-lg mb-1">${item.name}</h3>
+                                <p class="text-gray-400 text-sm mb-3">${item.joined_at}</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-red-500">Difficulty: ${item.difficulty}</span>
+                                    <button class="bg-gray-800 hover:bg-gray-700 text-white text-sm py-1 px-3 rounded transition-colors">
+                                        Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', cardHTML);
+                    
+                });
+            })
+            .catch(error => {
+                console.error('Error loading achievements:', error);
+            });
+        });
+
+        //---------------------USER-EXPERIENCE----------------//
 
         
     </script>

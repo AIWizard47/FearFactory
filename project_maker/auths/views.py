@@ -62,9 +62,6 @@ class SignUpView(APIView):
             fear_level=fear_level,
             membership=membership
         )
-        UserAchievement.objects.create(
-            user=user
-        )
         Progress.objects.create(
             user=user,
             experiences_completed = 0,
@@ -116,6 +113,7 @@ class FriendListView(APIView):
 
     def get(self, request):
         user = request.user
+        
 
         # Get usernames of accepted friends (sent or received)
         sent = FriendRequest.objects.filter(from_user=user, status='accepted').values_list('to_user__username', flat=True)
@@ -127,14 +125,14 @@ class FriendListView(APIView):
         for username in friend_usernames:
             try:
                 friend_user = User.objects.get(username=username)
-                user_achievements = UserAchievement.objects.filter(user=friend_user).first()
-                achievement_count = user_achievements.achieve.count() if user_achievements else 0
+                user_achievements = UserAchievement.objects.filter(user=friend_user)
+                achievement_count = user_achievements.count() if user_achievements else 0
                 
                 data.append({
                     "name": friend_user.username,
                     "number_of_achievements": achievement_count
                 })
-                print(user_achievements)
+                #print(user_achievements)
             except User.DoesNotExist:
                 continue
             except UserAchievement.DoesNotExist:
