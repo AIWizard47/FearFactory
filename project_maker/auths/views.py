@@ -9,7 +9,7 @@ from .models import FriendRequest
 from dashboard.models import UserProfile, FearLevel, MemberShip, UserTag, UserAchievement, Progress
 from rest_framework_simplejwt.tokens import RefreshToken
 
-class HelloView(APIView):
+class CheckAuth(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):

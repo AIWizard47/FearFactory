@@ -368,7 +368,7 @@
             }
 
             try {
-                let res = await fetch('http://127.0.0.1:8000/auth/api/hello', {
+                let res = await fetch('http://127.0.0.1:8000/auth/api/check-auth', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

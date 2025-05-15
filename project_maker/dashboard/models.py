@@ -11,12 +11,12 @@ class Achievement(models.Model):
     def __str__(self):
         return self.name
 
-# this is a tag for users    
+# this is a tag for users
 class UserTag(models.Model):
     category = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     def __str__(self):
-        return self.name    
+        return self.name
     
 # This is the progress Bar that show the user it experience and level
 class FearLevel(models.Model):
@@ -54,6 +54,7 @@ class Experience(models.Model):
     difficulty = models.CharField(max_length=50)
     trending = models.BooleanField(default=False)
     popular = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='experience_images/', blank=True, null=True)  # optional card image
 
     def __str__(self):
         return self.title

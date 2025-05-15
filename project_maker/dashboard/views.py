@@ -65,6 +65,7 @@ class UserExperienceAPI(APIView):
                 {
                     "name": ua.experience.title,
                     "difficulty": ua.experience.difficulty,
+                    "image": ua.experience.image.url,
                     "joined_at": ua.joined_at.strftime('%b %d, %Y • %#I:%M %p')  # formatted datetime
                 }
                 for ua in sorted(user_experience, key=lambda x: x.joined_at, reverse=True) if not ua.completed
