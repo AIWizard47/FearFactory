@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated ,IsAdminUser
 from rest_framework import status
 from django.contrib.auth.models import User
-from .models import UserTag, FearLevel, MemberShip, UserProfile, Achievement, UserAchievement, UserExperience
+from .models import UserTag, FearLevel, MemberShip, UserProfile, Achievement, UserAchievement, UserExperience, Experience, Achievement
 
 class UserDetails(APIView):
     permission_classes = [IsAuthenticated]
@@ -13,6 +13,12 @@ class UserDetails(APIView):
         user = request.user
         try:
             user_profile = UserProfile.objects.get(user=user)
+            user_experience = UserExperience.objects.filter(user=user)
+            
+            total_count = Experience.objects.all().count()
+            print(total_count)
+            count = user_experience.count()
+            print(count)
             
         except (UserProfile.DoesNotExist):
             return Response({"error": "User profile not found."}, status=status.HTTP_404_NOT_FOUND)
@@ -25,6 +31,8 @@ class UserDetails(APIView):
             "fear_level_description" : user_profile.fear_level.description,
             "profile_tags": [tag.name for tag in user_profile.profile_tags.all()],
             "profile_tags_category": [tag.category for tag in user_profile.profile_tags.all()],
+            "user_experience_total_count" : total_count ,
+            "user_experience_count" : count
         }
         return Response(data, status=status.HTTP_200_OK)
 
@@ -34,7 +42,8 @@ class UserAchievementAPI(APIView):
     def get(self, request, *args, **kwargs):
         user = request.user
         user_achievements = UserAchievement.objects.filter(user=user)
-
+        total_count = Achievement.objects.all().count()
+        print(total_count)
         if not user_achievements.exists():
             return Response({"error": "No achievements found."}, status=404)
 
@@ -43,12 +52,12 @@ class UserAchievementAPI(APIView):
                 {
                     "emoji": ua.achieve.name[:1],
                     "name": ua.achieve.name[2:],
-                    "earned_on": ua.date_earned.strftime('%b %d, %Y • %#I:%M %p')  # formatted datetime
+                    "earned_on": ua.date_earned.strftime('%b %d, %Y • %#I:%M %p'),  # formatted datetime
+                    "user_total_achievement" : total_count
                 }
                 for ua in user_achievements
             ]
         }
-
         return Response(data, status=200)
 
 class UserExperienceAPI(APIView):

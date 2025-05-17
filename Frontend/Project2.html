@@ -1,0 +1,877 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FearFactory - Horror Projects</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&display=swap');
+        
+        body {
+            background-color: #0a0a0a;
+            color: #f8f8f8;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .creepy-font {
+            font-family: 'Nosifer', cursive;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+            color: #ff3333;
+        }
+        
+        .flicker {
+            animation: flicker 5s infinite;
+        }
+        
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 1;
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.5;
+            }
+        }
+        
+        .cobweb {
+            position: absolute;
+            opacity: 0.5;
+            z-index: 1;
+        }
+        
+        .blood-drip {
+            position: absolute;
+            top: 0;
+            width: 10px;
+            height: 0;
+            background-color: #8a0303;
+            border-radius: 0 0 5px 5px;
+            animation: drip 8s infinite;
+            z-index: 1;
+        }
+        
+        @keyframes drip {
+            0% {
+                height: 0;
+            }
+            50% {
+                height: 100px;
+            }
+            100% {
+                height: 100px;
+                top: 100vh;
+                opacity: 0;
+            }
+        }
+        
+        .spider {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            animation: swing 5s ease-in-out infinite;
+            z-index: 2;
+        }
+        
+        @keyframes swing {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(30px);
+            }
+        }
+        
+        .scratch {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(45deg, transparent 45%, rgba(255, 0, 0, 0.1) 45%, transparent 55%),
+                linear-gradient(-45deg, transparent 45%, rgba(255, 0, 0, 0.1) 45%, transparent 55%);
+            background-size: 30px 30px;
+            z-index: 1;
+        }
+        
+        .nav-container {
+            position: relative;
+            z-index: 10;
+            background-color: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .menu-item {
+            position: relative;
+            font-weight: bold;
+        }
+        
+        .menu-item:hover::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ff0000;
+            animation: blood-spread 0.5s forwards;
+        }
+        
+        @keyframes blood-spread {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        
+        .content-container {
+            position: relative;
+            z-index: 5;
+        }
+        
+        .project-card {
+            background-color: rgba(20, 20, 20, 0.8);
+            border: 1px solid #3a0404;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2);
+        }
+        
+        .btn-horror {
+            background-color: #8a0303;
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid #ff0000;
+        }
+        
+        .btn-horror:hover {
+            background-color: #ff0000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+        
+        .decorative {
+            pointer-events: none;
+        }
+        
+        .fog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3CradialGradient id='a' cx='50%25' cy='50%25' r='50%25' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23ffffff' stop-opacity='.1'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23a)'/%3E%3C/svg%3E");
+            opacity: 0.3;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #1a1a1a;
+            border: 2px solid #8a0303;
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+            animation: modal-appear 0.5s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes modal-appear {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #8a0303;
+        }
+        
+        .close-btn:hover {
+            color: #ff0000;
+        }
+        
+        .tag {
+            background-color: #3a0404;
+            color: #f8f8f8;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin: 2px;
+        }
+        
+        .premium-badge {
+            background-color: #8a0303;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            display: inline-block;
+        }
+        
+        .filter-active {
+            background-color: #8a0303;
+            color: white;
+        }
+        
+        .project-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            background-color: #333;
+            position: relative;
+        }
+        
+        .project-image-placeholder {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .project-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-actions {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Fog effect -->
+    <div class="fog"></div>
+    
+    <!-- Cobwebs - with decorative class -->
+    <div class="cobweb top-0 left-0 decorative">
+        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0L200 200M0 200L200 0M100 0V200M0 100H200" stroke="white" stroke-width="1"/>
+        </svg>
+    </div>
+    <div class="cobweb top-0 right-0 decorative">
+        <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 0L200 200M0 200L200 0M100 0V200M0 100H200" stroke="white" stroke-width="1"/>
+        </svg>
+    </div>
+    
+    <!-- Blood drips - with decorative class -->
+    <div class="blood-drip decorative" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="blood-drip decorative" style="left: 25%; animation-delay: 2s;"></div>
+    <div class="blood-drip decorative" style="left: 40%; animation-delay: 1s;"></div>
+    <div class="blood-drip decorative" style="left: 60%; animation-delay: 3s;"></div>
+    <div class="blood-drip decorative" style="left: 75%; animation-delay: 0.5s;"></div>
+    <div class="blood-drip decorative" style="left: 90%; animation-delay: 2.5s;"></div>
+    
+    <!-- Spider - with decorative class -->
+    <div class="spider decorative" style="top: 100px; right: 50px;">
+        <svg viewBox="0 0 100 100" fill="black" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="20" />
+            <path d="M50 70 L50 90" stroke="black" stroke-width="2" />
+            <path d="M50 30 L50 10" stroke="black" stroke-width="2" />
+            <path d="M30 50 L10 40" stroke="black" stroke-width="2" />
+            <path d="M30 50 L10 60" stroke="black" stroke-width="2" />
+            <path d="M70 50 L90 40" stroke="black" stroke-width="2" />
+            <path d="M70 50 L90 60" stroke="black" stroke-width="2" />
+            <path d="M35 35 L20 20" stroke="black" stroke-width="2" />
+            <path d="M65 35 L80 20" stroke="black" stroke-width="2" />
+            <path d="M35 65 L20 80" stroke="black" stroke-width="2" />
+            <path d="M65 65 L80 80" stroke="black" stroke-width="2" />
+        </svg>
+    </div>
+    
+    <!-- Scratches - with decorative class -->
+    <div class="scratch w-full h-screen decorative"></div>
+    
+    <!-- Navigation - with nav-container class for proper z-index -->
+    <nav class="nav-container relative px-6 py-4 flex justify-between items-center border-b border-red-900">
+        <div class="flex items-center">
+            <div class="text-red-600 mr-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9c.83 0 1.5-.67 1.5-1.5S7.83 8 7 8s-1.5.67-1.5 1.5S6.17 11 7 11zm5-2c.83 0 1.5-.67 1.5-1.5S12.83 6 12 6s-1.5.67-1.5 1.5S11.17 9 12 9zm5 2c.83 0 1.5-.67 1.5-1.5S17.83 8 17 8s-1.5.67-1.5 1.5.67 1.5 1.5 1.5z"/>
+                </svg>
+            </div>
+            <a href="index.html" class="text-2xl font-bold creepy-font glow-text flicker">FearFactory</a>
+        </div>
+        <div class="hidden md:flex space-x-8">
+            <a href="index.html" class="menu-item text-white hover:text-red-500 transition-colors">Dashboard</a>
+            <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Experiences</a>
+            <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Achievements</a>
+            <a href="#" class="menu-item text-white hover:text-red-500 transition-colors active">Projects</a>
+            <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Events</a>
+        </div>
+        <div class="md:hidden">
+            <button id="mobile-menu-button" class="text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden bg-black bg-opacity-90 p-4 absolute w-full z-20">
+        <a href="index.html" class="block py-2 text-white hover:text-red-500">Dashboard</a>
+        <a href="#" class="block py-2 text-white hover:text-red-500">Experiences</a>
+        <a href="#" class="block py-2 text-white hover:text-red-500">Achievements</a>
+        <a href="#" class="block py-2 text-white hover:text-red-500 font-bold">Projects</a>
+        <a href="#" class="block py-2 text-white hover:text-red-500">Events</a>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="content-container px-4 py-8 md:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 creepy-font glow-text">Projects</h2>
+                <p class="text-xl text-gray-300">Explore our collection of terrifying experiences</p>
+            </div>
+            
+            <!-- Filters -->
+            <div class="mb-8 bg-gray-900 bg-opacity-60 p-4 rounded-lg">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                    <h3 class="text-xl font-bold mb-4 md:mb-0">Filter Projects</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="px-3 py-1 rounded border border-red-900 hover:bg-red-900 transition-colors filter-btn filter-active" data-filter="all">All</button>
+                        <button class="px-3 py-1 rounded border border-red-900 hover:bg-red-900 transition-colors filter-btn" data-filter="premium">Premium</button>
+                        <button class="px-3 py-1 rounded border border-red-900 hover:bg-red-900 transition-colors filter-btn" data-filter="template">With Template</button>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="w-full md:w-1/3">
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Project Type</label>
+                        <select id="project-type-filter" class="w-full bg-gray-800 border border-red-900 rounded px-3 py-2 text-white focus:outline-none focus:border-red-500">
+                            <option value="">All Types</option>
+                            <option value="Haunted House">Haunted House</option>
+                            <option value="Escape Room">Escape Room</option>
+                            <option value="Virtual Reality">Virtual Reality</option>
+                            <option value="Outdoor Experience">Outdoor Experience</option>
+                            <option value="Interactive Theater">Interactive Theater</option>
+                        </select>
+                    </div>
+                    <div class="w-full md:w-1/3">
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Sort By</label>
+                        <select id="sort-filter" class="w-full bg-gray-800 border border-red-900 rounded px-3 py-2 text-white focus:outline-none focus:border-red-500">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="price-low">Price: Low to High</option>
+                        </select>
+                    </div>
+                    <div class="w-full md:w-1/3">
+                        <label class="block text-sm font-medium text-gray-400 mb-1">Search</label>
+                        <input type="text" id="search-filter" placeholder="Search projects..." class="w-full bg-gray-800 border border-red-900 rounded px-3 py-2 text-white focus:outline-none focus:border-red-500">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projects Grid -->
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Projects will be dynamically inserted here -->
+            </div>
+            
+            <!-- No Results Message -->
+            <div id="no-results" class="hidden text-center py-12">
+                <svg class="w-16 h-16 mx-auto mb-4 text-red-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <h3 class="text-2xl font-bold mb-2">No Projects Found</h3>
+                <p class="text-gray-400">Try adjusting your filters or search criteria</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-project-modal">&times;</span>
+            <div id="modal-content-container">
+                <!-- Modal content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-black bg-opacity-70 text-white py-8 mt-16 border-t border-red-900">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4 creepy-font glow-text">FearFactory</h3>
+                    <p class="text-gray-400">Where nightmares become reality</p>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Explore</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-red-500">Experiences</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-red-500">Events</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-red-500">Achievements</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">About</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-red-500">Our Story</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-red-500">Team</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-red-500">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold mb-4">Support</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-red-500">FAQ</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-red-500">Contact</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-red-500">Safety</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500">
+                <p>&copy; 2023 FearFactory. All rights reserved. Enter at your own risk.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Sample project data
+        const projects = [
+            {
+                "title": "The Haunted Mansion",
+                "description": "Experience the terror of the abandoned mansion where no one has survived a night. This immersive experience takes you through 13 rooms of pure horror, each designed to test your courage and sanity.",
+                "project_type": "Haunted House",
+                "price": "29.99",
+                "launch_date": "2023-10-13",
+                "is_premium": true,
+                "template_available": true,
+                "achievement_tags": ["Survivor", "Ghost Hunter", "Fearless"],
+                "user_tags": ["Scary", "Intense", "Group Experience"],
+                "image_url": null
+            },
+            {
+                "title": "Forest of Whispers",
+                "description": "The trees speak in riddles, the shadows move with purpose, and something ancient hunts in the darkness. Navigate through a haunted woodland filled with supernatural entities.",
+                "project_type": "Outdoor Experience",
+                "price": "39.99",
+                "launch_date": "2023-09-21",
+                "is_premium": true,
+                "template_available": false,
+                "achievement_tags": ["Nature's Wrath", "Shadow Walker", "Midnight Survivor"],
+                "user_tags": ["Outdoor", "Atmospheric", "Challenging"],
+                "image_url": null
+            },
+            {
+                "title": "Asylum Outbreak",
+                "description": "The patients have escaped their cells, the doctors have disappeared, and something inhuman stalks the halls. You play as a security guard during a catastrophic incident at Ravenwood Psychiatric Hospital.",
+                "project_type": "Interactive Theater",
+                "price": "24.99",
+                "launch_date": "2023-08-05",
+                "is_premium": false,
+                "template_available": true,
+                "achievement_tags": ["Sanity Keeper", "Medical Expert", "Escape Artist"],
+                "user_tags": ["Psychological", "Tense", "Story-driven"],
+                "image_url": null
+            },
+            {
+                "title": "Nightmare Dimension",
+                "description": "Enter a virtual reality experience that adapts to your deepest fears. Using advanced AI, this project creates personalized horror scenarios based on your psychological profile.",
+                "project_type": "Virtual Reality",
+                "price": "49.99",
+                "launch_date": "2023-11-01",
+                "is_premium": true,
+                "template_available": false,
+                "achievement_tags": ["Mind Bender", "Reality Shifter", "Fear Conqueror"],
+                "user_tags": ["VR", "Personalized", "High-tech"],
+                "image_url": null
+            },
+            {
+                "title": "Cursed Carnival",
+                "description": "Step right up to the carnival where the games are rigged, the clowns are hungry, and the rides never end. This traveling horror experience combines classic carnival elements with terrifying twists.",
+                "project_type": "Interactive Theater",
+                "price": "34.99",
+                "launch_date": "2023-07-13",
+                "is_premium": false,
+                "template_available": true,
+                "achievement_tags": ["Ticket Master", "Freak Show Survivor", "Ring Leader"],
+                "user_tags": ["Carnival", "Clowns", "Family-friendly"],
+                "image_url": null
+            },
+            {
+                "title": "Buried Alive",
+                "description": "Test your claustrophobia in this extreme escape room experience. Participants are sealed in custom-built coffins and must solve puzzles to escape before the oxygen runs out.",
+                "project_type": "Escape Room",
+                "price": "59.99",
+                "launch_date": "2023-10-31",
+                "is_premium": true,
+                "template_available": false,
+                "achievement_tags": ["Grave Digger", "Oxygen Conserver", "Quick Thinker"],
+                "user_tags": ["Extreme", "Claustrophobic", "Puzzle-based"],
+                "image_url": null
+            },
+            {
+                "title": "Ghost Ship",
+                "description": "Board the abandoned vessel that appeared mysteriously in the harbor. Navigate through the rusting corridors and flooded chambers while avoiding the vengeful spirits of the former crew.",
+                "project_type": "Haunted House",
+                "price": "32.99",
+                "launch_date": "2023-08-17",
+                "is_premium": false,
+                "template_available": true,
+                "achievement_tags": ["Sea Captain", "Ghost Whisperer", "Treasure Hunter"],
+                "user_tags": ["Maritime", "Atmospheric", "Historical"],
+                "image_url": null
+            },
+            {
+                "title": "Witch Trial",
+                "description": "Travel back to Salem, 1692. You're accused of witchcraft and must prove your innocence or find a way to escape before dawn brings your execution. This historical horror experience blends fact with supernatural fiction.",
+                "project_type": "Interactive Theater",
+                "price": "27.99",
+                "launch_date": "2023-09-01",
+                "is_premium": false,
+                "template_available": true,
+                "achievement_tags": ["Innocent Soul", "Spell Caster", "Time Traveler"],
+                "user_tags": ["Historical", "Witchcraft", "Role-playing"],
+                "image_url": null
+            },
+            {
+                "title": "Alien Autopsy",
+                "description": "As a new recruit at a secret government facility, you're tasked with assisting in the examination of an extraterrestrial specimen. When the creature turns out to be very much alive, chaos ensues.",
+                "project_type": "Escape Room",
+                "price": "42.99",
+                "launch_date": "2023-11-15",
+                "is_premium": true,
+                "template_available": false,
+                "achievement_tags": ["Xenobiologist", "Government Agent", "First Contact"],
+                "user_tags": ["Sci-fi", "Alien", "Laboratory"],
+                "image_url": null
+            }
+        ];
+        
+        // DOM elements
+        const projectsGrid = document.getElementById('projects-grid');
+        const noResults = document.getElementById('no-results');
+        const projectModal = document.getElementById('project-modal');
+        const closeProjectModal = document.getElementById('close-project-modal');
+        const modalContentContainer = document.getElementById('modal-content-container');
+        const projectTypeFilter = document.getElementById('project-type-filter');
+        const sortFilter = document.getElementById('sort-filter');
+        const searchFilter = document.getElementById('search-filter');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Format date function
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+        
+        // Generate project SVG placeholder
+        function generateProjectSVG(title) {
+            // Create a simple color based on the project title
+            const hash = title.split('').reduce((acc, char) => {
+                return char.charCodeAt(0) + ((acc << 5) - acc);
+            }, 0);
+            
+            const hue = Math.abs(hash % 360);
+            const baseColor = `hsl(${hue}, 30%, 20%)`;
+            const accentColor = `hsl(${hue}, 70%, 40%)`;
+            
+            // Generate a simple SVG based on the project type
+            return `
+                <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <rect width="100" height="100" fill="${baseColor}"/>
+                    <circle cx="50" cy="50" r="25" fill="${accentColor}" opacity="0.7"/>
+                    <text x="50" y="55" font-family="Arial" font-size="10" fill="white" text-anchor="middle">${title.substring(0, 2).toUpperCase()}</text>
+                </svg>
+            `;
+        }
+        
+        // Render projects function
+        function renderProjects(projectsToRender) {
+            projectsGrid.innerHTML = '';
+            
+            if (projectsToRender.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+            
+            projectsToRender.forEach((project, index) => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card rounded-lg overflow-hidden shadow-lg';
+                
+                // Create image or placeholder
+                let imageHtml = '';
+                if (project.image_url) {
+                    imageHtml = `<div class="project-image" style="background-image: url('${project.image_url}');">`;
+                } else {
+                    imageHtml = `
+                        <div class="project-image">
+                            <div class="project-image-placeholder">
+                                ${generateProjectSVG(project.title)}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Create premium badge if applicable
+                const premiumBadge = project.is_premium ? 
+                    `<div class="absolute top-2 right-2 premium-badge">Premium</div>` : '';
+                
+                // Create template badge if applicable
+                const templateBadge = project.template_available ? 
+                    `<div class="absolute top-2 left-2 tag bg-gray-700">Template</div>` : '';
+                
+                // Format tags
+                const achievementTags = project.achievement_tags.map(tag => 
+                    `<span class="tag">${tag}</span>`
+                ).join('');
+                
+                const userTags = project.user_tags.map(tag => 
+                    `<span class="tag bg-gray-700">${tag}</span>`
+                ).join('');
+                
+                projectCard.innerHTML = `
+                    <div class="relative">
+                        ${imageHtml}
+                        ${premiumBadge}
+                        ${templateBadge}
+                    </div>
+                    <div class="p-6 project-details">
+                        <h3 class="text-xl font-bold mb-2">${project.title}</h3>
+                        <p class="text-gray-400 mb-4 text-sm line-clamp-3">${project.description.substring(0, 100)}${project.description.length > 100 ? '...' : ''}</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm text-red-500">${project.project_type}</span>
+                            <span class="text-lg font-bold">$${project.price}</span>
+                        </div>
+                        <div class="mb-4 text-sm">
+                            <p>Launch Date: ${formatDate(project.launch_date)}</p>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-4">
+                            ${achievementTags}
+                        </div>
+                        <div class="project-actions">
+                            <button class="btn-horror w-full px-4 py-2 rounded view-details-btn" data-index="${index}">View Details</button>
+                        </div>
+                    </div>
+                `;
+                
+                projectsGrid.appendChild(projectCard);
+            });
+            
+            // Add event listeners to view details buttons
+            document.querySelectorAll('.view-details-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const index = parseInt(button.getAttribute('data-index'));
+                    showProjectDetails(projectsToRender[index]);
+                });
+            });
+        }
+        
+        // Show project details in modal
+        function showProjectDetails(project) {
+            // Create image or placeholder
+            let imageHtml = '';
+            if (project.image_url) {
+                imageHtml = `<img src="${project.image_url}" alt="${project.title}" class="w-full h-64 object-cover rounded mb-6">`;
+            } else {
+                imageHtml = `
+                    <div class="w-full h-64 bg-gray-800 rounded mb-6 flex items-center justify-center">
+                        ${generateProjectSVG(project.title)}
+                    </div>
+                `;
+            }
+            
+            // Format tags
+            const achievementTags = project.achievement_tags.map(tag => 
+                `<span class="tag">${tag}</span>`
+            ).join('');
+            
+            const userTags = project.user_tags.map(tag => 
+                `<span class="tag bg-gray-700">${tag}</span>`
+            ).join('');
+            
+            // Premium and template badges
+            const premiumBadge = project.is_premium ? 
+                `<span class="premium-badge">Premium</span>` : '';
+            
+            const templateBadge = project.template_available ? 
+                `<span class="tag bg-gray-700">Template Available</span>` : '';
+            
+            modalContentContainer.innerHTML = `
+                <h2 class="text-3xl font-bold mb-2 creepy-font glow-text">${project.title}</h2>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    ${premiumBadge}
+                    ${templateBadge}
+                    <span class="tag">${project.project_type}</span>
+                </div>
+                ${imageHtml}
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold mb-2">Description</h3>
+                    <p class="text-gray-300">${project.description}</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Details</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li><span class="font-bold">Price:</span> $${project.price}</li>
+                            <li><span class="font-bold">Launch Date:</span> ${formatDate(project.launch_date)}</li>
+                            <li><span class="font-bold">Project Type:</span> ${project.project_type}</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Achievements</h3>
+                        <div class="flex flex-wrap gap-2">
+                            ${achievementTags || '<span class="text-gray-500">No achievements available</span>'}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold mb-2">User Tags</h3>
+                    <div class="flex flex-wrap gap-2">
+                        ${userTags || '<span class="text-gray-500">No user tags available</span>'}
+                    </div>
+                </div>
+                <div class="flex justify-between items-center mt-8">
+                    <span class="text-2xl font-bold">$${project.price}</span>
+                    <button class="btn-horror px-6 py-3 rounded">Book Experience</button>
+                </div>
+            `;
+            
+            projectModal.style.display = 'flex';
+        }
+        
+        // Close modal
+        closeProjectModal.addEventListener('click', () => {
+            projectModal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === projectModal) {
+                projectModal.style.display = 'none';
+            }
+        });
+        
+        // Filter projects
+        function filterProjects() {
+            const projectType = projectTypeFilter.value;
+            const searchTerm = searchFilter.value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.filter-active').getAttribute('data-filter');
+            
+            let filteredProjects = [...projects];
+            
+            // Filter by project type
+            if (projectType) {
+                filteredProjects = filteredProjects.filter(project => 
+                    project.project_type === projectType
+                );
+            }
+            
+            // Filter by search term
+            if (searchTerm) {
+                filteredProjects = filteredProjects.filter(project => 
+                    project.title.toLowerCase().includes(searchTerm) || 
+                    project.description.toLowerCase().includes(searchTerm) ||
+                    project.project_type.toLowerCase().includes(searchTerm) ||
+                    project.achievement_tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+                    project.user_tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            // Filter by button filters
+            if (activeFilter === 'premium') {
+                filteredProjects = filteredProjects.filter(project => project.is_premium);
+            } else if (activeFilter === 'template') {
+                filteredProjects = filteredProjects.filter(project => project.template_available);
+            }
+            
+            // Sort projects
+            const sortBy = sortFilter.value;
+            if (sortBy === 'newest') {
+                filteredProjects.sort((a, b) => new Date(b.launch_date) - new Date(a.launch_date));
+            } else if (sortBy === 'oldest') {
+                filteredProjects.sort((a, b) => new Date(a.launch_date) - new Date(b.launch_date));
+            } else if (sortBy === 'price-high') {
+                filteredProjects.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+            } else if (sortBy === 'price-low') {
+                filteredProjects.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+            }
+            
+            renderProjects(filteredProjects);
+        }
+        
+        // Add event listeners for filters
+        projectTypeFilter.addEventListener('change', filterProjects);
+        sortFilter.addEventListener('change', filterProjects);
+        searchFilter.addEventListener('input', filterProjects);
+        
+        // Filter button click handlers
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('filter-active'));
+                // Add active class to clicked button
+                button.classList.add('filter-active');
+                filterProjects();
+            });
+        });
+        
+        // Add some random spider movement
+        const spider = document.querySelector('.spider');
+        setInterval(() => {
+            const newTop = Math.random() * 300;
+            const newRight = Math.random() * 200 + 50;
+            spider.style.top = `${newTop}px`;
+            spider.style.right = `${newRight}px`;
+        }, 10000);
+        
+        // Initial render
+        renderProjects(projects);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9413247600b7802e',t:'MTc0NzQ4NTE5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

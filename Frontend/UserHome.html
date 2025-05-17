@@ -397,7 +397,7 @@
             <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Dashboard</a>
             <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Experiences</a>
             <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Achievements</a>
-            <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Community</a>
+            <a href="Project2.html" class="menu-item text-white hover:text-red-500 transition-colors">Projects</a>
             <a href="#" class="menu-item text-white hover:text-red-500 transition-colors">Events</a>
         </div>
 
@@ -1054,15 +1054,19 @@
 
                 // Optional (static progress bar values)
                 document.querySelectorAll(".experience-level-name").forEach(el => {
-                    el.textContent = "0/0";
+                    el.textContent = data.user_experience_count+"/"+data.user_experience_total_count;
                 });
                 document.querySelectorAll(".experience-level-progress-bar").forEach(el => {
-                    el.style.width = "10%";
+                    el.style.width = getPercentage(data.user_experience_count,data.user_experience_total_count) +"%";
                 });
-
 
             } catch (err) {
                 console.error("Error fetching user data:", err);
+            }
+
+            function getPercentage(level,total){
+                    let num = (level/total)*100;
+                    return num;
             }
 
             function getCookie(name) {
@@ -1110,16 +1114,17 @@
 
                 const data = await response.json();
                 const achievements = data.user_achievements || [];
-
+                console.log(achievements)
                 // 👇 Get the count of achievements
+                const total = achievements[0].user_total_achievement
                 const achievementCount = achievements.length;
 
                 document.querySelectorAll(".achievement-level-name").forEach(el => {
-                    el.textContent = achievementCount + "/25";
+                    el.textContent = achievementCount + "/"+ total;
                 });
 
                 document.querySelectorAll(".achievement-level-progress-bar").forEach(el => {
-                    el.style.width = (getPercentage(achievementCount, 25)) + "%";
+                    el.style.width = (getPercentage(achievementCount, total)) + "%";
                 });
 
             } catch (err) {
@@ -1137,7 +1142,6 @@
                 
             }
         });
-
 
         //--------------------Dashboard-users-details-----------//
 
