@@ -24,7 +24,8 @@ urlpatterns = [
     path("auth/",include("auths.urls")),
     path("feedback/",include("feedback.urls")),
     path("dashboard/",include("dashboard.urls")),
-    path("projects/",include("projects.urls"))
+    path("projects/",include("projects.urls")),
+    path("control/",include("control.urls"))
     
 ]
 if settings.DEBUG:

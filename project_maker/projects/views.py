@@ -21,6 +21,7 @@ class Projects(APIView):
         data = {
             "projects": [
                 {
+                    "id": project.id,
                     "title": project.title,
                     "description": project.description,
                     "project_type": project.get_project_type_display(),
@@ -32,7 +33,7 @@ class Projects(APIView):
                     "user_tags": project.user_tags.split(',') if project.user_tags else [],
                     "image_url": project.image.url if project.image else None,
                 }
-                for project in projects 
+                for project in projects     
             ]
         }
 

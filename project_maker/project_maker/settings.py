@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "feedback",
     "dashboard",
     "projects",
+    "control"
 ]
 
 MIDDLEWARE = [
