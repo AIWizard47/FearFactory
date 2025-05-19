@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-fg5t@*lx!igp(amgw2##o6acxo#zmvl4#ypf0bv7*88u5u0!fs'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -138,13 +138,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = [
-    'https://*.defang.dev'
-]
-if DEBUG:
-    CSRF_TRUSTED_ORIGINS = [
-        'http://localhost:8000',
-    ]
 
 
 REST_FRAMEWORK = {
