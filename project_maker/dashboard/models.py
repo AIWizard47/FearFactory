@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-
-
+from django.utils.timezone import now
+import random
+from datetime import timedelta
 
 #--------------------------REWARD-SYSTEM----------------------#
 
@@ -63,11 +64,24 @@ class UserExperience(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     experience = models.ForeignKey(Experience, on_delete=models.CASCADE)
     joined_at = models.DateTimeField(auto_now_add=True)
+    end_date = models.DateTimeField(blank=True,null=True)  #update this one in all functions and every files. 
     completed = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user.username} - {self.experience.title}"
-
+    
+    def save(self, *args, **kwargs):
+        # Set end_date if not already set
+        if not self.end_date:
+            days = random.randint(8, 12)
+            self.end_date = now() + timedelta(days=days)
+        
+        # Then check if completed
+        if self.end_date and now() >= self.end_date:
+            self.completed = True
+        else:
+            self.completed = False
+        super().save(*args, **kwargs)
 
 # Buy a any projects or assets etc...
 class Booking(models.Model):

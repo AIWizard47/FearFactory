@@ -473,7 +473,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span>My Bookings</span>
-                            <span class="ml-auto bg-red-900 text-white text-xs px-2 py-0.5 rounded-full">2</span>
+                            <span class="ml-auto bg-red-900 text-white text-xs px-2 py-0.5 rounded-full" id="booking_number">0</span>
                         </a>
                         <a href="#" class="profile-menu-item flex items-center px-4 py-3 hover:bg-red-900/30 transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1292,9 +1292,12 @@
                 return response.json();
             })
             .then(data => {
+                const booking_number = document.getElementById('booking_number');
+                booking_number.textContent = `${data.not_completed_number}`;
                 const container = document.getElementById('user-experience-container');
                 container.innerHTML = ''; // Clear existing content
                 const experiences = data.user_experience || [];
+                console.log(experiences.not_completed_number)
                 const bgColors = ['purple', 'red', 'green', 'blue', 'yellow', 'pink', 'rose'];
                 experiences.forEach((item, index) => {
                     if (index >= 4) return;  // Limit to 6 experience
@@ -1322,6 +1325,7 @@
                             </div>
                         </div>
                     `;
+                    
                     container.insertAdjacentHTML('beforeend', cardHTML);
                     
                 });

@@ -65,10 +65,14 @@ class UserExperienceAPI(APIView):
     def get(self, request, *args, **kwargs):
         user = request.user
         user_experience = UserExperience.objects.filter(user=user)
-
+        not_completed_number = 0
+        for i in user_experience:
+            if not i.completed:
+                not_completed_number += 1
+            
         if not user_experience.exists():
             return Response({"error": "No experience found."}, status=404)
-
+        print("-->",not_completed_number)
         data = {
             "user_experience": [
                 {
@@ -80,11 +84,13 @@ class UserExperienceAPI(APIView):
                     "price" : ua.experience.price,
                     "trending" : ua.experience.trending,
                     "popular" : ua.experience.popular,
-                    "completed" : ua.completed
+                    "completed" : ua.completed,
+                    
                     
                 }
                 for ua in sorted(user_experience, key=lambda x: x.joined_at, reverse=True) if not ua.completed
-            ]
+            ],
+            "not_completed_number" : not_completed_number
         }
         return Response(data, status=200)
     
