@@ -10,7 +10,6 @@ class Projects(APIView):
 
     def get(self, request, *args, **kwargs):
         projects = Project.objects.all()
-
         if not projects.exists():
             return Response(
                 {"error": "No projects found."},
