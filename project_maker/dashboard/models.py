@@ -4,6 +4,30 @@ from django.utils.timezone import now
 import random
 from datetime import timedelta
 
+
+# ---------------------- DEFAULT FUNCTIONS ---------------------- #
+# These MUST be above the UserProfile model
+
+def get_default_fear_level():
+    obj, created = FearLevel.objects.get_or_create(
+        name="Beginner",
+        defaults={"description": "Default beginner level"}
+    )
+    return obj.id
+
+
+def get_default_membership():
+    obj, created = MemberShip.objects.get_or_create(
+        name="Free Haunter",
+        defaults={
+            "description": "Default free membership",
+            "perk": "Basic access"
+        }
+    )
+    return obj.id
+
+
+
 #--------------------------REWARD-SYSTEM----------------------#
 
 class Achievement(models.Model):
@@ -105,8 +129,8 @@ class Progress(models.Model):
 # Extra profile info (optional, linked to User)
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    fear_level = models.OneToOneField(FearLevel, on_delete=models.SET_NULL, null=True, blank=True)
-    membership = models.OneToOneField(MemberShip, on_delete=models.SET_NULL, null=True, blank=True)
+    fear_level = models.ForeignKey(FearLevel, on_delete=models.SET_DEFAULT, default=get_default_fear_level)
+    membership = models.ForeignKey(MemberShip, on_delete=models.SET_DEFAULT, default=get_default_membership)
     profile_tags = models.ManyToManyField('UserTag', blank=True)
 
     def __str__(self):

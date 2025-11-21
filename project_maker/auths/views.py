@@ -67,9 +67,7 @@ class SignUpView(APIView):
             experiences_completed = 0,
             achievements_unlocked = 0
         )
-
         return Response({"message": "User registered successfully!"}, status=status.HTTP_201_CREATED)
-
 
 
 # class FollowUserView(APIView):

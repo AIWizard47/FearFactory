@@ -1,0 +1,656 @@
+================================================================================
+                    PROJECT MAKER - PROJECT DOCUMENTATION
+================================================================================
+Project Name: Project Maker
+Framework: Django 5.2 (Python Web Framework)
+Database: SQLite3
+Status: Development (DEBUG=True)
+Created: November 2025
+================================================================================
+
+TABLE OF CONTENTS
+================================================================================
+1. PROJECT OVERVIEW
+2. TECHNOLOGY STACK
+3. PROJECT STRUCTURE & APPS
+4. DATABASE MODELS & WORKFLOWS
+5. API ENDPOINTS
+6. AUTHENTICATION & SECURITY
+7. INSTALLATION & SETUP
+8. RUNNING THE PROJECT
+9. DEPLOYMENT
+10. PROJECT WORKFLOW
+
+================================================================================
+1. PROJECT OVERVIEW
+================================================================================
+Project Maker is a Django-based web application designed to manage user projects,
+experiences, achievements, and social connections. It provides a reward system
+with gamification elements including:
+- User authentication and social networking (friend requests)
+- Project management and marketplace
+- Experience tracking and progression system
+- Achievement and badge system
+- Membership levels and perks
+- Feedback and contact system
+
+The project uses REST API architecture with JWT (JSON Web Token) authentication
+and CORS enabled for frontend integration.
+
+================================================================================
+2. TECHNOLOGY STACK
+================================================================================
+
+BACKEND:
+  - Python 3.x
+  - Django 5.2 (Web Framework)
+  - Django REST Framework 3.16.0 (API)
+  - djangorestframework_simplejwt 5.5.0 (JWT Authentication)
+  
+DATABASE:
+  - SQLite3 (Development - can be upgraded to PostgreSQL)
+  
+STORAGE & MEDIA:
+  - Pillow 11.2.1 (Image Processing)
+  - WhiteNoise 6.6.0 (Static Files)
+  
+SECURITY & CORS:
+  - django-cors-headers 4.7.0 (Cross-Origin Resource Sharing)
+  - PyJWT 2.9.0 (JWT Token Handling)
+  
+SERVER & DEPLOYMENT:
+  - Gunicorn 22.0.0 (WSGI Application Server)
+  - Docker (Containerization)
+  
+OTHER UTILITIES:
+  - sqlparse 0.5.3 (SQL Parsing)
+  - tzdata 2025.2 (Timezone Data)
+  - asgiref 3.8.1 (Async Framework Support)
+  - packaging 24.0 (Package Management)
+
+================================================================================
+3. PROJECT STRUCTURE & APPS
+================================================================================
+
+Project Root: d:\VS_code\VSCodePy\Project_maker\project_maker\
+
+DIRECTORY STRUCTURE:
+  ├── manage.py                    # Django management script
+  ├── db.sqlite3                   # SQLite database
+  ├── requirements.txt             # Python dependencies
+  ├── Dockerfile                   # Docker configuration
+  ├── netlify.toml                 # Netlify deployment config
+  ├── DETAILS.txt                  # This documentation file
+  ├── project_maker/               # Main Django project configuration
+  │   ├── __init__.py
+  │   ├── settings.py              # Project settings & configurations
+  │   ├── urls.py                  # Main URL router
+  │   ├── asgi.py                  # ASGI config (async)
+  │   └── wsgi.py                  # WSGI config (production)
+  ├── auths/                       # Authentication & Social Features
+  │   ├── models.py                # User, FriendRequest models
+  │   ├── views.py
+  │   ├── urls.py
+  │   ├── admin.py
+  │   ├── apps.py
+  │   ├── tests.py
+  │   └── migrations/
+  ├── projects/                    # Project Management
+  │   ├── models.py                # Project model
+  │   ├── views.py
+  │   ├── urls.py
+  │   ├── admin.py
+  │   ├── apps.py
+  │   ├── tests.py
+  │   └── migrations/
+  ├── dashboard/                   # User Dashboard & Rewards System
+  │   ├── models.py                # User Profile, Achievements, Experience
+  │   ├── views.py
+  │   ├── urls.py
+  │   ├── admin.py
+  │   ├── apps.py
+  │   ├── tests.py
+  │   └── migrations/
+  ├── feedback/                    # Feedback & Contact System
+  │   ├── models.py                # Feedback model
+  │   ├── serializers.py
+  │   ├── views.py
+  │   ├── urls.py
+  │   ├── admin.py
+  │   ├── apps.py
+  │   ├── tests.py
+  │   └── migrations/
+  ├── control/                     # Admin Control Panel
+  │   ├── models.py
+  │   ├── views.py
+  │   ├── urls.py
+  │   ├── admin.py
+  │   ├── apps.py
+  │   ├── tests.py
+  │   └── migrations/
+  └── media/                       # User uploaded media files
+      ├── experience_images/
+      └── project_images/
+
+================================================================================
+4. DATABASE MODELS & WORKFLOWS
+================================================================================
+
+APP: AUTHS (Authentication & Social)
+--------------------------------------
+Models:
+  - FriendRequest
+    * from_user (FK to User)
+    * to_user (FK to User)
+    * status: ['pending', 'accepted', 'rejected']
+    * created_at: Auto timestamp
+    * Unique constraint: (from_user, to_user)
+
+Workflow:
+  1. User sends friend request to another user
+  2. Request status starts as 'pending'
+  3. Recipient can accept or reject the request
+  4. Accepted requests establish friendship connection
+
+
+APP: PROJECTS (Project Management)
+------------------------------------
+Models:
+  - Project
+    * title: CharField (100)
+    * description: TextField
+    * project_type: ['WEB', 'APP', 'GAME', 'MODEL']
+    * price: DecimalField (10,2)
+    * launch_date: DateField
+    * is_premium: BooleanField
+    * template_available: BooleanField
+    * achievement_tags: CharField (comma-separated)
+    * user_tags: CharField (comma-separated rewards/categories)
+    * image: ImageField (project_images/)
+
+Workflow:
+  1. Admin/User creates a project with details
+  2. Projects can be marked as premium or have templates
+  3. Projects have types: Website, Android App, Game, 3D Model
+  4. Projects are displayed in marketplace
+  5. Users can purchase/book projects through Booking model
+
+
+APP: DASHBOARD (User Dashboard & Reward System)
+--------------------------------------------------
+Models:
+
+  A. REWARD SYSTEM:
+  
+  - Achievement
+    * name: CharField (100)
+    * description: TextField
+    * Represents badges/achievements users can earn
+  
+  - UserAchievement (Many-to-Many through model)
+    * user (FK to User)
+    * achieve (FK to Achievement)
+    * date_earned: DateField (auto)
+  
+  - UserTag
+    * category: CharField (50)
+    * name: CharField (50)
+    * Tags for categorizing users (e.g., "Developer", "Designer")
+  
+  - FearLevel (Progression)
+    * name: CharField (20)
+    * description: TextField
+    * Represents user's experience level/progression
+  
+  B. MEMBERSHIP SYSTEM:
+  
+  - MemberShip
+    * name: CharField (20) - e.g., "Free Haunter"
+    * description: TextField
+    * perk: TextField
+    * Different membership tiers with different perks
+  
+  C. EXPERIENCE & PROGRESSION:
+  
+  - Experience
+    * title: CharField (100)
+    * description: TextField
+    * price: DecimalField (6,2)
+    * difficulty: CharField (50)
+    * trending: BooleanField
+    * popular: BooleanField
+    * image: ImageField (experience_images/)
+    * Represents courses/learning experiences
+  
+  - UserExperience (Enrollment)
+    * user (FK to User)
+    * experience (FK to Experience)
+    * joined_at: DateTimeField (auto)
+    * end_date: DateTimeField (calculated on save, 8-12 days from join)
+    * completed: BooleanField (auto-calculated based on end_date)
+    * Auto-sets end_date if not already set
+    * Auto-marks as completed when end_date is reached
+  
+  - Booking (Purchase/Reservation)
+    * user (FK to User)
+    * experience (FK to Experience)
+    * date_time: DateTimeField
+    * status: CharField (20) - default: 'Upcoming'
+    * Represents user bookings/purchases
+  
+  D. PROGRESS TRACKING:
+  
+  - Progress (OneToOne with User)
+    * experiences_completed: IntegerField (default: 0)
+    * achievements_unlocked: IntegerField (default: 0)
+    * Tracks user's overall progress statistics
+  
+  E. USER PROFILE:
+  
+  - UserProfile (OneToOne with User)
+    * user (OneToOne to User)
+    * fear_level (OneToOne to FearLevel)
+    * membership (OneToOne to MemberShip)
+    * profile_tags (ManyToMany to UserTag)
+    * Created automatically when user registers
+    * Stores additional profile information
+
+Dashboard Workflow:
+  1. User registers → UserProfile created automatically
+  2. User joins an Experience → UserExperience created with auto-calculated end_date
+  3. When end_date reached → experience marked as completed
+  4. Completion triggers Achievement unlock
+  5. Progress model updates with completion count
+  6. User can view achievements, experience history, profile tags
+  7. Admin can manage memberships and fear levels
+
+
+APP: FEEDBACK (Feedback & Contact System)
+-------------------------------------------
+Models:
+  - Feedback/ContactUs
+    * Stores user feedback and contact information
+    * Used for communication and support tickets
+
+Workflow:
+  1. User submits feedback or contact form
+  2. Admin can view and respond to feedback
+  3. Can be exported for analysis
+
+
+APP: CONTROL (Admin Control Panel)
+-----------------------------------
+Purpose:
+  - Administrative functions
+  - Control system-wide settings
+  - Moderation tools
+
+================================================================================
+5. API ENDPOINTS
+================================================================================
+
+URL ROUTING (from project_maker/urls.py):
+
+/admin/                    # Django Admin Panel
+/auth/                     # Authentication endpoints (auths/urls)
+                           # - User registration
+                           # - User login
+                           # - Friend requests
+/feedback/                 # Feedback endpoints (feedback/urls)
+                           # - Submit feedback
+                           # - Get feedback
+/dashboard/                # Dashboard endpoints (dashboard/urls)
+                           # - User profile
+                           # - Achievements
+                           # - Progress
+/projects/                 # Project endpoints (projects/urls)
+                           # - List projects
+                           # - Project details
+                           # - Create project
+/control/                  # Admin control endpoints (control/urls)
+
+/media/                    # Media files (only in DEBUG=True)
+                           # - Experience images
+                           # - Project images
+
+API Authentication:
+  - JWT (JSON Web Token) Required
+  - Token format: Bearer <token>
+  - Access token lifetime: 60 minutes
+  - Refresh token lifetime: 7 days
+  - Tokens blacklisted on logout
+
+================================================================================
+6. AUTHENTICATION & SECURITY
+================================================================================
+
+Authentication Method:
+  - JWT (JSON Web Token) with simplejwt
+  - Token rotation enabled
+  - Blacklist after rotation enabled
+
+Security Settings:
+  - SECRET_KEY: django-insecure-... (CHANGE IN PRODUCTION!)
+  - DEBUG: True (Development only - MUST be False in production)
+  - ALLOWED_HOSTS: ['*'] (RESTRICT in production)
+  - CORS_ORIGIN_ALLOW_ALL: True (Configure properly in production)
+
+Password Validation:
+  - User attribute similarity check
+  - Minimum length validation
+  - Common password check
+  - Numeric-only password check
+
+Middleware Stack:
+  - CorsMiddleware (first - for CORS)
+  - SecurityMiddleware
+  - SessionMiddleware
+  - CommonMiddleware
+  - CsrfMiddleware (CSRF protection)
+  - AuthenticationMiddleware
+  - MessageMiddleware
+  - ClickJackingMiddleware (X-Frame-Options)
+
+================================================================================
+7. INSTALLATION & SETUP
+================================================================================
+
+PREREQUISITES:
+  - Python 3.9 or higher
+  - pip (Python package manager)
+  - Virtual environment tool (venv)
+
+STEP 1: Clone or download the project
+  cd d:\VS_code\VSCodePy\Project_maker\project_maker
+
+STEP 2: Create virtual environment
+  python -m venv venv
+
+STEP 3: Activate virtual environment
+  Windows: venv\Scripts\activate
+  macOS/Linux: source venv/bin/activate
+
+STEP 4: Install dependencies
+  pip install -r requirements.txt
+
+STEP 5: Apply database migrations
+  python manage.py migrate
+
+STEP 6: Create superuser (admin)
+  python manage.py createsuperuser
+  # Follow prompts to create admin account
+
+STEP 7: Collect static files
+  python manage.py collectstatic --noinput
+
+================================================================================
+8. RUNNING THE PROJECT
+================================================================================
+
+DEVELOPMENT SERVER:
+  python manage.py runserver
+  Access at: http://127.0.0.1:8000/
+  Admin panel: http://127.0.0.1:8000/admin/
+
+PRODUCTION SERVER (using Gunicorn):
+  gunicorn project_maker.wsgi:application --bind 0.0.0.0:8000
+
+CREATING SUPERUSER:
+  python manage.py createsuperuser
+
+MAKING MIGRATIONS (after model changes):
+  python manage.py makemigrations
+  python manage.py migrate
+
+RUNNING TESTS:
+  python manage.py test
+
+SHELL ACCESS:
+  python manage.py shell
+
+================================================================================
+9. DEPLOYMENT
+================================================================================
+
+DOCKER DEPLOYMENT:
+  
+  The project includes a Dockerfile configured for:
+  - Python 3.11-slim base image
+  - Automatic dependency installation
+  - Static file collection
+  - Database migration
+  - Superuser creation (prompts)
+  - Gunicorn server startup
+
+  Build Docker image:
+    docker build -t project-maker .
+  
+  Run Docker container:
+    docker run -p 8000:8000 project-maker
+
+ENVIRONMENT VARIABLES TO SET IN PRODUCTION:
+  - SECRET_KEY (generate new secure key)
+  - DEBUG = False
+  - ALLOWED_HOSTS (specific domain list)
+  - CORS_ORIGIN_ALLOW_ALL = False
+  - CORS_ALLOWED_ORIGINS (specific origins)
+  - DATABASE_URL (use PostgreSQL/MySQL)
+  - EMAIL_BACKEND (for email notifications)
+
+NETLIFY DEPLOYMENT:
+  - netlify.toml file included for Netlify configuration
+  - Requires environment variables to be set in Netlify dashboard
+
+================================================================================
+10. PROJECT WORKFLOW
+================================================================================
+
+USER JOURNEY & WORKFLOW:
+
+1. USER REGISTRATION & ONBOARDING
+   ├── User signs up with email/password
+   ├── User account created in Django auth
+   ├── UserProfile created automatically
+   ├── Default Fear Level assigned
+   ├── Default Membership assigned (Free)
+   └── User tags initialized (empty, can be added)
+
+2. USER BROWSES PROJECTS & EXPERIENCES
+   ├── User views Project marketplace
+   ├── User views Experience catalog
+   ├── Filters by:
+   │   ├── Project type (WEB, APP, GAME, MODEL)
+   │   ├── Price range
+   │   ├── Difficulty level
+   │   └── Trending/Popular status
+   └── Can view project details and reviews
+
+3. SOCIAL NETWORKING
+   ├── User searches for other users
+   ├── User sends friend request
+   ├── Request status: pending → accepted/rejected
+   ├── Accepted requests → Friends connection
+   └── Can view friend's profiles and achievements
+
+4. BOOKING & PURCHASING EXPERIENCE
+   ├── User clicks "Book" or "Purchase" on Experience
+   ├── Booking model created
+   ├── UserExperience record created
+   ├── Auto end_date set (8-12 days from now)
+   ├── Status: "Upcoming"
+   ├── Payment processed (external integration possible)
+   └── Confirmation sent to user
+
+5. EXPERIENCE PROGRESSION
+   ├── User joins Experience
+   ├── Enrolled in learning/training
+   ├── Completes tasks/modules within experience
+   ├── System tracks progress
+   ├── When end_date reached → auto mark as "completed"
+   ├── Completion unlocks related Achievements
+   └── Progress model updates with completion count
+
+6. ACHIEVEMENT & REWARD SYSTEM
+   ├── User completes an Experience
+   ├── Achievement unlocked (auto)
+   ├── UserAchievement record created
+   ├── Achievement appears on user profile
+   ├── Points/badges displayed
+   ├── Multiple achievements can be earned
+   └── Achievements enhance user reputation
+
+7. PROFILE & PROGRESS TRACKING
+   ├── User views their dashboard
+   ├── Displays:
+   │   ├── Profile info (name, profile picture)
+   │   ├── Current Fear Level
+   │   ├── Membership tier
+   │   ├── All achievements earned
+   │   ├── All experiences completed
+   │   ├── Experiences in progress
+   │   ├── Bookings/upcoming events
+   │   └── Progress statistics
+   ├── User can update profile tags
+   ├── User can manage account settings
+   └── User can upgrade membership tier
+
+8. FEEDBACK & SUPPORT
+   ├── User fills feedback form
+   ├── Feedback submitted to system
+   ├── Admin reviews feedback
+   ├── Admin can respond/take action
+   └── User notified of resolution
+
+9. MEMBERSHIP & PERKS
+   ├── Free tier: Basic access
+   ├── Paid tiers: Premium features
+   ├── Perks include:
+   │   ├── Exclusive projects
+   │   ├── Early access to experiences
+   │   ├── Premium template access
+   │   └── Special achievements
+   └── Can upgrade/downgrade anytime
+
+10. ADMIN MANAGEMENT
+    ├── Create/edit projects
+    ├── Create/edit experiences
+    ├── Define achievements
+    ├── Manage memberships
+    ├── View user statistics
+    ├── Process feedback
+    ├── Moderate user content
+    ├── Set fear levels/progression
+    └── Generate reports
+
+================================================================================
+KEY FEATURES SUMMARY
+================================================================================
+
+✓ User Authentication (Django Auth + JWT)
+✓ Social Networking (Friend Requests & Connections)
+✓ Project Marketplace (Browse & Purchase)
+✓ Experience/Learning Courses (Enrollment & Tracking)
+✓ Achievement System (Badges & Rewards)
+✓ Gamification (Fear Levels, Progression)
+✓ Membership Tiers (Free, Premium)
+✓ User Profiles (Customizable with Tags)
+✓ Feedback System (Support & Contact)
+✓ Media Management (Image uploads)
+✓ Admin Dashboard (Django Admin)
+✓ REST API (Full API endpoints)
+✓ CORS Enabled (Frontend integration ready)
+✓ Docker Support (Ready for containerization)
+✓ Static Files Management (WhiteNoise)
+
+================================================================================
+DEVELOPMENT NOTES
+================================================================================
+
+⚠ PRODUCTION CHECKLIST:
+  □ Change SECRET_KEY to a secure random value
+  □ Set DEBUG = False
+  □ Configure ALLOWED_HOSTS with actual domains
+  □ Set CORS_ORIGIN_ALLOW_ALL = False and configure specific origins
+  □ Migrate database to PostgreSQL or MySQL
+  □ Set up email backend for notifications
+  □ Configure media file storage (AWS S3 recommended)
+  □ Set up SSL/HTTPS
+  □ Configure CDN for static files
+  □ Set up logging and monitoring
+  □ Configure database backups
+  □ Set up CI/CD pipeline
+  □ Implement rate limiting
+  □ Add API documentation (Swagger/Redoc)
+
+TODO / FUTURE ENHANCEMENTS:
+  □ Add payment gateway integration (Stripe, PayPal)
+  □ Email notifications for events
+  □ Real-time notifications (WebSockets)
+  □ User messaging system
+  □ Advanced search and filtering
+  □ Recommendation algorithm
+  □ Analytics dashboard
+  □ API rate limiting
+  □ Mobile app integration
+  □ Two-factor authentication
+  □ Social login (Google, GitHub)
+  □ Review & rating system
+  □ Reporting system
+
+================================================================================
+USEFUL COMMANDS REFERENCE
+================================================================================
+
+Virtual Environment:
+  python -m venv venv                    # Create venv
+  venv\Scripts\activate                  # Activate (Windows)
+  deactivate                             # Deactivate
+
+Dependencies:
+  pip install -r requirements.txt        # Install all
+  pip freeze > requirements.txt          # Update requirements
+  pip install package_name==version      # Install specific version
+
+Database:
+  python manage.py makemigrations        # Create migration files
+  python manage.py migrate               # Apply migrations
+  python manage.py sqlmigrate app migration_name  # Preview SQL
+  python manage.py dbshell               # Database shell
+
+Django:
+  python manage.py runserver             # Run dev server
+  python manage.py shell                 # Python shell
+  python manage.py createsuperuser       # Create admin
+  python manage.py changepassword        # Change user password
+  python manage.py test                  # Run tests
+  python manage.py collectstatic         # Collect static files
+  python manage.py flush                 # Clear database
+
+Docker:
+  docker build -t project-maker .        # Build image
+  docker run -p 8000:8000 project-maker  # Run container
+  docker ps                              # List running containers
+  docker logs container_id               # View container logs
+
+Git (if version controlled):
+  git status                             # Check status
+  git add .                              # Stage changes
+  git commit -m "message"                # Commit changes
+  git push                               # Push to remote
+
+================================================================================
+SUPPORT & DOCUMENTATION
+================================================================================
+
+Django Official Documentation: https://docs.djangoproject.com/
+Django REST Framework: https://www.django-rest-framework.org/
+JWT Authentication: https://django-rest-framework-simplejwt.readthedocs.io/
+Docker Documentation: https://docs.docker.com/
+Python Documentation: https://docs.python.org/
+
+================================================================================
+LAST UPDATED: November 16, 2025
+PROJECT STATUS: In Development
+DJANGO VERSION: 5.2
+PYTHON VERSION: 3.11 (Docker) / 3.9+ (Development)
+================================================================================
