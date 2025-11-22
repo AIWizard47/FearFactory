@@ -1,0 +1,1368 @@
+================================================================================
+                        PROJECT MAKER - API REFERENCE
+                          COMPLETE URL & JSON GUIDE
+================================================================================
+
+Base URL: http://127.0.0.1:8000 (Development)
+API Version: v1
+Last Updated: November 22, 2025
+
+================================================================================
+TABLE OF CONTENTS
+================================================================================
+1. AUTHENTICATION & JWT
+2. USER MANAGEMENT
+3. FRIEND SYSTEM
+4. DASHBOARD & USER PROFILE
+5. ACHIEVEMENTS
+6. USER EXPERIENCES
+7. PROJECTS
+8. FEEDBACK
+9. ADMIN ENDPOINTS
+
+================================================================================
+1. AUTHENTICATION & JWT ENDPOINTS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.1 USER REGISTRATION                                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /auth/api/signup
+Content-Type: application/json
+
+REQUEST:
+{
+  "username": "john_doe",
+  "email": "john@example.com",
+  "password": "SecurePass123!"
+}
+
+RESPONSE (201 Created):
+{
+  "message": "User registered successfully!"
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "error": "Username already exists."
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "error": "Email already exists."
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "error": "All fields are required."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.2 GET JWT TOKEN (LOGIN)                                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /auth/api/token/
+Content-Type: application/json
+
+REQUEST:
+{
+  "username": "john_doe",
+  "password": "SecurePass123!"
+}
+
+RESPONSE (200 OK):
+{
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk0MzU5NjQ1LCJpYXQiOjE2OTQzNTU2NDUsImp0aSI6IjQwYTQ3YWJhYTc4ZTQ5YmU4MjZkMWE3ZDY2ZjM1MDA1IiwidXNlcl9pZCI6MX0.abcdefg...",
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5NDk2MDQ0NSwiaWF0IjoxNjk0MzU1NjQ1LCJqdGkiOiI4YzQ0YTU4ZTYyZTQ0OGQwODE5ZDg0YWFjOWRiNTU5YiIsInVzZXJfaWQiOjF9.hijklmn..."
+}
+
+ERROR RESPONSE (401 Unauthorized):
+{
+  "detail": "Invalid credentials"
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.3 REFRESH ACCESS TOKEN                                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /auth/api/token/refresh/
+Content-Type: application/json
+Authorization: Not required (uses refresh token in body)
+
+REQUEST:
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5NDk2MDQ0NSwiaWF0IjoxNjk0MzU1NjQ1LCJqdGkiOiI4YzQ0YTU4ZTYyZTQ0OGQwODE5ZDg0YWFjOWRiNTU5YiIsInVzZXJfaWQiOjF9.hijklmn..."
+}
+
+RESPONSE (200 OK):
+{
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjk0MzU5NjQ1LCJpYXQiOjE2OTQzNTU2NDUsImp0aSI6IjQwYTQ3YWJhYTc4ZTQ5YmU4MjZkMWE3ZDY2ZjM1MDA1IiwidXNlcl9pZCI6MX0.abcdefg..."
+}
+
+ERROR RESPONSE (401 Unauthorized):
+{
+  "detail": "Token is invalid or expired"
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.4 CHECK AUTHENTICATION                                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: GET /auth/api/check-auth
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+(No body required)
+
+RESPONSE (200 OK):
+{
+  "message": "Hello, authenticated user!",
+  "User": "john_doe"
+}
+
+ERROR RESPONSE (401 Unauthorized):
+{
+  "detail": "Authentication credentials were not provided."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 1.5 LOGOUT                                                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /auth/user/logout/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5NDk2MDQ0NSwiaWF0IjoxNjk0MzU1NjQ1LCJqdGkiOiI4YzQ0YTU4ZTYyZTQ0OGQwODE5ZDg0YWFjOWRiNTU5YiIsInVzZXJfaWQiOjF9.hijklmn..."
+}
+
+RESPONSE (205 Reset Content):
+{
+  "message": "Logout successful."
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "error": "Token is blacklisted"
+}
+
+
+================================================================================
+2. USER MANAGEMENT ENDPOINTS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 2.1 GET ALL USERS                                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: GET /auth/users/view-users/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+(No body required)
+
+RESPONSE (200 OK):
+[
+  {
+    "id": 1,
+    "username": "john_doe",
+    "email": "john@example.com",
+    "fear_level": "Beginner",
+    "membership": "Free Haunter"
+  },
+  {
+    "id": 2,
+    "username": "jane_smith",
+    "email": "jane@example.com",
+    "fear_level": "Intermediate",
+    "membership": "Premium"
+  },
+  {
+    "id": 3,
+    "username": "alex_jones",
+    "email": "alex@example.com",
+    "fear_level": "Expert",
+    "membership": "Elite"
+  }
+]
+
+ERROR RESPONSE (401 Unauthorized):
+{
+  "detail": "Authentication credentials were not provided."
+}
+
+
+================================================================================
+3. FRIEND SYSTEM ENDPOINTS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3.1 SEND FRIEND REQUEST                                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /auth/users/send-friend-request/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+{
+  "to_user_id": 2
+}
+
+RESPONSE (201 Created):
+{
+  "message": "Friend request sent!",
+  "request_id": 15
+}
+
+RESPONSE (200 OK) - Already Friends:
+{
+  "message": "You are already friends."
+}
+
+RESPONSE (200 OK) - Reverse Request Exists:
+{
+  "message": "That user already sent you a request.",
+  "request_id": 14
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "error": "to_user_id is required."
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "error": "You cannot send a friend request to yourself."
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "error": "Friend request already sent."
+}
+
+ERROR RESPONSE (404 Not Found):
+{
+  "error": "User does not exist."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3.2 ACCEPT FRIEND REQUEST                                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /auth/users/accept-friend-request/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+{
+  "request_id": 15
+}
+
+RESPONSE (200 OK):
+{
+  "message": "Friend request accepted successfully."
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "error": "request_id is required"
+}
+
+ERROR RESPONSE (404 Not Found):
+{
+  "error": "Friend request not found or already processed."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3.3 REJECT FRIEND REQUEST                                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /auth/users/reject-friend-request/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+{
+  "request_id": 15
+}
+
+RESPONSE (200 OK):
+{
+  "message": "Friend request rejected successfully."
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "error": "request_id is required"
+}
+
+ERROR RESPONSE (404 Not Found):
+{
+  "error": "Friend request not found or already processed."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3.4 GET FRIENDS LIST (PAGINATION)                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: GET /auth/users/friend-list-view/
+Query Parameters: ?cursor=cD0xMjM= (optional, for pagination)
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+(No body required)
+
+RESPONSE (200 OK):
+{
+  "count": 5,
+  "next": "http://127.0.0.1:8000/auth/users/friend-list-view/?cursor=cD0xMjM=",
+  "previous": null,
+  "results": [
+    {
+      "id": 2,
+      "name": "jane_smith",
+      "number_of_achievements": 3
+    },
+    {
+      "id": 3,
+      "name": "alex_jones",
+      "number_of_achievements": 7
+    },
+    {
+      "id": 4,
+      "name": "mike_wilson",
+      "number_of_achievements": 2
+    }
+  ]
+}
+
+ERROR RESPONSE (500 Internal Server Error):
+{
+  "error": "Failed to load friends",
+  "debug_error": "User profile not found"
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3.5 GET SENT FRIEND REQUESTS (PENDING)                                      │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: GET /auth/users/friend-pending-send-list-view/
+Query Parameters: ?cursor=cD0xMjM= (optional, for pagination)
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+(No body required)
+
+RESPONSE (200 OK):
+{
+  "count": 2,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 5,
+      "name": "sarah_brown",
+      "created_at": "2025-11-22T10:30:00Z"
+    },
+    {
+      "id": 6,
+      "name": "chris_davis",
+      "created_at": "2025-11-21T15:45:00Z"
+    }
+  ]
+}
+
+ERROR RESPONSE (500 Internal Server Error):
+{
+  "error": "Something went wrong while fetching sent requests."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 3.6 GET RECEIVED FRIEND REQUESTS (PENDING)                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: GET /auth/users/friend-pending-receive-list-view/
+Query Parameters: ?cursor=cD0xMjM= (optional, for pagination)
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+(No body required)
+
+RESPONSE (200 OK):
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 7,
+      "request_id": 25,
+      "name": "emma_taylor",
+      "created_at": "2025-11-22T08:15:00Z"
+    },
+    {
+      "id": 8,
+      "request_id": 26,
+      "name": "ryan_anderson",
+      "created_at": "2025-11-20T14:20:00Z"
+    }
+  ]
+}
+
+ERROR RESPONSE (500 Internal Server Error):
+{
+  "error": "Something went wrong while fetching received requests."
+}
+
+
+================================================================================
+4. DASHBOARD & USER PROFILE ENDPOINTS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 4.1 GET USER PROFILE DETAILS                                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: GET /dashboard/users/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+(No body required)
+
+RESPONSE (200 OK):
+{
+  "username": "John_doe",
+  "membership": "Free Haunter",
+  "membership_description": "Basic access to platform features",
+  "fear_level": "Beginner",
+  "fear_level_description": "Just starting your journey",
+  "profile_tags": [
+    "Developer",
+    "Designer",
+    "Entrepreneur"
+  ],
+  "profile_tags_category": [
+    "profession",
+    "profession",
+    "interest"
+  ],
+  "user_experience_total_count": 25,
+  "user_experience_count": 5
+}
+
+ERROR RESPONSE (401 Unauthorized):
+{
+  "detail": "Authentication credentials were not provided."
+}
+
+ERROR RESPONSE (404 Not Found):
+{
+  "error": "User profile not found."
+}
+
+
+================================================================================
+5. ACHIEVEMENTS ENDPOINTS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 5.1 GET USER ACHIEVEMENTS                                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: GET /dashboard/api/user-achievement/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+(No body required)
+
+RESPONSE (200 OK):
+{
+  "user_achievements": [
+    {
+      "emoji": "🏆",
+      "name": "First Step",
+      "earned_on": "Nov 20, 2025 • 10:30 AM",
+      "user_total_achievement": 15
+    },
+    {
+      "emoji": "⭐",
+      "name": "Rising Star",
+      "earned_on": "Nov 21, 2025 • 02:15 PM",
+      "user_total_achievement": 15
+    },
+    {
+      "emoji": "🎯",
+      "name": "Achiever",
+      "earned_on": "Nov 22, 2025 • 09:45 AM",
+      "user_total_achievement": 15
+    }
+  ]
+}
+
+ERROR RESPONSE (401 Unauthorized):
+{
+  "detail": "Authentication credentials were not provided."
+}
+
+ERROR RESPONSE (404 Not Found):
+{
+  "error": "No achievements found."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 5.2 CREATE ACHIEVEMENTS (ADMIN ONLY)                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /dashboard/api/achievement/
+Content-Type: application/json
+Authorization: Bearer <admin_token>
+
+REQUEST:
+{
+  "achievements": [
+    {
+      "name": "🏆 First Step",
+      "description": "Complete your first experience"
+    },
+    {
+      "name": "⭐ Rising Star",
+      "description": "Complete 5 experiences"
+    },
+    {
+      "name": "🎯 Achiever",
+      "description": "Complete 10 experiences"
+    }
+  ]
+}
+
+RESPONSE (201 Created):
+{
+  "created_tags": [
+    {
+      "name": "🏆 First Step",
+      "description": "Complete your first experience"
+    },
+    {
+      "name": "⭐ Rising Star",
+      "description": "Complete 5 experiences"
+    },
+    {
+      "name": "🎯 Achiever",
+      "description": "Complete 10 experiences"
+    }
+  ]
+}
+
+ERROR RESPONSE (403 Forbidden):
+{
+  "detail": "You do not have permission to perform this action."
+}
+
+
+================================================================================
+6. USER EXPERIENCES ENDPOINTS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 6.1 GET USER EXPERIENCES (NON-COMPLETED)                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: GET /dashboard/api/experience/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+(No body required)
+
+RESPONSE (200 OK):
+{
+  "user_experience": [
+    {
+      "name": "Advanced Web Development",
+      "difficulty": "Hard",
+      "image": "http://127.0.0.1:8000/media/experience_images/web_dev.jpg",
+      "joined_at": "Nov 22, 2025 • 09:30 AM",
+      "description": "Master modern web development with React and Django",
+      "price": "99.99",
+      "trending": true,
+      "popular": true,
+      "completed": false
+    },
+    {
+      "name": "Mobile App Development",
+      "difficulty": "Medium",
+      "image": "http://127.0.0.1:8000/media/experience_images/mobile_dev.jpg",
+      "joined_at": "Nov 20, 2025 • 02:15 PM",
+      "description": "Learn Flutter and React Native for mobile development",
+      "price": "79.99",
+      "trending": true,
+      "popular": false,
+      "completed": false
+    },
+    {
+      "name": "Data Science Fundamentals",
+      "difficulty": "Medium",
+      "image": "http://127.0.0.1:8000/media/experience_images/data_science.jpg",
+      "joined_at": "Nov 19, 2025 • 11:00 AM",
+      "description": "Introduction to data science with Python and Pandas",
+      "price": "89.99",
+      "trending": false,
+      "popular": true,
+      "completed": false
+    }
+  ],
+  "not_completed_number": 3
+}
+
+ERROR RESPONSE (401 Unauthorized):
+{
+  "detail": "Authentication credentials were not provided."
+}
+
+ERROR RESPONSE (404 Not Found):
+{
+  "error": "No experience found."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 6.2 CREATE USER TAGS (ADMIN ONLY)                                           │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /dashboard/api/tags/upload/
+Content-Type: application/json
+Authorization: Bearer <admin_token>
+
+REQUEST:
+{
+  "tags": [
+    {
+      "name": "Developer",
+      "category": "profession"
+    },
+    {
+      "name": "Designer",
+      "category": "profession"
+    },
+    {
+      "name": "Entrepreneur",
+      "category": "interest"
+    }
+  ]
+}
+
+RESPONSE (201 Created):
+{
+  "created_tags": [
+    {
+      "name": "Developer",
+      "category": "profession"
+    },
+    {
+      "name": "Designer",
+      "category": "profession"
+    },
+    {
+      "name": "Entrepreneur",
+      "category": "interest"
+    }
+  ]
+}
+
+ERROR RESPONSE (403 Forbidden):
+{
+  "detail": "You do not have permission to perform this action."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 6.3 CREATE FEAR LEVELS (ADMIN ONLY)                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /dashboard/api/fear-level/
+Content-Type: application/json
+Authorization: Bearer <admin_token>
+
+REQUEST:
+{
+  "fear": [
+    {
+      "name": "Beginner",
+      "description": "Just starting your journey"
+    },
+    {
+      "name": "Intermediate",
+      "description": "Building experience and skills"
+    },
+    {
+      "name": "Expert",
+      "description": "Mastered advanced concepts"
+    }
+  ]
+}
+
+RESPONSE (201 Created):
+{
+  "created_tags": [
+    {
+      "name": "Beginner",
+      "description": "Just starting your journey"
+    },
+    {
+      "name": "Intermediate",
+      "description": "Building experience and skills"
+    },
+    {
+      "name": "Expert",
+      "description": "Mastered advanced concepts"
+    }
+  ]
+}
+
+ERROR RESPONSE (403 Forbidden):
+{
+  "detail": "You do not have permission to perform this action."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 6.4 CREATE MEMBERSHIPS (ADMIN ONLY)                                         │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /dashboard/api/member-ship/
+Content-Type: application/json
+Authorization: Bearer <admin_token>
+
+REQUEST:
+{
+  "member": [
+    {
+      "name": "Free Haunter",
+      "description": "Free plan with basic access",
+      "perks": "Basic features, Limited projects, No premium content"
+    },
+    {
+      "name": "Premium",
+      "description": "Premium subscription",
+      "perks": "All features, Unlimited projects, Early access, Premium content"
+    },
+    {
+      "name": "Elite",
+      "description": "Elite membership",
+      "perks": "VIP support, Exclusive content, Custom features, Priority access"
+    }
+  ]
+}
+
+RESPONSE (201 Created):
+{
+  "created_tags": [
+    {
+      "name": "Free Haunter",
+      "description": "Free plan with basic access",
+      "perk": "Basic features, Limited projects, No premium content"
+    },
+    {
+      "name": "Premium",
+      "description": "Premium subscription",
+      "perk": "All features, Unlimited projects, Early access, Premium content"
+    },
+    {
+      "name": "Elite",
+      "description": "Elite membership",
+      "perk": "VIP support, Exclusive content, Custom features, Priority access"
+    }
+  ]
+}
+
+ERROR RESPONSE (403 Forbidden):
+{
+  "detail": "You do not have permission to perform this action."
+}
+
+
+================================================================================
+7. PROJECTS ENDPOINTS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 7.1 GET ALL PROJECTS                                                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: GET /projects/project/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+(No body required)
+
+RESPONSE (200 OK):
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "E-Commerce Platform",
+      "description": "Build a full-featured e-commerce platform with Django and React",
+      "project_type": "Web Application",
+      "price": "199.99",
+      "launch_date": "2025-03-15",
+      "is_premium": true,
+      "template_available": true,
+      "achievement_tags": [
+        "Full Stack",
+        "Database Design",
+        "API Development"
+      ],
+      "user_tags": [
+        "Python",
+        "JavaScript",
+        "Database"
+      ],
+      "image_url": "http://127.0.0.1:8000/media/project_images/ecommerce.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Mobile Chat App",
+      "description": "Create a real-time messaging application with Flutter",
+      "project_type": "Mobile App",
+      "price": "149.99",
+      "launch_date": "2025-02-20",
+      "is_premium": false,
+      "template_available": true,
+      "achievement_tags": [
+        "Mobile Development",
+        "Real-time Communication",
+        "UI/UX"
+      ],
+      "user_tags": [
+        "Flutter",
+        "Firebase",
+        "Dart"
+      ],
+      "image_url": "http://127.0.0.1:8000/media/project_images/chat_app.jpg"
+    },
+    {
+      "id": 3,
+      "title": "3D Game",
+      "description": "Develop an interactive 3D game using Unity",
+      "project_type": "Game",
+      "price": "249.99",
+      "launch_date": "2025-04-10",
+      "is_premium": true,
+      "template_available": false,
+      "achievement_tags": [
+        "Game Development",
+        "3D Graphics",
+        "Physics Engine"
+      ],
+      "user_tags": [
+        "Unity",
+        "C#",
+        "Game Design"
+      ],
+      "image_url": "http://127.0.0.1:8000/media/project_images/game.jpg"
+    },
+    {
+      "id": 4,
+      "title": "AI Model",
+      "description": "Build and deploy machine learning models",
+      "project_type": "Model",
+      "price": "179.99",
+      "launch_date": "2025-01-30",
+      "is_premium": false,
+      "template_available": true,
+      "achievement_tags": [
+        "Machine Learning",
+        "Data Science",
+        "Python"
+      ],
+      "user_tags": [
+        "TensorFlow",
+        "Python",
+        "Data Science"
+      ],
+      "image_url": "http://127.0.0.1:8000/media/project_images/ml_model.jpg"
+    }
+  ]
+}
+
+ERROR RESPONSE (401 Unauthorized):
+{
+  "detail": "Authentication credentials were not provided."
+}
+
+ERROR RESPONSE (404 Not Found):
+{
+  "error": "No projects found."
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 7.2 REGISTER FOR EXPERIENCE (ENROLL IN PROJECT)                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /control/register-to-experience/
+Content-Type: application/json
+Authorization: Bearer <access_token>
+
+REQUEST:
+{
+  "project_id": 1
+}
+
+RESPONSE (201 Created):
+{
+  "message": "Successfully registered for experience.",
+  "experience_id": 5,
+  "title": "E-Commerce Platform"
+}
+
+RESPONSE (200 OK) - Already Registered:
+{
+  "message": "Already registered for this experience."
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "error": "Project ID is required."
+}
+
+ERROR RESPONSE (404 Not Found):
+{
+  "detail": "Not found."
+}
+
+
+================================================================================
+8. FEEDBACK ENDPOINTS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 8.1 SUBMIT ABOUT-US FEEDBACK                                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /feedback/about-us/
+Content-Type: application/json
+Authorization: AllowAny (public endpoint)
+
+REQUEST:
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "message": "Great platform! Love the user interface and features."
+}
+
+RESPONSE (201 Created):
+{
+  "message": "You successfully delivered the message to us."
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "field_name": ["This field is required."]
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 8.2 SUBMIT CONTACT-US MESSAGE                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: POST /feedback/contact-us/
+Content-Type: application/json
+Authorization: AllowAny (public endpoint)
+
+REQUEST:
+{
+  "name": "Jane Smith",
+  "email": "jane@example.com",
+  "subject": "Technical Support Needed",
+  "message": "I'm having issues with my account. Please help!"
+}
+
+RESPONSE (201 Created):
+{
+  "message": "You successfully delivered the message to us."
+}
+
+ERROR RESPONSE (400 Bad Request):
+{
+  "email": ["Enter a valid email address."]
+}
+
+
+================================================================================
+9. ADMIN PANEL ENDPOINTS
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ 9.1 ACCESS DJANGO ADMIN PANEL                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+URL: /admin/
+Method: GET / POST (Web Interface)
+Authentication: Superuser credentials required
+
+AVAILABLE MODELS FOR MANAGEMENT:
+  - Users (Django built-in)
+  - Groups (Django built-in)
+  - FriendRequest
+  - Friend
+  - Project
+  - Experience
+  - UserExperience
+  - Achievement
+  - UserAchievement
+  - UserProfile
+  - FearLevel
+  - MemberShip
+  - UserTag
+  - Progress
+  - Feedback
+  - ContactUs
+  - Booking
+
+Login page: http://127.0.0.1:8000/admin/
+Username: your_superuser_username
+Password: your_superuser_password
+
+
+================================================================================
+10. COMPLETE WORKFLOW EXAMPLES
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ WORKFLOW 1: USER REGISTRATION & LOGIN & PROFILE VIEW                        │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Step 1: Register new user
+REQUEST:
+POST /auth/api/signup
+{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "password": "SecurePassword123!"
+}
+
+RESPONSE:
+{
+  "message": "User registered successfully!"
+}
+
+---
+
+Step 2: Get JWT token (Login)
+REQUEST:
+POST /auth/api/token/
+{
+  "username": "newuser",
+  "password": "SecurePassword123!"
+}
+
+RESPONSE:
+{
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+
+---
+
+Step 3: Get user profile (use access token)
+REQUEST:
+GET /dashboard/users/
+Header: Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+RESPONSE:
+{
+  "username": "Newuser",
+  "membership": "Free Haunter",
+  "membership_description": "Basic access to platform features",
+  "fear_level": "Beginner",
+  "fear_level_description": "Just starting your journey",
+  "profile_tags": [],
+  "profile_tags_category": [],
+  "user_experience_total_count": 25,
+  "user_experience_count": 0
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ WORKFLOW 2: FRIEND REQUEST & ACCEPTANCE                                     │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Step 1: Get all users to find friend
+REQUEST:
+GET /auth/users/view-users/
+Header: Authorization: Bearer <token>
+
+RESPONSE:
+[
+  {"id": 1, "username": "john_doe", "email": "john@example.com", ...},
+  {"id": 2, "username": "jane_smith", "email": "jane@example.com", ...},
+  ...
+]
+
+---
+
+Step 2: Send friend request to user with id=2
+REQUEST:
+POST /auth/users/send-friend-request/
+Header: Authorization: Bearer <token>
+{
+  "to_user_id": 2
+}
+
+RESPONSE:
+{
+  "message": "Friend request sent!",
+  "request_id": 42
+}
+
+---
+
+Step 3: Accept friend request (as user with id=2)
+REQUEST:
+POST /auth/users/accept-friend-request/
+Header: Authorization: Bearer <jane_smith_token>
+{
+  "request_id": 42
+}
+
+RESPONSE:
+{
+  "message": "Friend request accepted successfully."
+}
+
+---
+
+Step 4: View friends list
+REQUEST:
+GET /auth/users/friend-list-view/
+Header: Authorization: Bearer <jane_smith_token>
+
+RESPONSE:
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 1,
+      "name": "john_doe",
+      "number_of_achievements": 3
+    }
+  ]
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ WORKFLOW 3: BROWSE PROJECTS & ENROLL IN EXPERIENCE                          │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Step 1: Get all available projects
+REQUEST:
+GET /projects/project/
+Header: Authorization: Bearer <token>
+
+RESPONSE:
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "E-Commerce Platform",
+      "description": "...",
+      "project_type": "Web Application",
+      "price": "199.99",
+      ...
+    },
+    ...
+  ]
+}
+
+---
+
+Step 2: Enroll in a project (project_id=1)
+REQUEST:
+POST /control/register-to-experience/
+Header: Authorization: Bearer <token>
+{
+  "project_id": 1
+}
+
+RESPONSE:
+{
+  "message": "Successfully registered for experience.",
+  "experience_id": 5,
+  "title": "E-Commerce Platform"
+}
+
+---
+
+Step 3: View enrolled experiences
+REQUEST:
+GET /dashboard/api/experience/
+Header: Authorization: Bearer <token>
+
+RESPONSE:
+{
+  "user_experience": [
+    {
+      "name": "E-Commerce Platform",
+      "difficulty": "Hard",
+      "image": "http://...",
+      "joined_at": "Nov 22, 2025 • 10:30 AM",
+      "description": "...",
+      "price": "199.99",
+      "trending": true,
+      "popular": true,
+      "completed": false
+    }
+  ],
+  "not_completed_number": 1
+}
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ WORKFLOW 4: VIEW ACHIEVEMENTS & PROGRESS                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+Step 1: Get user achievements
+REQUEST:
+GET /dashboard/api/user-achievement/
+Header: Authorization: Bearer <token>
+
+RESPONSE:
+{
+  "user_achievements": [
+    {
+      "emoji": "🏆",
+      "name": "First Step",
+      "earned_on": "Nov 20, 2025 • 10:30 AM",
+      "user_total_achievement": 15
+    },
+    {
+      "emoji": "⭐",
+      "name": "Rising Star",
+      "earned_on": "Nov 21, 2025 • 02:15 PM",
+      "user_total_achievement": 15
+    }
+  ]
+}
+
+---
+
+Step 2: Get user profile with progress
+REQUEST:
+GET /dashboard/users/
+Header: Authorization: Bearer <token>
+
+RESPONSE:
+{
+  "username": "John_doe",
+  "membership": "Free Haunter",
+  "fear_level": "Beginner",
+  "profile_tags": ["Developer", "Designer"],
+  "user_experience_total_count": 25,
+  "user_experience_count": 2
+}
+
+
+================================================================================
+11. ERROR HANDLING REFERENCE
+================================================================================
+
+Common Error Response Codes:
+
+400 Bad Request
+{
+  "error": "Description of what went wrong",
+  "field_name": ["Field validation error message"]
+}
+
+401 Unauthorized
+{
+  "detail": "Authentication credentials were not provided."
+}
+
+403 Forbidden
+{
+  "detail": "You do not have permission to perform this action."
+}
+
+404 Not Found
+{
+  "error": "Resource not found.",
+  "detail": "Not found."
+}
+
+500 Internal Server Error
+{
+  "error": "Internal server error message",
+  "debug_error": "Additional debug information"
+}
+
+
+================================================================================
+12. PAGINATION GUIDE
+================================================================================
+
+Cursor-based pagination is used for list endpoints:
+
+Example request with pagination:
+GET /auth/users/friend-list-view/?cursor=cD0xMjM=
+
+Example response:
+{
+  "count": 100,                    // Total items available
+  "next": "...?cursor=cD0xMjM=",  // URL for next page (null if no more)
+  "previous": "...?cursor=cD0x1=", // URL for previous page (null if first page)
+  "results": [...]                 // Current page results
+}
+
+Navigation:
+1. First request: No cursor parameter
+2. For next page: Use the "next" URL
+3. For previous page: Use the "previous" URL
+
+
+================================================================================
+NOTES & TIPS
+================================================================================
+
+1. All timestamps are in ISO 8601 format (UTC)
+2. Prices are returned as decimal strings
+3. Image URLs are absolute paths
+4. JWT tokens expire after 60 minutes (access) or 7 days (refresh)
+5. Always include "Authorization: Bearer <token>" header for protected endpoints
+6. Content-Type must be "application/json" for all requests
+7. Test API with tools like Postman, Thunder Client, or cURL
+8. In production, replace localhost with actual domain name
+9. Never expose refresh tokens or store them in plain text on frontend
+10. Always validate user input before sending to API
+
+================================================================================
+LAST UPDATED: November 22, 2025
+API VERSION: 1.0
+DJANGO VERSION: 5.2
+FRAMEWORK: Django REST Framework 3.16.0
+================================================================================

@@ -21,3 +21,14 @@ class FriendRequest(models.Model):
 
     def __str__(self):
         return f"{self.from_user} → {self.to_user} ({self.status})"
+
+# My friend's friend model
+class Friend(models.Model):
+    user = models.ForeignKey(User, related_name='friends', on_delete=models.CASCADE)
+    friend = models.ForeignKey(User, related_name='friend_of', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'friend')
+
+    def __str__(self):
+        return f"{self.user.username} ↔ {self.friend.username}"

@@ -291,34 +291,684 @@ Purpose:
 
 URL ROUTING (from project_maker/urls.py):
 
-/admin/                    # Django Admin Panel
-/auth/                     # Authentication endpoints (auths/urls)
-                           # - User registration
-                           # - User login
-                           # - Friend requests
-/feedback/                 # Feedback endpoints (feedback/urls)
-                           # - Submit feedback
-                           # - Get feedback
-/dashboard/                # Dashboard endpoints (dashboard/urls)
-                           # - User profile
-                           # - Achievements
-                           # - Progress
-/projects/                 # Project endpoints (projects/urls)
-                           # - List projects
-                           # - Project details
-                           # - Create project
-/control/                  # Admin control endpoints (control/urls)
-
-/media/                    # Media files (only in DEBUG=True)
-                           # - Experience images
-                           # - Project images
+MAIN ROUTES:
+  /admin/                  # Django Admin Panel
+  /auth/                   # Authentication & User Management
+  /feedback/               # Feedback & Contact System
+  /dashboard/              # User Profile & Reward System
+  /projects/               # Project Management
+  /control/                # Admin Control Panel
+  /media/                  # Media files (only in DEBUG=True)
 
 API Authentication:
-  - JWT (JSON Web Token) Required
-  - Token format: Bearer <token>
+  - JWT (JSON Web Token) Required for most endpoints
+  - Token format: Authorization: Bearer <token>
   - Access token lifetime: 60 minutes
   - Refresh token lifetime: 7 days
   - Tokens blacklisted on logout
+
+================================================================================
+5.1 AUTHENTICATION ENDPOINTS (/auth/)
+================================================================================
+
+JWT TOKEN MANAGEMENT:
+  
+  POST /auth/api/token/
+    Name: token_obtain_pair
+    Description: Obtain JWT access and refresh tokens
+    Authentication: AllowAny (public)
+    Request Body:
+      {
+        "username": "string",
+        "password": "string"
+      }
+    Response (200):
+      {
+        "access": "jwt_token_string",
+        "refresh": "jwt_refresh_token_string"
+      }
+    Response (401): Invalid credentials
+
+  POST /auth/api/token/refresh/
+    Name: token_refresh
+    Description: Refresh expired access token using refresh token
+    Authentication: AllowAny (public)
+    Request Body:
+      {
+        "refresh": "jwt_refresh_token_string"
+      }
+    Response (200):
+      {
+        "access": "new_jwt_token_string"
+      }
+    Response (401): Invalid or expired refresh token
+
+
+USER REGISTRATION & AUTHENTICATION:
+
+  POST /auth/api/signup
+    Name: signup
+    Description: Register a new user account
+    Authentication: AllowAny (public)
+    Request Body:
+      {
+        "username": "string (required)",
+        "email": "email_string (required)",
+        "password": "string (required)"
+      }
+    Response (201):
+      {
+        "message": "User registered successfully!"
+      }
+    Response (400):
+      - Username already exists
+      - Email already exists
+      - Missing required fields
+    Side Effects:
+      - Creates Django User
+      - Auto-creates UserProfile with "Beginner" fear level
+      - Auto-creates UserProfile with "Free Haunter" membership
+      - Auto-creates Progress tracker
+
+  GET /auth/api/check-auth
+    Name: check-auth
+    Description: Verify if user is authenticated and get user info
+    Authentication: IsAuthenticated (JWT required)
+    Response (200):
+      {
+        "message": "Hello, authenticated user!",
+        "User": "username"
+      }
+    Response (401): Token missing or invalid
+
+  POST /auth/user/logout/
+    Name: logout
+    Description: Logout user and blacklist their refresh token
+    Authentication: IsAuthenticated (JWT required)
+    Request Body:
+      {
+        "refresh": "jwt_refresh_token_string"
+      }
+    Response (205):
+      {
+        "message": "Logout successful."
+      }
+    Response (400): Invalid refresh token
+
+
+USER DISCOVERY:
+
+  GET /auth/users/view-users/
+    Name: view-users
+    Description: Get list of all users with their profiles
+    Authentication: IsAuthenticated (JWT required)
+    Response (200):
+      [
+        {
+          "id": integer,
+          "username": "string",
+          "email": "string",
+          "fear_level": "string",
+          "membership": "string"
+        },
+        ...
+      ]
+    Response (401): Authentication required
+
+
+FRIEND REQUEST MANAGEMENT:
+
+  POST /auth/users/send-friend-request/
+    Name: send-friend-request
+    Description: Send a friend request to another user
+    Authentication: IsAuthenticated (JWT required)
+    Request Body:
+      {
+        "to_user_id": integer (required)
+      }
+    Response (201):
+      {
+        "message": "Friend request sent!",
+        "request_id": integer
+      }
+    Response (200):
+      {
+        "message": "You are already friends."
+      }
+      OR
+      {
+        "message": "That user already sent you a request.",
+        "request_id": integer
+      }
+    Response (400):
+      - to_user_id is required
+      - You cannot send request to yourself
+      - Friend request already sent
+    Response (404): User does not exist
+
+  POST /auth/users/accept-friend-request/
+    Name: accept-friend-request
+    Description: Accept a pending friend request
+    Authentication: IsAuthenticated (JWT required)
+    Request Body:
+      {
+        "request_id": integer (required)
+      }
+    Response (200):
+      {
+        "message": "Friend request accepted successfully."
+      }
+    Response (400): request_id is required
+    Response (404): Friend request not found or already processed
+    Side Effects:
+      - Creates mutual Friend records (both directions)
+      - Changes FriendRequest status to "accepted"
+
+  POST /auth/users/reject-friend-request/
+    Name: reject-friend-request
+    Description: Reject a pending friend request
+    Authentication: IsAuthenticated (JWT required)
+    Request Body:
+      {
+        "request_id": integer (required)
+      }
+    Response (200):
+      {
+        "message": "Friend request rejected successfully."
+      }
+    Response (400): request_id is required
+    Response (404): Friend request not found or already processed
+    Side Effects:
+      - Changes FriendRequest status to "rejected"
+
+  GET /auth/users/friend-list-view/
+    Name: user-profile-view
+    Description: Get list of user's accepted friends with pagination
+    Authentication: IsAuthenticated (JWT required)
+    Query Parameters:
+      - cursor: string (for pagination)
+    Response (200):
+      {
+        "count": integer,
+        "next": "url_or_null",
+        "previous": "url_or_null",
+        "results": [
+          {
+            "id": integer,
+            "name": "username",
+            "number_of_achievements": integer
+          },
+          ...
+        ]
+      }
+    Response (500): Failed to load friends
+
+  GET /auth/users/friend-pending-send-list-view/
+    Name: friend-pending-send-list-view
+    Description: Get list of friend requests sent by current user (pending)
+    Authentication: IsAuthenticated (JWT required)
+    Query Parameters:
+      - cursor: string (for pagination)
+    Response (200):
+      {
+        "count": integer,
+        "next": "url_or_null",
+        "previous": "url_or_null",
+        "results": [
+          {
+            "id": integer,
+            "name": "username",
+            "created_at": "datetime"
+          },
+          ...
+        ]
+      }
+    Response (500): Something went wrong while fetching sent requests
+
+  GET /auth/users/friend-pending-receive-list-view/
+    Name: friend-pending-receive-list-view
+    Description: Get list of friend requests received by current user (pending)
+    Authentication: IsAuthenticated (JWT required)
+    Query Parameters:
+      - cursor: string (for pagination)
+    Response (200):
+      {
+        "count": integer,
+        "next": "url_or_null",
+        "previous": "url_or_null",
+        "results": [
+          {
+            "id": integer,
+            "request_id": integer,
+            "name": "username",
+            "created_at": "datetime"
+          },
+          ...
+        ]
+      }
+    Response (500): Something went wrong while fetching received requests
+
+================================================================================
+5.2 DASHBOARD ENDPOINTS (/dashboard/)
+================================================================================
+
+USER PROFILE & INFORMATION:
+
+  GET /dashboard/users/
+    Name: user-details
+    Description: Get authenticated user's profile details
+    Authentication: IsAuthenticated (JWT required)
+    Response (200):
+      {
+        "username": "string",
+        "membership": "string",
+        "membership_description": "string",
+        "fear_level": "string",
+        "fear_level_description": "string",
+        "profile_tags": ["tag1", "tag2"],
+        "profile_tags_category": ["category1", "category2"],
+        "user_experience_total_count": integer,
+        "user_experience_count": integer
+      }
+    Response (401): Authentication required
+    Response (404): User profile not found
+
+
+ACHIEVEMENT SYSTEM:
+
+  GET /dashboard/api/user-achievement/
+    Name: user-achievement
+    Description: Get all achievements earned by authenticated user
+    Authentication: IsAuthenticated (JWT required)
+    Response (200):
+      {
+        "user_achievements": [
+          {
+            "emoji": "string",
+            "name": "string",
+            "earned_on": "formatted_datetime_string",
+            "user_total_achievement": integer
+          },
+          ...
+        ]
+      }
+    Response (401): Authentication required
+    Response (404): No achievements found
+
+
+USER EXPERIENCE & PROGRESS:
+
+  GET /dashboard/api/experience/
+    Name: experience
+    Description: Get user's experiences (filtered for non-completed)
+    Authentication: IsAuthenticated (JWT required)
+    Response (200):
+      {
+        "user_experience": [
+          {
+            "name": "string",
+            "difficulty": "string",
+            "image": "image_url",
+            "joined_at": "formatted_datetime_string",
+            "description": "string",
+            "price": "decimal",
+            "trending": boolean,
+            "popular": boolean,
+            "completed": boolean
+          },
+          ...
+        ],
+        "not_completed_number": integer
+      }
+    Response (401): Authentication required
+    Response (404): No experience found
+    Note: Results sorted by joined_at (newest first), only non-completed shown
+
+
+ADMIN: DATA MANAGEMENT (Requires IsAdminUser):
+
+  POST /dashboard/api/tags/upload/
+    Name: tag-upload
+    Description: Admin endpoint to create/update user tags
+    Authentication: IsAdminUser required
+    Request Body:
+      {
+        "tags": [
+          {
+            "name": "string",
+            "category": "string"
+          },
+          ...
+        ]
+      }
+    Response (201):
+      {
+        "created_tags": [
+          {
+            "name": "string",
+            "category": "string"
+          },
+          ...
+        ]
+      }
+    Response (403): Admin access required
+
+  POST /dashboard/api/fear-level/
+    Name: fear-level
+    Description: Admin endpoint to create/update fear levels
+    Authentication: IsAdminUser required
+    Request Body:
+      {
+        "fear": [
+          {
+            "name": "string",
+            "description": "string"
+          },
+          ...
+        ]
+      }
+    Response (201):
+      {
+        "created_tags": [
+          {
+            "name": "string",
+            "description": "string"
+          },
+          ...
+        ]
+      }
+    Response (403): Admin access required
+
+  POST /dashboard/api/member-ship/
+    Name: member-ship
+    Description: Admin endpoint to create/update membership tiers
+    Authentication: IsAdminUser required
+    Request Body:
+      {
+        "member": [
+          {
+            "name": "string",
+            "description": "string",
+            "perks": "string"
+          },
+          ...
+        ]
+      }
+    Response (201):
+      {
+        "created_tags": [
+          {
+            "name": "string",
+            "description": "string",
+            "perk": "string"
+          },
+          ...
+        ]
+      }
+    Response (403): Admin access required
+
+  POST /dashboard/api/achievement/
+    Name: achievement
+    Description: Admin endpoint to create/update achievements
+    Authentication: IsAdminUser required
+    Request Body:
+      {
+        "achievements": [
+          {
+            "name": "string",
+            "description": "string"
+          },
+          ...
+        ]
+      }
+    Response (201):
+      {
+        "created_tags": [
+          {
+            "name": "string",
+            "description": "string"
+          },
+          ...
+        ]
+      }
+    Response (403): Admin access required
+
+================================================================================
+5.3 PROJECTS ENDPOINTS (/projects/)
+================================================================================
+
+PROJECT MANAGEMENT:
+
+  GET /projects/project/
+    Name: project
+    Description: Get list of all projects
+    Authentication: IsAuthenticated (JWT required)
+    Response (200):
+      {
+        "projects": [
+          {
+            "id": integer,
+            "title": "string",
+            "description": "string",
+            "project_type": "string (WEB, APP, GAME, MODEL)",
+            "price": "decimal_string",
+            "launch_date": "date",
+            "is_premium": boolean,
+            "template_available": boolean,
+            "achievement_tags": ["tag1", "tag2"],
+            "user_tags": ["tag1", "tag2"],
+            "image_url": "url_or_null"
+          },
+          ...
+        ]
+      }
+    Response (401): Authentication required
+    Response (404): No projects found
+
+
+PROJECT ENROLLMENT:
+
+  POST /control/register-to-experience/
+    Name: register
+    Description: Register user for a project/experience
+    Authentication: IsAuthenticated (JWT required)
+    Request Body:
+      {
+        "project_id": integer (required)
+      }
+    Response (201):
+      {
+        "message": "Successfully registered for experience.",
+        "experience_id": integer,
+        "title": "string"
+      }
+    Response (200):
+      {
+        "message": "Already registered for this experience."
+      }
+    Response (400): Project ID is required
+    Response (401): Authentication required
+    Response (404): Project not found
+    Side Effects:
+      - Creates Experience record if not exists (linked to Project)
+      - Creates UserExperience record
+      - Auto-calculates end_date (8-12 days from registration)
+
+================================================================================
+5.4 FEEDBACK ENDPOINTS (/feedback/)
+================================================================================
+
+FEEDBACK SUBMISSION:
+
+  POST /feedback/about-us/
+    Name: about-us-feedback
+    Description: Submit feedback about the platform
+    Authentication: AllowAny (public)
+    Request Body:
+      {
+        Fields depend on FeedbackAboutUsSerializer
+      }
+    Response (201):
+      {
+        "message": "You successfully delivered the message to us."
+      }
+    Response (400): Validation errors from serializer
+
+  POST /feedback/contact-us/
+    Name: contact-us-feedback
+    Description: Submit contact us message / support ticket
+    Authentication: AllowAny (public)
+    Request Body:
+      {
+        Fields depend on FeedbackContactUsSerializer
+      }
+    Response (201):
+      {
+        "message": "You successfully delivered the message to us."
+      }
+    Response (400): Validation errors from serializer
+
+================================================================================
+5.5 CONTROL ENDPOINTS (/control/)
+================================================================================
+
+ADMIN EXPERIENCE MANAGEMENT:
+
+  POST /control/register-to-experience/
+    Name: register
+    Description: Register user for an experience from admin side
+    Authentication: IsAuthenticated (JWT required)
+    Request Body:
+      {
+        "project_id": integer (required)
+      }
+    Response (201):
+      {
+        "message": "Successfully registered for experience.",
+        "experience_id": integer,
+        "title": "string"
+      }
+    Response (200):
+      {
+        "message": "Already registered for this experience."
+      }
+    Response (400): Project ID is required
+    Response (404): Project not found
+
+================================================================================
+5.6 ADMIN PANEL (/admin/)
+================================================================================
+
+Django Admin Interface:
+  Access: /admin/
+  Authentication: Superuser credentials required
+  Available Models:
+    - User Management
+    - FriendRequest
+    - Friend
+    - Project
+    - Experience
+    - UserExperience
+    - Achievement
+    - UserAchievement
+    - UserProfile
+    - FearLevel
+    - MemberShip
+    - UserTag
+    - Progress
+    - Feedback/ContactUs
+    - Booking
+
+================================================================================
+5.7 MEDIA FILES (/media/)
+================================================================================
+
+Media Serving (only in DEBUG=True):
+  /media/experience_images/     # Experience course images
+  /media/project_images/         # Project template/showcase images
+
+Note: In production, configure static file serving with CDN or WhiteNoise
+
+================================================================================
+QUERY PARAMETERS & PAGINATION
+================================================================================
+
+Cursor Pagination:
+  Some endpoints use cursor-based pagination for efficient data retrieval:
+    - FriendListView: Uses UserCursorPagination
+    - Friend Request views: Uses FriendRequestCursorPagination
+  
+  Usage:
+    GET /endpoint/?cursor=cD0xMjM=
+  
+  Response includes:
+    {
+      "count": total_items,
+      "next": "url_to_next_page_or_null",
+      "previous": "url_to_previous_page_or_null",
+      "results": [...]
+    }
+
+================================================================================
+COMMON HTTP STATUS CODES
+================================================================================
+
+200 OK              - Request successful
+201 CREATED         - Resource created successfully
+204 NO CONTENT      - Request successful, no content to return
+205 RESET CONTENT   - Successful logout, reset state
+400 BAD REQUEST     - Invalid request parameters or validation error
+401 UNAUTHORIZED    - Authentication required or invalid token
+403 FORBIDDEN       - Permission denied (e.g., not admin)
+404 NOT FOUND       - Resource not found
+500 SERVER ERROR    - Internal server error
+
+================================================================================
+AUTHENTICATION EXAMPLES
+================================================================================
+
+Example: Register and Login
+
+  1. Register new user:
+     POST /auth/api/signup
+     {
+       "username": "newuser",
+       "email": "user@example.com",
+       "password": "SecurePass123!"
+     }
+     Response: {"message": "User registered successfully!"}
+
+  2. Get access token:
+     POST /auth/api/token/
+     {
+       "username": "newuser",
+       "password": "SecurePass123!"
+     }
+     Response: 
+     {
+       "access": "eyJhbGciOiJIUzI1NiIs...",
+       "refresh": "eyJhbGciOiJIUzI1NiIs..."
+     }
+
+  3. Use access token in requests:
+     GET /dashboard/users/
+     Header: Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+     Response: User profile data
+
+  4. Refresh expired token:
+     POST /auth/api/token/refresh/
+     {
+       "refresh": "eyJhbGciOiJIUzI1NiIs..."
+     }
+     Response: {"access": "new_access_token..."}
+
+  5. Logout:
+     POST /auth/user/logout/
+     Header: Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
+     {
+       "refresh": "eyJhbGciOiJIUzI1NiIs..."
+     }
+     Response: {"message": "Logout successful."}
 
 ================================================================================
 6. AUTHENTICATION & SECURITY
