@@ -159,6 +159,7 @@ class MemberShipUploadView(APIView):
             created.append({'name': obj.name, 'description': obj.description, 'perk':obj.perk})
         return Response({"created_tags": created}, status=status.HTTP_201_CREATED)
 
+
 # Inserting of Achievements
 class AchievementsUploadView(APIView):
     permission_classes = [IsAdminUser]  # or use custom permission
