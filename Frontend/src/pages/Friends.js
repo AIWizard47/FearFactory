@@ -550,7 +550,7 @@ const Friends = () => {
                           </div>
                           <div className="flex gap-3 mt-4">
                             <button
-                              onClick={() => handleAcceptRequest(request.id)}
+                              onClick={() => handleAcceptRequest(request.request_id)}
                               className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg hover:shadow-emerald-500/50 transition-all flex items-center justify-center gap-2"
                             >
                               <Check size={18} />
