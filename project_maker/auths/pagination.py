@@ -7,3 +7,7 @@ class UserCursorPagination(CursorPagination):
 class FriendRequestCursorPagination(CursorPagination):
     ordering = '-created_at'
     page_size = 10
+
+class UserSearchCursorPagination(CursorPagination):
+    page_size = 10
+    ordering = '-id'      # Fast ordering (indexed)

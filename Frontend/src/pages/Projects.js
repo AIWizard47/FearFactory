@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef  } from "react";
 import { Link } from "react-router-dom";
 import { getApiUrl, getCookie } from "@/App";
 import { toast } from "sonner";
@@ -6,48 +6,112 @@ import { Search, Filter, SlidersHorizontal, X } from "lucide-react";
 import ProjectDetailModal from "@/components/ProjectDetailModal";
 
 const Projects = () => {
+  const BASE_URL = process.env.REACT_APP_BACKEND_URL || "http://127.0.0.1:8000"
   const [projects, setProjects] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [cursor, setCursor] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
-  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
   const [sortBy, setSortBy] = useState("popular");
   const [showFilters, setShowFilters] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-
+  const [difficulties, setFearLevels] = useState([]);
   const categories = ["all", "Horror Game", "VR Experience", "Investigation", "Paranormal", "Mystery"];
-  const difficulties = ["all", "Easy", "Medium", "Hard", "Extreme"];
+
+
+
+  
 
   useEffect(() => {
-    fetchProjects();
+    fetch(getApiUrl("fearLevels"))
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (!data.fear_levels || !Array.isArray(data.fear_levels)) {
+          console.error("Invalid response format:", data);
+          return;
+        }
+
+        setFearLevels(["all", ...data.fear_levels.map(level => level.name)]);
+      })
+      .catch((err) => console.error("Failed to load fear levels:", err));
   }, []);
 
+
+  
   useEffect(() => {
     filterProjects();
   }, [projects, searchQuery, selectedCategory, selectedDifficulty, priceRange, sortBy]);
 
-  const fetchProjects = async () => {
+// 🛑 store which cursors were already loaded
+  const loadedCursors = useRef(new Set());
+
+  const loadProjects = async () => {
+    if (loading) return;               // 🛑 stop if already loading
+    if (cursor && loadedCursors.current.has(cursor)) return;  // 🛑 stop if cursor already loaded
+
+    setLoading(true);
+
+    const token = getCookie("access_token");
+
+    const url = cursor
+      ? `${getApiUrl("projects")}?cursor=${cursor}`
+      : getApiUrl("projects");
+
     try {
-      const token = getCookie('access_token');
-      const response = await fetch(getApiUrl('projects'), {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      if (!response.ok) throw new Error('Failed to fetch projects');
-      console.log("Fetching projects...");
-      const data = await response.json();
-      setProjects(data.projects || []);
-      setFilteredProjects(data.projects || []);
-    } catch (error) {
-      console.error('Error fetching projects:', error);
-      toast.error('Failed to load projects');
-    } finally {
-      setLoading(false);
+
+      const data = await res.json();
+
+      // 🛑 Avoid pushing duplicate data
+      setProjects((prev) => {
+        const ids = new Set(prev.map((p) => p.id));
+        const newItems = data.results.filter((p) => !ids.has(p.id));
+        return [...prev, ...newItems];
+      });
+
+      // Save cursor so it’s never loaded again
+      if (cursor) loadedCursors.current.add(cursor);
+
+      // Update next cursor
+      if (data.next) {
+        const nextUrl = new URL(data.next);
+        const nextCursor = nextUrl.searchParams.get("cursor");
+        setCursor(nextCursor);
+      } else {
+        setCursor(null);
+      }
+    } catch (err) {
+      console.error("Error loading projects:", err);
     }
+
+    setLoading(false);
   };
+
+  // Load initial
+  useEffect(() => {
+    loadProjects();
+  }, []);
+
+  // Infinite scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.offsetHeight - 200
+      ) {
+        if (cursor) loadProjects();
+      }
+  };
+
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, [cursor]);
 
   const filterProjects = () => {
     let filtered = [...projects];
@@ -88,15 +152,14 @@ const Projects = () => {
       default: // popular
         break;
     }
-
     setFilteredProjects(filtered);
   };
-
+  
   const clearFilters = () => {
     setSearchQuery("");
     setSelectedCategory("all");
     setSelectedDifficulty("all");
-    setPriceRange([0, 100]);
+    setPriceRange([0, 1000]);
     setSortBy("popular");
   };
 
@@ -122,9 +185,9 @@ const Projects = () => {
               <Link to="/projects" className="text-emerald-400 font-medium" data-testid="nav-projects">Projects</Link>
             </div>
 
-            <Link to="/login">
+            <Link to="/dashboard">
               <button className="px-6 py-2 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-medium hover:shadow-lg hover:shadow-emerald-500/50 transition-all" data-testid="nav-login-btn">
-                Login
+                Dashboard
               </button>
             </Link>
           </div>
@@ -161,7 +224,7 @@ const Projects = () => {
       </section>
 
       {/* Filters and Sort */}
-      <section className="py-6 px-4 bg-zinc-900/50 border-y border-zinc-800 sticky top-16 z-30">
+      <section className="py-6 px-4 bg-zinc-900/50 border-y border-zinc-800  top-16 z-30">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Filter Button (Mobile) */}
@@ -198,8 +261,9 @@ const Projects = () => {
                 data-testid="difficulty-filter"
               >
                 {difficulties.map((diff) => (
+                  console.log(diff),
                   <option key={diff} value={diff}>
-                    {diff === "all" ? "All Difficulties" : diff}
+                    {diff === "all" ? "FearLevel" : diff}
                   </option>
                 ))}
               </select>
@@ -210,7 +274,7 @@ const Projects = () => {
                 <input
                   type="range"
                   min="0"
-                  max="100"
+                  max={projects.reduce((max, p) => Math.max(max, p.price), 1000)}
                   value={priceRange[1]}
                   onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
                   className="w-24"
@@ -244,7 +308,7 @@ const Projects = () => {
                 <option value="popular">Most Popular</option>
                 <option value="price-low">Price: Low to High</option>
                 <option value="price-high">Price: High to Low</option>
-                <option value="difficulty">Difficulty</option>
+                <option value="difficulty">FearLevel</option>
               </select>
             </div>
           </div>
@@ -295,7 +359,7 @@ const Projects = () => {
                   <div className="h-48 bg-gradient-to-br from-emerald-900/30 to-teal-900/30 flex items-center justify-center relative">
                     <div className="text-6xl ">
                       <img
-                        src={"http://127.0.0.1:8000"+project.image_url}
+                        src={BASE_URL+project?.image_url}
                         alt={project?.title || "Project Image"}
                         className="w-full h-full object-cover  rounded-xl"
                       />
@@ -315,7 +379,7 @@ const Projects = () => {
                     <p className="text-gray-400 text-sm mb-4 line-clamp-2">{project.description}</p>
                     
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-sm text-emerald-400">Difficulty: {project.difficulty}</span>
+                      <span className="text-sm text-emerald-400">FearLevel: {project.fearLevel}</span>
                       <span className="text-emerald-500 font-bold text-xl">${project.price}</span>
                     </div>
 
@@ -343,6 +407,14 @@ const Projects = () => {
           project={selectedProject}
           onClose={() => setSelectedProject(null)}
         />
+      )}
+
+      {/* Loader */}
+      {loading && <p className="text-center text-white mt-4">Loading...</p>}
+
+      {/* No more pages */}
+      {!cursor && !loading && (
+        <p className="text-center text-gray-400 mt-4">No more projects</p>
       )}
 
       {/* Footer */}

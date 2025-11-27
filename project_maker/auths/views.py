@@ -8,15 +8,14 @@ from rest_framework import status
 from .models import FriendRequest ,Friend
 from dashboard.models import UserProfile, FearLevel, MemberShip, UserTag, UserAchievement, Progress
 from rest_framework_simplejwt.tokens import RefreshToken
-from .pagination import UserCursorPagination, FriendRequestCursorPagination
-
+from .pagination import UserCursorPagination, FriendRequestCursorPagination, UserSearchCursorPagination
+from django.db.models import Q, Prefetch
 
 class CheckAuth(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         return Response({"message": "Hello, authenticated user!", "User": request.user.username})
-
 
 class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
@@ -370,3 +369,82 @@ class SendFriendRequestView(APIView):
         )
 
         return Response({"message": "Friend request sent!", "request_id": fr.id }, status=status.HTTP_201_CREATED)
+    
+    
+class SearchUsersView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        query = request.GET.get("q", "")
+        fear = request.GET.get("fearlevel", "")
+        tag = request.GET.get("tag", "")
+        ach = request.GET.get("achievement", "")
+        membership = request.GET.get("membership", "")
+
+        # Prefetch user achievements properly
+        user_achievements_prefetch = Prefetch(
+            "user__userachievement_set",
+            queryset=UserAchievement.objects.select_related("achieve"),
+            to_attr="prefetched_achievements"
+        )
+
+        # Base query
+        users = UserProfile.objects.select_related(
+            "user",
+            "fear_level",
+            "membership"
+        ).prefetch_related(
+            "profile_tags",
+            user_achievements_prefetch
+        )
+        
+        # 🚫 Exclude the logged-in user
+        users = users.exclude(user=request.user)
+
+        # 🔍 Filters
+        if query:
+            users = users.filter(
+                Q(user__username__icontains=query) |
+                Q(fear_level__name__icontains=query) |
+                Q(profile_tags__name__icontains=query)
+            ).distinct()
+
+        if fear:
+            users = users.filter(fear_level__name__icontains=fear)
+
+        if membership:
+            users = users.filter(membership__name__icontains=membership)
+
+        if tag:
+            users = users.filter(profile_tags__name__icontains=tag)
+
+        if ach:
+            users = users.filter(
+                user__userachievement_set__achieve__name__icontains=ach
+            ).distinct()
+
+        # Cursor Pagination
+        paginator = UserSearchCursorPagination()
+        page = paginator.paginate_queryset(users, request)
+
+        results = []
+
+        for u in page:
+            achievement_names = []
+            if hasattr(u.user, "prefetched_achievements"):
+                achievement_names = [
+                    ua.achieve.name
+                    for ua in u.user.prefetched_achievements
+                ]
+
+            results.append({
+                "id": u.user.id,
+                "username": u.user.username,
+                "fear_level": u.fear_level.name if u.fear_level else None,
+                "membership": u.membership.name if u.membership else None,
+                "tags": [t.name for t in u.profile_tags.all()],
+                "achievements": achievement_names,
+                "profile_pic": u.profile_pic.url if u.profile_pic else None,
+            })
+
+        return paginator.get_paginated_response(results)

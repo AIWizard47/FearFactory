@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .views import CheckAuth , SignUpView, LogoutView, FriendListView, SendFriendRequestView, AcceptFriendRequestView, RejectFriendRequestView ,FriendPendingSendListView, FriendPendingReceiveListView, GetUserView
+from .views import CheckAuth, SearchUsersView , SignUpView, LogoutView, FriendListView, SendFriendRequestView, AcceptFriendRequestView, RejectFriendRequestView ,FriendPendingSendListView, FriendPendingReceiveListView, GetUserView
 
 urlpatterns = [
     # JWT Auth URLs
@@ -18,6 +18,9 @@ urlpatterns = [
     path('users/reject-friend-request/', RejectFriendRequestView.as_view(),name='reject-friend-request'),
     path('users/friend-pending-send-list-view/', FriendPendingSendListView.as_view(),name='friend-pending-send-list-view'),
     path('users/friend-pending-receive-list-view/', FriendPendingReceiveListView.as_view(),name='friend-pending-receive-list-view'),
+    
+    #search users
+    path('users/search-users/', SearchUsersView.as_view(), name='search-users'),
     
     #logout
     path("user/logout/",LogoutView.as_view(),name='logout'),

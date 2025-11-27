@@ -12,8 +12,14 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserProfile();
-    setupScrollAnimations();
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      setupScrollAnimations();
+    }
+  }, [loading]);
+
 
   const setupScrollAnimations = () => {
     observerRef.current = new IntersectionObserver(
@@ -27,12 +33,16 @@ const Profile = () => {
       { threshold: 0.1 }
     );
 
-    document.querySelectorAll('[data-animate-id]').forEach((el) => {
-      observerRef.current?.observe(el);
-    });
+    // Small delay to ensure DOM is ready
+    setTimeout(() => {
+      document.querySelectorAll('[data-animate-id]').forEach((el) => {
+        observerRef.current?.observe(el);
+      });
+    }, 100);
 
     return () => observerRef.current?.disconnect();
   };
+
 
   const fetchUserProfile = async () => {
     try {
@@ -46,13 +56,13 @@ const Profile = () => {
       // Mock additional data for showcase
       setUser({
         ...data,
-        bio: "Horror enthusiast and thrill seeker. Exploring the darkest corners of digital experiences.",
-        level: 15,
+        bio: data?.membership_description || "Horror enthusiast and thrill seeker. Exploring the darkest corners of digital experiences.",
+        level: data?.level ||0,
         xp: 3750,
         nextLevelXp: 5000,
-        joinDate: "January 2024",
-        location: "Digital Realm",
-        achievements: [
+        joinDate: data?.joinDate||"January 2024",
+        location: data?.location||"Digital Realm",
+        achievements: data?.achievements || [
           { id: 1, name: "First Blood", description: "Completed your first experience", icon: "🩸", rarity: "common", unlockedAt: "2024-01-15" },
           { id: 2, name: "Fearless Explorer", description: "Completed 10 horror experiences", icon: "🛡️", rarity: "rare", unlockedAt: "2024-02-20" },
           { id: 3, name: "Night Survivor", description: "Survived overnight challenge", icon: "🌙", rarity: "epic", unlockedAt: "2024-03-10" },
@@ -60,7 +70,7 @@ const Profile = () => {
           { id: 5, name: "Ghost Hunter", description: "Found 50 paranormal clues", icon: "👻", rarity: "rare", unlockedAt: "2024-04-05" },
           { id: 6, name: "Brave Heart", description: "Completed extreme difficulty", icon: "❤️", rarity: "epic", unlockedAt: "2024-04-20" },
         ],
-        stats: {
+        stats: data?.stats ||{
           experiencesCompleted: 25,
           hoursSpent: 47,
           averageHeartRate: 142,
@@ -68,13 +78,13 @@ const Profile = () => {
           friendsScared: 12,
           favoriteCategory: "Paranormal"
         },
-        badges: [
+        badges: data?.badges|| [
           { name: "Early Adopter", color: "from-blue-500 to-blue-600" },
           { name: "Premium Member", color: "from-yellow-500 to-yellow-600" },
           { name: "Community Hero", color: "from-purple-500 to-purple-600" },
           { name: "Top Reviewer", color: "from-pink-500 to-pink-600" },
         ],
-        recentActivity: [
+        recentActivity: data?.recentActivity || [
           { action: "Completed", target: "Haunted Asylum Tour", time: "2 days ago", icon: "✅" },
           { action: "Unlocked", target: "Scream Master Achievement", time: "5 days ago", icon: "🏆" },
           { action: "Joined", target: "Midnight Horror Marathon", time: "1 week ago", icon: "🎭" },
@@ -140,9 +150,20 @@ const Profile = () => {
 
         <div className="relative max-w-7xl mx-auto px-4 h-full flex items-end pb-8">
           {/* Profile Picture */}
-          <div className="relative" data-animate-id="profile-pic" className={`transition-all duration-1000 ${visibleElements.has('profile-pic') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`relative transition-all duration-1000 ${visibleElements.has('profile-pic') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} data-animate-id="profile-pic">
             <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center border-4 border-zinc-900 shadow-2xl relative overflow-hidden">
-              <span className="text-6xl font-bold text-white">{user?.username?.charAt(0).toUpperCase()}</span>
+                {user?.profile_pic ? (
+                  <img 
+                    src={getApiUrl(user.profile_pic)} 
+                    alt="Profile" 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-6xl font-bold text-white">
+                    {user?.username?.charAt(0).toUpperCase()}
+                  </span>
+                )}
+
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             </div>
             {/* Level Badge */}
@@ -152,7 +173,7 @@ const Profile = () => {
           </div>
 
           {/* Basic Info */}
-          <div className="ml-6 flex-1" data-animate-id="basic-info" className={`transition-all duration-1000 delay-100 ${visibleElements.has('basic-info') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`ml-6 flex-1 transition-all duration-1000 delay-100 ${visibleElements.has('basic-info') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} data-animate-id="basic-info">
             <h1 className="text-4xl font-bold mb-2 flex items-center gap-3">
               {user?.username}
               <span className="text-2xl">✨</span>
@@ -174,7 +195,7 @@ const Profile = () => {
           </div>
 
           {/* Badges */}
-          <div className="flex gap-2" data-animate-id="badges" className={`transition-all duration-1000 delay-200 ${visibleElements.has('badges') ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
+          <div className={`flex gap-2 transition-all duration-1000 delay-200 ${visibleElements.has('badges') ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} data-animate-id="badges">
             {user?.badges?.map((badge, idx) => (
               <div
                 key={idx}
@@ -189,7 +210,7 @@ const Profile = () => {
       </div>
 
       {/* XP Progress Bar */}
-      <div className="max-w-7xl mx-auto px-4 -mt-4 relative z-10" data-animate-id="xp-bar" className={`transition-all duration-1000 ${visibleElements.has('xp-bar') ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+      <div className={`max-w-7xl mx-auto px-4 -mt-4 relative z-10 transition-all duration-1000 ${visibleElements.has('xp-bar') ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} data-animate-id="xp-bar">
         <div className="glass-effect rounded-xl p-4 border border-emerald-500/20">
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm text-gray-400">Experience Points</span>

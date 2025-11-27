@@ -23,7 +23,7 @@ const Experiences = () => {
       if (!response.ok) throw new Error('Failed to fetch experiences');
       
       const data = await response.json();
-      setExperiences(data.experiences || []);
+      setExperiences(data.user_experience || []);
     } catch (error) {
       console.error('Error fetching experiences:', error);
       toast.error('Failed to load experiences');
@@ -88,13 +88,14 @@ const Experiences = () => {
                     {exp.status}
                   </span>
                 </div>
-                <p className="text-sm text-gray-400 mb-2">📅 {exp.date} • {exp.time}</p>
-                <p className="text-sm text-emerald-400">Difficulty: {exp.difficulty}</p>
+                <p className="text-sm text-gray-400 mb-2">📅 {exp.joined_at}</p>
+                <p className="text-sm text-emerald-400">FearLevel: {exp.difficulty}</p>
               </div>
             ))}
           </div>
         )}
       </main>
+      
     </div>
   );
 };

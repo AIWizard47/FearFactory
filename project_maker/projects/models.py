@@ -8,7 +8,7 @@ class Project(models.Model):
         ('GAME', 'Game'),
         ('MODEL', '3D Model'),
     ]
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects_user')
     title = models.CharField(max_length=100)
     description = models.TextField()
     project_type = models.CharField(max_length=10, choices=PROJECT_TYPES)

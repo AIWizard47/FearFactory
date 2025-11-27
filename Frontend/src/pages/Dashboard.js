@@ -42,6 +42,10 @@ const Dashboard = () => {
     navigate('/login');
   };
 
+  const handleProfile =() => {
+    navigate('/profile');
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
@@ -70,6 +74,7 @@ const Dashboard = () => {
               <Link to="/dashboard" className="text-emerald-400 font-medium" data-testid="nav-dashboard">Dashboard</Link>
               <Link to="/experiences" className="text-gray-300 hover:text-emerald-400 transition-colors" data-testid="nav-experiences">Experiences</Link>
               <Link to="/projects" className="text-gray-300 hover:text-emerald-400 transition-colors" data-testid="nav-projects">Projects</Link>
+              <Link to="/friends" className="text-gray-300 hover:text-emerald-400 transition-colors" data-testid="nav-projects">Friends</Link>
             </div>
 
             <div className="flex items-center space-x-4">
@@ -109,7 +114,9 @@ const Dashboard = () => {
                     </div>
 
                     <div className="py-2">
-                      <button className="w-full px-4 py-2 text-left hover:bg-zinc-800 transition-colors flex items-center space-x-2" data-testid="menu-profile">
+                      <button 
+                      onClick = {handleProfile}
+                      className="w-full px-4 py-2 text-left hover:bg-zinc-800 transition-colors flex items-center space-x-2" data-testid="menu-profile">
                         <span>👤</span>
                         <span>My Profile</span>
                       </button>
@@ -163,7 +170,7 @@ const Dashboard = () => {
           {[
             { label: "Fear Level", value: user?.fear_level || "Beginner", icon: "🎯" },
             { label: "Membership", value: user?.membership || "Free Member", icon: "👑" },
-            { label: "Experiences", value: "0", icon: "🎭" }
+            { label: "Experiences", value: user?.user_experience_count || "0", icon: "🎭" }
           ].map((stat, index) => (
             <div key={index} className="glass-effect rounded-xl p-6 border border-emerald-500/20" data-testid={`stat-card-${index}`}>
               <div className="flex items-center justify-between">
@@ -199,35 +206,98 @@ const Dashboard = () => {
 
           {/* Tab Content */}
           <div className="min-h-[300px]">
-            {activeTab === 'experiences' && (
-              <div className="text-center py-12" data-testid="experiences-empty">
-                <div className="text-6xl mb-4">🎭</div>
-                <h3 className="text-xl font-bold mb-2">No Experiences Yet</h3>
-                <p className="text-gray-400 mb-6">Start your journey by booking your first horror experience</p>
-                <Link to="/projects">
-                  <button className="px-6 py-3 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-medium hover:shadow-lg hover:shadow-emerald-500/50 transition-all" data-testid="browse-experiences-btn">
-                    Browse Experiences
-                  </button>
-                </Link>
-              </div>
-            )}
 
-            {activeTab === 'achievements' && (
-              <div className="text-center py-12" data-testid="achievements-empty">
-                <div className="text-6xl mb-4">🏆</div>
-                <h3 className="text-xl font-bold mb-2">No Achievements Yet</h3>
-                <p className="text-gray-400">Complete experiences to unlock achievements</p>
-              </div>
-            )}
+          {/* ⭐ EXPERIENCES TAB */}
+          {activeTab === "experiences" && (
+            <>
+              {user?.user_experience_count === 0 ? (
+                <div className="text-center py-12">
+                  <div className="text-6xl mb-4">🎭</div>
+                  <h3 className="text-xl font-bold mb-2">No Experiences Yet</h3>
+                  <p className="text-gray-400 mb-6">
+                    Start your journey by booking your first horror experience
+                  </p>
 
-            {activeTab === 'activity' && (
-              <div className="text-center py-12" data-testid="activity-empty">
-                <div className="text-6xl mb-4">📊</div>
-                <h3 className="text-xl font-bold mb-2">No Activity Yet</h3>
-                <p className="text-gray-400">Your recent activity will appear here</p>
-              </div>
-            )}
-          </div>
+                  <Link to="/projects">
+                    <button className="px-6 py-3 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-medium hover:shadow-lg hover:shadow-emerald-500/50 transition-all">
+                      Browse Experiences
+                    </button>
+                  </Link>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 gap-4 p-4">
+                  {/* Show list of user experiences */}
+                  {user?.user_experience_list?.map((exp, index) => (
+                    <div
+                      key={index}
+                      className="p-4 bg-zinc-800 rounded-lg border border-zinc-700"
+                    >
+                      <h3 className="text-lg font-bold">{exp.name}</h3>
+                      <p className="text-gray-400">{exp.category}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+
+          {/* ⭐ ACHIEVEMENTS TAB */}
+          {activeTab === "achievements" && (
+            <>
+              {user?.achievements?.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="text-6xl mb-4">🏆</div>
+                  <h3 className="text-xl font-bold mb-2">No Achievements Yet</h3>
+                  <p className="text-gray-400">Complete experiences to unlock achievements</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                  {user.achievements.map((ach) => (
+                    <div
+                      key={ach.id}
+                      className="p-4 bg-zinc-800 rounded-lg border border-zinc-700"
+                    >
+                      <div className="text-4xl mb-2">{ach.icon}</div>
+                      <h3 className="text-xl font-bold">{ach.name}</h3>
+                      <p className="text-gray-400">{ach.description}</p>
+                      <p className="text-sm text-gray-500">{ach.unlockedAt}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+
+          {/* ⭐ ACTIVITY TAB */}
+          {activeTab === "activity" && (
+            <>
+              {user?.recentActivity?.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="text-6xl mb-4">📊</div>
+                  <h3 className="text-xl font-bold mb-2">No Activity Yet</h3>
+                  <p className="text-gray-400">Your recent activity will appear here</p>
+                </div>
+              ) : (
+                <div className="space-y-4 p-4">
+                  {user.recentActivity.map((act, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-4 p-4 bg-zinc-800 rounded-lg border border-zinc-700"
+                    >
+                      <span className="text-3xl">{act.icon}</span>
+                      <div>
+                        <h3 className="font-bold">{act.action} {act.target}</h3>
+                        <p className="text-gray-400 text-sm">{act.time}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+
+        </div>
+
         </div>
       </main>
     </div>

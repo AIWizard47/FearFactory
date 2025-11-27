@@ -132,6 +132,7 @@ class UserProfile(models.Model):
     fear_level = models.ForeignKey(FearLevel, on_delete=models.SET_DEFAULT, default=get_default_fear_level)
     membership = models.ForeignKey(MemberShip, on_delete=models.SET_DEFAULT, default=get_default_membership)
     profile_tags = models.ManyToManyField('UserTag', blank=True)
+    profile_pic = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
 
     def __str__(self):
         return self.user.username

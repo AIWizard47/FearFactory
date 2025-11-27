@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import FeedbackAboutUsSerializer, FeedbackContactUsSerializer
+from .serializers import FeedbackAboutUsSerializer, FeedbackContactUsSerializer, ProjectReviewSerializer
 from .models import FeedbackAboutUs
 
 
@@ -34,6 +34,23 @@ class FeedbackContactUs(APIView):
             serializer.save()
             return Response(
                 {"message": "You successfully delivered the message to us."},
+                status=status.HTTP_201_CREATED
+            )
+        
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+class ProjectReview(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request, *args, **kwargs):
+        serializer = ProjectReviewSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                {"message": "You successfully submitted the project review."},
                 status=status.HTTP_201_CREATED
             )
         

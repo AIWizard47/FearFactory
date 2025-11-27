@@ -1,12 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "@/App.css";
+import Profile from "@/pages/Profile";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Dashboard from "@/pages/Dashboard";
+import Friends from "@/pages/Friends";
 import Projects from "@/pages/Projects";
 import Experiences from "@/pages/Experiences";
 import { Toaster } from "@/components/ui/sonner";
+
 
 // API Configuration - Users can change this
 export const API_CONFIG = {
@@ -16,10 +19,18 @@ export const API_CONFIG = {
     refreshToken: "/auth/api/token/refresh/",
     signup: "/auth/api/signup",
     checkAuth: "/auth/api/check-auth",
-    profile: "/api/user/profile",
+    profile: "/dashboard/users/",
     projects: "/projects/project/",
-    experiences: "/api/experiences",
-    achievements: "/api/achievements"
+    experiences: "/dashboard/api/experience/",
+    achievements: "/api/achievements",
+    fearLevels: "/dashboard/api/fear-level/",
+    friendsSearch: "/auth/users/search-users/",
+    friendsList: "/auth/users/friend-list-view/",
+    friendsRequest: "/auth/users/send-friend-request/",
+    friendsAccept: "/auth/users/accept-friend-request/",
+    friendsReject: "/auth/users/reject-friend-request/",
+    friendsPendingSend: "/auth/users/friend-pending-send-list-view/",
+    friendsPendingReceive: "/auth/users/friend-pending-receive-list-view/",
   }
 };
 
@@ -160,6 +171,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/friends" element={
+            <ProtectedRoute>
+              <Friends/>
+            </ProtectedRoute>
+          }/>
+          <Route path="/profile" element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } />
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />

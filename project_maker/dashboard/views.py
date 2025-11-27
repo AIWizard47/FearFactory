@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated ,IsAdminUser
+from rest_framework.permissions import IsAuthenticated ,IsAdminUser, AllowAny
 from rest_framework import status
 from django.contrib.auth.models import User
 from .models import UserTag, FearLevel, MemberShip, UserProfile, Achievement, UserAchievement, UserExperience, Experience, Achievement
@@ -11,30 +11,83 @@ class UserDetails(APIView):
 
     def get(self, request, *args, **kwargs):
         user = request.user
+
         try:
             user_profile = UserProfile.objects.get(user=user)
             user_experience = UserExperience.objects.filter(user=user)
-            
-            total_count = Experience.objects.all().count()
-            print(total_count)
+            total_count = Experience.objects.count()
             count = user_experience.count()
-            print(count)
+            user_achievement = UserAchievement.objects.filter(user=user)
+            #achievements
+            achievements = []
             
-        except (UserProfile.DoesNotExist):
-            return Response({"error": "User profile not found."}, status=status.HTTP_404_NOT_FOUND)
+            for i in user_achievement:
+                achievements.append({
+                    "id": i.achieve.id,
+                    "name": i.achieve.name[2:],
+                    "description": i.achieve.description,
+                    "icon": i.achieve.name[:1],
+                    "rarity": "common",  # Placeholder, you can modify as needed
+                    "unlockedAt": i.date_earned.strftime("%Y-%m-%d")
+                })
+
+        except UserProfile.DoesNotExist:
+            return Response({"error": "User profile not found."},
+                            status=status.HTTP_404_NOT_FOUND)
 
         data = {
             "username": user.username.capitalize(),
             "membership": user_profile.membership.name,
-            "membership_description" : user_profile.membership.description,
+            "membership_description": user_profile.membership.description[:-2],
+
             "fear_level": user_profile.fear_level.name,
-            "fear_level_description" : user_profile.fear_level.description,
+            "fear_level_description": user_profile.fear_level.description,
+
             "profile_tags": [tag.name for tag in user_profile.profile_tags.all()],
             "profile_tags_category": [tag.category for tag in user_profile.profile_tags.all()],
-            "user_experience_total_count" : total_count ,
-            "user_experience_count" : count
+
+            "user_experience_total_count": total_count,
+            "user_experience_count": count,
+
+            # ⭐ Added fields for frontend
+            "joinDate": user.date_joined.strftime("%B %Y"),
+            "location": "Digital Realm",
+
+            # Placeholder stats — later you can make dynamic
+            "stats": {
+                "experiencesCompleted": count,
+                "hoursSpent": 10 + count * 2,
+                "averageHeartRate": 120,
+                "scaresReceived": count * 4,
+                "friendsScared": 5,
+                "favoriteCategory": user_profile.fear_level.name
+            },
+
+            "achievements": achievements,
+
+            "badges": [
+                { "name": "Early Adopter", "color": "from-blue-500 to-blue-600" }
+            ],
+
+            "recentActivity": [
+                { "action": "Completed", "target": "Haunted Asylum Tour",
+                  "time": "2 days ago", "icon": "✅" }
+            ],
+            "level" : user_profile.fear_level.description[-2:],
+            "profile_pic": user_profile.profile_pic.url if user_profile.profile_pic else None,
+            "user_experience_list": [
+                {
+                    "id": exp.experience.id,
+                    "name": exp.experience.title,
+                    "category": exp.experience.description
+                }
+                for exp in user_experience
+            ],
+
         }
+
         return Response(data, status=status.HTTP_200_OK)
+
 
 class UserAchievementAPI(APIView):
     permission_classes = [IsAuthenticated]
@@ -85,8 +138,6 @@ class UserExperienceAPI(APIView):
                     "trending" : ua.experience.trending,
                     "popular" : ua.experience.popular,
                     "completed" : ua.completed,
-                    
-                    
                 }
                 for ua in sorted(user_experience, key=lambda x: x.joined_at, reverse=True) if not ua.completed
             ],
@@ -142,7 +193,27 @@ class FearLevelUploadView(APIView):
             )
             created.append({'name': obj.name, 'description': obj.description})
         return Response({"created_tags": created}, status=status.HTTP_201_CREATED)
-    
+
+class FearLevelView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        fear_levels = FearLevel.objects.all()
+
+        data = [
+            {
+                "id": fl.id,
+                "name": fl.name,
+                "description": fl.description,
+            }
+            for fl in fear_levels
+        ]
+
+        return Response(
+            {"fear_levels": data},
+            status=status.HTTP_200_OK
+        )
+
 # Inserting of MemberShip
 class MemberShipUploadView(APIView):
     permission_classes = [IsAdminUser]  # or use custom permission

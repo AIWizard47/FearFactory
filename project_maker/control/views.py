@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from projects.models import Project
-from dashboard.models import Experience, UserExperience
+from dashboard.models import Experience, UserExperience, UserProfile
 from django.contrib.auth.models import User
 
 class RegisterToExperience(APIView):
@@ -18,14 +18,14 @@ class RegisterToExperience(APIView):
 
         # Get the project
         project = get_object_or_404(Project, id=project_id)
-
+        profile = UserProfile.objects.filter(user=project.user).select_related("fear_level").first()
         # Try to find or create the corresponding Experience
         experience, created = Experience.objects.get_or_create(
             title=project.title,
             defaults={
                 "description": project.description,
                 "price": project.price,
-                "difficulty": "Intermediate",  # You can dynamically assign this if needed
+                "difficulty": profile.fear_level.name if profile and profile.fear_level else None,  # You can dynamically assign this if needed
                 "image": project.image  # assuming your Project model has `image` field
             }
         )
