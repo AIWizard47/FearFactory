@@ -13,7 +13,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 // API Configuration - Users can change this
 export const API_CONFIG = {
-  BASE_URL: process.env.REACT_APP_BACKEND_URL || "http://127.0.0.1:8000",
+  BASE_URL: process.env.REACT_APP_BACKEND_URL || "https://beta02.pythonanywhere.com",
   ENDPOINTS: {
     login: "/auth/api/token/",
     refreshToken: "/auth/api/token/refresh/",
